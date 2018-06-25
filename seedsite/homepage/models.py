@@ -12,8 +12,8 @@ class Intern(AbstractUser):
     semester = models.TextField(blank=True, null=True)
 
 class AssignedClient(models.Model):
-    intern_id = models.ForeignKey('Intern', on_delete=models.CASCADE)
-    client_id = models.ForeignKey('Client', on_delete=models.CASCADE)
+    intern = models.ForeignKey('Intern', on_delete=models.CASCADE)
+    client = models.ForeignKey('Client', on_delete=models.CASCADE)
 
 class Client(models.Model):
     first_name = models.TextField(blank=True, null=True)
@@ -38,5 +38,5 @@ class Log(models.Model):
     visit_description = models.TextField(blank=True, null=True)
     next_steps = models.TextField(blank=True, null=True)
     time_of_visit = models.TextField(blank=True, null=True)
-    intern_id = models.ForeignKey('Intern', on_delete=models.CASCADE)
-    client_id = models.ForeignKey('Client', on_delete=models.CASCADE)
+    intern = models.ForeignKey('Intern', on_delete=models.CASCADE)
+    client = models.ForeignKey('Client', on_delete=models.CASCADE)
