@@ -13,13 +13,16 @@ from django.core.mail import send_mail
 import re
 from django.template.loader import render_to_string, get_template
 from django.conf import settings as django_settings
+from homepage import models as mod
 
 # Create your views here.
 
 def index(request):
 
-    context = {
+    clients = mod.Client.objects.all()
 
+    context = {
+        'clients':clients,
     }
 
     return render(request, 'homepage/index.html', context)

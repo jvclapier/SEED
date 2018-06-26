@@ -2,34 +2,61 @@
 {% load static %}
 
 {% block title %}
-Home
+Intern Portal
 {% endblock title %}
 
+{% block navigation %}
+    <a href="/index">
+        <img src="{% static "search_icon-03.svg" %}" alt="Search Icon" class="nav-button">
+    </a>
+    <a href="/index">
+        <img src="{% static "plus_icon-04.svg" %}" alt="Plus Icon" class="nav-button">
+    </a>
+    <a href="/index">
+        <img src="{% static "user_icon-05.svg" %}" alt="User Icon" class="nav-button">
+    </a>
+{% endblock navigation %}
+
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-12 col-md-4">
+
+{% for client in clients %}
+    <div class="card mb-3">
+        <div class="card-header p-2">
             <div class="container">
-                <div class="row">
-                  <div class="col-6 col-md-6">
-                      <h4>inside column 1</h4>
-                  </div>
-                  <div class="col-6 col-md-6">
-                      <h4>inside column 2</h4>
-                  </div>
+                <div class="row d-flex align-items-center">
+                    <div class="col-4">
+                        <img src="{% static "profile.JPG" %}" class="img-responsive rounded-image" alt="">
+                    </div>
+                    <div class="col-8">
+                        {{ client.first_name }} {{ client.last_name}}
+                    </div>
                 </div>
             </div>
-        </div>
+            </div>
+        <div class="card-body">
+            <p class="card-text">
+                <strong>Business Name: </strong>{{ client.business_name }}
+                </br>
+                <strong>Phone Number: </strong><a href="tel: {{client.phone_number}}">{{client.phone_number}}</a>
+            </p>
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 p-1">
+                        <button type="button" class="btn btn-primary full-width">
+                          <i class="fa fa-bookmark fa-2x"></i>
+                        </button>
+                    </div>
+                    <div class="col-6 p-1">
+                        <button type="button" class="btn btn-success full-width">
+                          <i class="fa fa-plus fa-2x"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-        <div class="col-12 col-md-4">
-            <h4>Column 2</h4>
-        </div>
-
-        <div class="col-12 col-md-4">
-            <h4>Column 3</h4>
         </div>
     </div>
-</div>
+{% endfor %}
 
 
 

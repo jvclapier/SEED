@@ -32,6 +32,7 @@ class Client(models.Model):
     business_type = models.TextField(blank=True, null=True)
     transportation_method = models.TextField(blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
+    # TODO: add image field
 
 class Log(models.Model):
     date_created = models.DateField(auto_now_add=True)

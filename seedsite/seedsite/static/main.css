@@ -1,0 +1,17 @@
+.full-width {
+    width: 100%;
+}
+
+.nav-button {
+    margin-bottom: 10px;
+}
+
+#left-side-nav {
+    left: auto;
+    margin-top: 15px;
+}
+
+.rounded-image {
+    border-radius: 50%;
+    width: 100%;
+}
