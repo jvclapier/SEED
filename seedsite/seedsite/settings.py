@@ -71,6 +71,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'seedsite.wsgi.application'
 
+ADMIN_PASSWORD = 'thisisthepassword'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
