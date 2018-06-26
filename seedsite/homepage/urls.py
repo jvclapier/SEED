@@ -20,4 +20,5 @@ from homepage import views
 urlpatterns = [
     path('index/', views.index, name='index'),
     path('', views.index, name='index'),
+    path('add_log/', views.add_log, name='add_log')
 ]
