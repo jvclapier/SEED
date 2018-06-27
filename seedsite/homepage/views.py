@@ -133,3 +133,14 @@ class AddLog(forms.Form):
 
         print('##### log.intern =', log.intern.first_name)
         print('##### log.client =', log.client.first_name)
+
+
+def client_profile(request, id):
+
+    current_client = mod.Client.objects.get(id=id)
+
+    context = {
+    'current_client':current_client,
+    }
+
+    return render(request, 'homepage/client_profile.html', context)
