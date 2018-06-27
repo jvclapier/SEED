@@ -1,3 +1,10 @@
+/* Site colors
+#6B7A8F - blue
+#F7882F - orange
+#F7C331 - yellow
+#DCC7AA - tan
+*/
+
 .full-width {
     width: 100%;
 }
@@ -14,4 +21,10 @@
 .rounded-image {
     border-radius: 50%;
     width: 100%;
+}
+
+#login-background {
+    background-color: #6B7A8F;
+    height: 100vh;
+    width: 100vw;
 }

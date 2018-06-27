@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{% block title %}Home{% endblock title %} | SEED Philippines</title>
+    <title>{% block title %}Login{% endblock title %} | SEED Philippines</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
@@ -34,21 +34,33 @@
 </head>
 
 <body>
-    <a href="/logout">Logout</a>
-    <div class="container pt-3">
+    <div class="container-fluid d-flex align-items-center justify-content-center" id="login-background">
         <div class="row">
-            <div class="col-9">
-                {% block content %}
-                {% endblock content %}
-            </div>
-            <div class="col-3 pl-0 fixed-top" id="left-side-nav">
-                <a href="/index">
-                    <img src="{% static "home_icon-02.svg" %}" alt="Home Icon" class="nav-button">
-                </a>
+          <div class="col-8 offset-2">
+              <img src="{% static "cr_logo-06.svg" %}" alt="" class="img-responsive" style="width:100%;">
+              <form class="text-center" action="/login/" method="post">
+                {% csrf_token %}
+                  <div class="row">
+                    <div class="col-12 input-label">
+                      {{form.username.errors}}
+                      <div class="input-group">
+                        {{form.username}}
+                      </div>
+                      <br>
+                    </div>
+                    <div class="col-12 input-label">
+                      {{form.password.errors}}
+                      <div class="input-group">
+                        {{form.password}}
+                      </div>
+                      <br>
+                    </div>
+                  </div>
 
-                {% block navigation %}
-                {% endblock navigation %}
-            </div>
+              <input class="btn btn-primary " value="Login" type="submit"></input>
+              </form>
+          </div>
         </div>
     </div>
+
 </body>

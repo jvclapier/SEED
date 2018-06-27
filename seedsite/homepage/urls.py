@@ -19,6 +19,8 @@ from homepage import views
 
 urlpatterns = [
     path('index/', views.index, name='index'),
-    path('', views.index, name='index'),
-    path('add_log/', views.add_log, name='add_log')
+    path('', views.login, name='login'),
+    path('add_log/<int:id>', views.add_log, name='add_log'),
+    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout')
 ]

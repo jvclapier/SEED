@@ -20,6 +20,7 @@ Intern Portal
 {% block content %}
 
 {% for client in clients %}
+<h1>Hello {{ current_user.first_name}}</h1>
     <div class="card mb-3">
         <div class="card-header p-2">
             <div class="container">
@@ -47,7 +48,7 @@ Intern Portal
                         </button>
                     </div>
                     <div class="col-6 p-1">
-                      <a href="/add_log" class="btn btn-success full-width">
+                      <a href="/add_log/{{client.id}} " class="btn btn-success full-width">
                         <i class="fa fa-plus fa-2x"></i>
                       </a>
                     </div>

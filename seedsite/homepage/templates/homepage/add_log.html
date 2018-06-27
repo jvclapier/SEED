@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<form class="" action="/add_log/" method="post">
+<form class="" action="/add_log/{{current_client.id}}" method="post">
   {% csrf_token %}
   <p class="card-text">
     <div class="row">
