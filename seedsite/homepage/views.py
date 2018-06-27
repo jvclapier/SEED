@@ -138,9 +138,11 @@ class AddLog(forms.Form):
 def client_profile(request, id):
 
     current_client = mod.Client.objects.get(id=id)
+    client_logs = mod.Log.objects.filter(client=current_client)
 
     context = {
     'current_client':current_client,
+    'client_logs':client_logs,
     }
 
     return render(request, 'homepage/client_profile.html', context)

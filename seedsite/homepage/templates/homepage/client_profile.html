@@ -11,4 +11,8 @@
 {{ current_client.first_name }}
 {{ current_client.last_name }}
 
+{% for log in client_logs %}
+<h1>{{ log.visit_description }}</h1>
+{% endfor %}
+
 {% endblock content %}
