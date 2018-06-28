@@ -110,8 +110,8 @@ class AddLog(forms.Form):
         ('6:00', '6:00'),
     )
 
-    visit_description = forms.CharField(label="Visit Description", required=True, max_length=1000, widget=forms.TextInput(attrs={'placeholder':'Please describe your visit.'}))
-    next_steps = forms.CharField(label="Next Steps", required=True, max_length=250, widget=forms.TextInput(attrs={'placeholder':'Describe what you plan to do next.'}))
+    visit_description = forms.CharField(label="Visit Description", required=True, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Please describe your visit.'}))
+    next_steps = forms.CharField(label="Next Steps", required=True, max_length=250, widget=forms.Textarea(attrs={'placeholder':'Describe what you plan to do next.'}))
     time_of_visit = forms.ChoiceField(label="Time Of Visit", choices=TIME_CHOICES, required=True)
 
     def __init__(self, *args, **kwargs):
@@ -146,3 +146,89 @@ def client_profile(request, id):
     }
 
     return render(request, 'homepage/client_profile.html', context)
+
+@login_required(login_url = '/login/')
+def edit_client(request, id):
+
+    current_client = mod.Client.objects.get(id=id)
+    print("##### The current client is", current_client.first_name)
+
+    if request.method == 'POST':
+        form = EditClient(request.POST)
+        if form.is_valid():
+
+            form.commit(request, current_client)
+
+            return HttpResponseRedirect('/client_profile/'+str(id))
+    else:
+        form = EditClient({'first_name':current_client.first_name,
+            'last_name':current_client.last_name, 'gender': current_client.gender,
+            'email':current_client.email, 'phone_number': current_client.phone_number,
+            'tagalog_needed': current_client.tagalog_needed, 'street_address': current_client.street_address,
+            'city': current_client.city, 'zipcode': current_client.zipcode, 'country': current_client.country,
+            'barangay': current_client.barangay, 'business_name': current_client.business_name,
+            'business_type': current_client.business_type, 'transportation_method': current_client.transportation_method,
+            'bio': current_client.bio,
+
+        })
+
+    context = {
+        'form':form,
+        'current_client':current_client,
+
+    }
+
+    return render(request, 'homepage/edit_client.html', context)
+
+class EditClient(forms.Form):
+
+    GENDER_CHOICES = (
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+    )
+
+    first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name'}))
+    last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name'}))
+    gender = forms.ChoiceField(label="Client Gender", choices=GENDER_CHOICES, required=False)
+    email = forms.CharField(label="Email Address", required=True, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address'}))
+    phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number'}))
+    tagalog_needed = forms.BooleanField(label="Tagalog Needed", required=False, initial=False)
+    street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address'}))
+    city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City'}))
+    zipcode = forms.CharField(label="Zipcode", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Zipcode'}))
+    country = forms.CharField(label="Country", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Country'}))
+    barangay = forms.CharField(label="Barangay", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Barangay'}))
+    ## TODO: Create google maps API
+    business_name = forms.CharField(label="Business Name", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Name'}))
+    business_type = forms.CharField(label="Business Type", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Type'}))
+    transportation_method = forms.CharField(label="Transportation Method", required=False, max_length=500, widget=forms.TextInput(attrs={'placeholder':'Please describe how you got there'}))
+    bio = forms.CharField(label="Client Bio", required=False, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Write a brief bio about your overall experience with this client'}))
+
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(EditClient, self).__init__(*args, **kwargs)
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data
+
+    def commit(self, request, current_client):
+        client = current_client
+        client.first_name = self.cleaned_data.get('first_name')
+        client.last_name = self.cleaned_data.get('last_name')
+        client.gender = self.cleaned_data.get('gender')
+        client.email = self.cleaned_data.get('email')
+        client.phone_number = self.cleaned_data.get('phone_number')
+        client.tagalog_needed = self.cleaned_data.get('tagalog_needed')
+        client.street_address = self.cleaned_data.get('street_address')
+        client.city = self.cleaned_data.get('city')
+        client.zipcode = self.cleaned_data.get('zipcode')
+        client.country = self.cleaned_data.get('country')
+        client.barangay = self.cleaned_data.get('barangay')
+        client.business_name = self.cleaned_data.get('business_name')
+        client.business_type = self.cleaned_data.get('business_type')
+        client.transportation_method = self.cleaned_data.get('transportation_method')
+        client.bio = self.cleaned_data.get('bio')
+        client.save()
+
+        print('##### client.first_name =', client.first_name)

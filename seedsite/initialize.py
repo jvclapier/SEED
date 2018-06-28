@@ -113,7 +113,7 @@ CreateIntern('bdsmith98', 'password', 'Benton', 'Smith', 'bdsmith98@gmail.com', 
 CreateIntern('eaglauser', 'password', 'Eliza', 'Clapier', 'eaglauser@gmail.com', 'Summer')
 
 '''create client'''
-def CreateClient(first_name, last_name, gender, email, phone_number, tagalog_needed, street_address, city, zipcode, country, barangay, business_name, business_type, transportation_method, notes):
+def CreateClient(first_name, last_name, gender, email, phone_number, tagalog_needed, street_address, city, zipcode, country, barangay, business_name, business_type, transportation_method, bio):
     client = mod.Client()
     client.first_name = first_name
     client.last_name = last_name
@@ -129,7 +129,7 @@ def CreateClient(first_name, last_name, gender, email, phone_number, tagalog_nee
     client.business_name = business_name
     client.business_type = business_name
     client.transportation_method = transportation_method
-    client.notes = notes
+    client.bio = bio
     client.save()
     print("####### Client created: " + client.first_name)
 

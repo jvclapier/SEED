@@ -19,8 +19,9 @@ Intern Portal
 
 {% block content %}
 
-{% for client in clients %}
 <h1>Hello {{ current_user.first_name}}</h1>
+
+{% for client in clients %}
 <div class="card mb-3">
   <a href="/client_profile/{{client.id}} ">
     <div class="card-header p-2">

@@ -4,15 +4,23 @@
 {% block title %}Client Profile{% endblock title %}
 
 
+
 {% block content %}
 
-<h1>Client Profile</h1>
+<h1>Client Profile</h1><br>
 
-{{ current_client.first_name }}
-{{ current_client.last_name }}
+<h3>{{ current_client.first_name }}
+  {{ current_client.last_name }}
+</h3><br>
 
 {% for log in client_logs %}
-<h1>{{ log.visit_description }}</h1>
+
+{{ log.visit_description }}
+<br>
 {% endfor %}
+
+<a href="/edit_client/{{current_client.id}} ">
+  <button type="button" name="Edit client" href="/index">Edit Client</button>
+</a>
 
 {% endblock content %}

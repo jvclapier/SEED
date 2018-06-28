@@ -23,5 +23,6 @@ urlpatterns = [
     path('add_log/<int:id>', views.add_log, name='add_log'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
-    path('client_profile/<int:id>', views.client_profile, name='client_profile')
+    path('client_profile/<int:id>', views.client_profile, name='client_profile'),
+    path('edit_client/<int:id>', views.edit_client, name='edit_client')
 ]
