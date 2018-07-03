@@ -25,5 +25,7 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('client_profile/<int:id>', views.client_profile, name='client_profile'),
     path('edit_client/<int:id>', views.edit_client, name='edit_client'),
-    path('add_client/', views.add_client, name='add_client')
+    path('add_client/', views.add_client, name='add_client'),
+    path('search/', views.search, name='search'),
+    path('add_bookmark/<int:id>', views.add_bookmark, name='add_bookmark')
 ]
