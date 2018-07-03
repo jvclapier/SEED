@@ -2,37 +2,12 @@
 {% load static %}
 
 {% block title %}
-Intern Portal
+Search
 {% endblock title %}
-
-{% block navigation %}
-    <a href="/index">
-        <img src="{% static "search_icon-03.svg" %}" alt="Search Icon" class="nav-button">
-    </a>
-    <a href="/add_client">
-        <img src="{% static "plus_icon-04.svg" %}" alt="Plus Icon" class="nav-button">
-    </a>
-    <a href="/index">
-        <img src="{% static "user_icon-05.svg" %}" alt="User Icon" class="nav-button">
-    </a>
-{% endblock navigation %}
 
 {% block content %}
 
-<h3>Hello {{ current_user.first_name}}</h3>
-
-<div class="col-lg-4 col-lg-offset-4">
-<form action="/search/">
-    <div class="input-group">
-        <span class="input-group-btn">
-            <button class="btn btn-default" id="search_submit" type="submit" >Search</button>
-        </span>
-        <input  id="search_box" type="text" class="form-control" name="client_name"  placeholder="Search Client" >
-    </div>
-</form>
-</div>
-
-{% for client in assigned_clients %}
+{% for client in assigned_clients_filtered %}
 <div class="card mb-3">
   <a href="/client_profile/{{client.id}} ">
     <div class="card-header p-2">
@@ -57,9 +32,9 @@ Intern Portal
     <div class="container">
       <div class="row">
         <div class="col-6 p-1">
-          <a href="/add_bookmark/{{client.id}} " class="btn btn-primary full-width">
+          <button type="button" class="btn btn-primary full-width">
             <i class="fa fa-bookmark fa-2x"></i>
-          </a>
+          </button>
         </div>
         <div class="col-6 p-1">
           <a href="/add_log/{{client.id}} " class="btn btn-success full-width">
@@ -72,7 +47,7 @@ Intern Portal
 </div>
 {% endfor %}
 
-{% for client in unassigned_clients %}
+{% for client in unassigned_clients_filtered %}
 <div class="card mb-3" style="background-color:red;">
   <a href="/client_profile/{{client.id}} ">
     <div class="card-header p-2">
@@ -97,9 +72,9 @@ Intern Portal
     <div class="container">
       <div class="row">
         <div class="col-6 p-1">
-          <a href="/add_bookmark/{{client.id}} " class="btn btn-primary full-width">
+          <button type="button" class="btn btn-primary full-width">
             <i class="fa fa-bookmark fa-2x"></i>
-          </a>
+          </button>
         </div>
         <div class="col-6 p-1">
           <a href="/add_log/{{client.id}} " class="btn btn-success full-width">
@@ -111,6 +86,5 @@ Intern Portal
   </div>
 </div>
 {% endfor %}
-
 
 {% endblock content %}
