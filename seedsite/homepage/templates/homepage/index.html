@@ -9,7 +9,7 @@ Intern Portal
     <a href="/index">
         <img src="{% static "search_icon-03.svg" %}" alt="Search Icon" class="nav-button">
     </a>
-    <a href="/index">
+    <a href="/add_client">
         <img src="{% static "plus_icon-04.svg" %}" alt="Plus Icon" class="nav-button">
     </a>
     <a href="/index">
@@ -19,7 +19,12 @@ Intern Portal
 
 {% block content %}
 
-<h1>Hello {{ current_user.first_name}}</h1>
+<h3>Hello {{ current_user.first_name}}</h3>
+
+<form class="form-inline md-form mr-auto mb-4" action='/add_client'>
+    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-warning btn-rounded btn-sm my-0" type="submit">Search</button>
+</form>
 
 {% for client in clients %}
 <div class="card mb-3">

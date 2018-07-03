@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block title %}
-Edit Client
+Add Client
 {% endblock title %}
 
 {% block content %}
-<form class="" action="/edit_client/{{current_client.id}}" method="post">
+<form class="" action="/add_client/" method="post">
   {% csrf_token %}
   <p class="card-text">
     <div class="row">

@@ -232,3 +232,75 @@ class EditClient(forms.Form):
         client.save()
 
         print('##### client.first_name =', client.first_name)
+
+@login_required(login_url = '/login/')
+def add_client(request):
+    if request.method == 'POST':
+        form = AddClient(request.POST)
+
+        if form.is_valid():
+
+            form.commit(request)
+
+            return HttpResponseRedirect('/index/')
+    else:
+        form = AddClient()
+
+    context = {
+    'form':form,
+    }
+
+    return render(request, 'homepage/add_client.html', context)
+
+class AddClient(forms.Form):
+
+    GENDER_CHOICES = (
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+    )
+
+    first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name'}))
+    last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name'}))
+    gender = forms.ChoiceField(label="Client Gender", choices=GENDER_CHOICES, required=False)
+    email = forms.CharField(label="Email Address", required=True, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address'}))
+    phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number'}))
+    tagalog_needed = forms.BooleanField(label="Tagalog Needed", required=False, initial=False)
+    street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address'}))
+    city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City'}))
+    zipcode = forms.CharField(label="Zipcode", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Zipcode'}))
+    country = forms.CharField(label="Country", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Country'}))
+    barangay = forms.CharField(label="Barangay", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Barangay'}))
+    ## TODO: Create google maps API
+    business_name = forms.CharField(label="Business Name", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Name'}))
+    business_type = forms.CharField(label="Business Type", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Type'}))
+    transportation_method = forms.CharField(label="Transportation Method", required=False, max_length=500, widget=forms.TextInput(attrs={'placeholder':'Please describe how you got there'}))
+    bio = forms.CharField(label="Client Bio", required=False, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Write a brief bio about your overall experience with this client'}))
+
+
+    def __init__(self, *arg, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(AddClient, self).__init__(*arg, **kwargs)
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data
+
+    def commit(self, request):
+        client = mod.Client()
+        client.first_name = self.cleaned_data.get('first_name')
+        client.last_name = self.cleaned_data.get('last_name')
+        client.gender = self.cleaned_data.get('gender')
+        client.email = self.cleaned_data.get('email')
+        client.phone_number = self.cleaned_data.get('phone_number')
+        client.tagalog_needed = self.cleaned_data.get('tagalog_needed')
+        client.street_address = self.cleaned_data.get('street_address')
+        client.city = self.cleaned_data.get('city')
+        client.zipcode = self.cleaned_data.get('zipcode')
+        client.country = self.cleaned_data.get('country')
+        client.barangay = self.cleaned_data.get('barangay')
+        client.business_name = self.cleaned_data.get('business_name')
+        client.business_type = self.cleaned_data.get('business_type')
+        client.transportation_method = self.cleaned_data.get('transportation_method')
+        client.bio = self.cleaned_data.get('bio')
+        client.save()
+
+        print('##### client.first_name =', client.first_name)
