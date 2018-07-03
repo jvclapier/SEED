@@ -16,19 +16,23 @@ from django.conf import settings as django_settings
 from homepage import models as mod
 from django.db.models import Q
 
-## This passes the current user and a list of all clients. Users are directed to the index file.
 @login_required(login_url = '/login/')
 def index(request):
+    #initialize variables
     current_user = request.user
     all_clients = mod.Client.objects.all().order_by('first_name')
     assigned_client_objects = mod.AssignedClient.objects.filter(intern = current_user)
     assigned_clients = []
     unassigned_clients = []
+    #Loop through the assigned clients and add each to the assigned clients list
     for item in assigned_client_objects:
         client_to_add = mod.Client.objects.get(id = item.client.id)
         assigned_clients.append(client_to_add)
+    #Loop through the all clients list
     for item in all_clients:
         client_exists = False
+        #Loop through the assigned clients list to see if the client exists.
+        # If the client does not exist, add it to the unassigned client list
         for i in assigned_clients:
             if item == i:
                 client_exists = True
@@ -397,6 +401,7 @@ def add_bookmark(request, id):
         # if the bookmark exists delete bookmark
         mod.AssignedClient.objects.get(id=existing_bookmark.id).delete()
     else:
+        #if the bookmark does not exist, create bookmark
         new_assigned_client = mod.AssignedClient()
         new_assigned_client.intern = current_user
         new_assigned_client.client = current_client
