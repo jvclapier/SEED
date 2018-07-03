@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Add Client
+{% endblock title %}
+
+{% block content %}
+<form class="" action="/add_client/" method="post">
+  {% csrf_token %}
+  <p class="card-text">
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.first_name.errors}}
+        <label for="{{form.first_name.id_for_label}}">First Name</label>
+        <div class="input-group">
+          {{form.first_name}}
+        </div>
+        <br>
+      </div>
+      <div class="col-md-6 input-label">
+        {{form.last_name.errors}}
+        <label for="{{form.last_name.id_for_label}}">Last Name</label>
+        <div class="input-group">
+          {{form.last_name}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.gender.errors}}
+        <label for="{{form.gender.id_for_label}}">Gender</label>
+        <div class="input-group">
+          {{form.gender}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.email.errors}}
+        <label for="{{form.email.id_for_label}}">Email</label>
+        <div class="input-group">
+          {{form.email}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.phone_number.errors}}
+        <label for="{{form.phone_number.id_for_label}}">Phone Number</label>
+        <div class="input-group">
+          {{form.phone_number}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.tagalog_needed.errors}}
+        <label for="{{form.tagalog_needed.id_for_label}}">Tagalog Needed</label>
+        <div class="input-group">
+          {{form.tagalog_needed}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.street_address.errors}}
+        <label for="{{form.street_address.id_for_label}}">Street Address</label>
+        <div class="input-group">
+          {{form.street_address}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.city.errors}}
+        <label for="{{form.city.id_for_label}}">City</label>
+        <div class="input-group">
+          {{form.city}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.zipcode.errors}}
+        <label for="{{form.zipcode.id_for_label}}">Zipcode</label>
+        <div class="input-group">
+          {{form.zipcode}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.country.errors}}
+        <label for="{{form.country.id_for_label}}">Country</label>
+        <div class="input-group">
+          {{form.country}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.barangay.errors}}
+        <label for="{{form.barangay.id_for_label}}">Barangay</label>
+        <div class="input-group">
+          {{form.barangay}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.business_name.errors}}
+        <label for="{{form.business_name.id_for_label}}">Business Name</label>
+        <div class="input-group">
+          {{form.business_name}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.business_type.errors}}
+        <label for="{{form.business_type.id_for_label}}">Business Type</label>
+        <div class="input-group">
+          {{form.business_type}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.transportation_method.errors}}
+        <label for="{{form.transportation_method.id_for_label}}">Transportation Method</label>
+        <div class="input-group">
+          {{form.transportation_method}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.bio.errors}}
+        <label for="{{form.bio.id_for_label}}">Bio</label>
+        <div class="input-group">
+          {{form.bio}}
+        </div>
+        <br>
+      </div>
+    </div>
+</p>
+<input class="btn btn-success" value="Save" type="submit"></input>
+</form>
+{% endblock content %}

@@ -31,7 +31,7 @@ class Client(models.Model):
     business_name = models.TextField(blank=True, null=True)
     business_type = models.TextField(blank=True, null=True)
     transportation_method = models.TextField(blank=True, null=True)
-    notes = models.TextField(blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
     # TODO: add image field
 
 class Log(models.Model):
