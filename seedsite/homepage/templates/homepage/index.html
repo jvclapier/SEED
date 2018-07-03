@@ -32,7 +32,7 @@ Intern Portal
 </form>
 </div>
 
-{% for client in assigned_clients %}
+{% for client in assigned_clients_ordered %}
 <div class="card mb-3">
   <a href="/client_profile/{{client.id}} ">
     <div class="card-header p-2">

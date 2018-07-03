@@ -23,15 +23,23 @@ def index(request):
     all_clients = mod.Client.objects.all().order_by('first_name')
     assigned_client_objects = mod.AssignedClient.objects.filter(intern = current_user)
     assigned_clients = []
+    assigned_clients_ordered = []
     unassigned_clients = []
-    #Loop through the assigned clients and add each to the assigned clients list
+    # Loop through the assigned clients and add each to the assigned clients list
     for item in assigned_client_objects:
         client_to_add = mod.Client.objects.get(id = item.client.id)
         assigned_clients.append(client_to_add)
-    #Loop through the all clients list
+    # Looping through the all clients list to order the assigned client list
+    for item in all_clients:
+        for i in assigned_clients:
+            if item == i:
+                assigned_clients_ordered.append(item)
+            else:
+                continue
+    # Loop through the all clients list
     for item in all_clients:
         client_exists = False
-        #Loop through the assigned clients list to see if the client exists.
+        # Loop through the assigned clients list to see if the client exists.
         # If the client does not exist, add it to the unassigned client list
         for i in assigned_clients:
             if item == i:
@@ -44,14 +52,14 @@ def index(request):
             continue
 
     context = {
-        'assigned_clients':assigned_clients,
+        'assigned_clients_ordered':assigned_clients_ordered,
         'unassigned_clients':unassigned_clients,
         'current_user': current_user,
     }
 
     return render(request, 'homepage/index.html', context)
 
-##This directs users to the login form. Once they have successfully logged in, it sends them to the index page.
+# This directs users to the login form. Once they have successfully logged in, it sends them to the index page.
 def login(request):
 
     if request.method == 'POST':
@@ -71,7 +79,7 @@ def login(request):
 
     return render(request, 'homepage/login.html', context)
 
-##This form takes a user's username and password, validates and authenticates it, and logs the user into the site.
+# This form takes a user's username and password, validates and authenticates it, and logs the user into the site.
 class LoginForm(forms.Form):
     username = forms.CharField(label="", required=True, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Username', 'class':'form-control'}))
     password = forms.CharField(label="", required=True, widget=forms.PasswordInput(attrs={'placeholder':'Password', 'class':'form-control'}))
@@ -90,7 +98,7 @@ class LoginForm(forms.Form):
         auth_login(request, self.user)
 
 
-##This function logs the user out of the website adn redirects them to the login page.
+# This function logs the user out of the website adn redirects them to the login page.
 @login_required(login_url = '/login/')
 def logout(request):
 
@@ -98,8 +106,8 @@ def logout(request):
     return HttpResponseRedirect('/login')
 
 
-##This function takes the current user and current client and directs the user to the AddLog form.
-##If the request is a post, the function commits the form data and redirects the user to the index page.
+# This function takes the current user and current client and directs the user to the AddLog form.
+# If the request is a post, the function commits the form data and redirects the user to the index page.
 @login_required(login_url = '/login/')
 def add_log(request, id):
 
@@ -126,7 +134,7 @@ def add_log(request, id):
     return render(request, 'homepage/add_log.html', context)
 
 
-##This form records a visit description, details about next steps, and time of visit.
+# This form records a visit description, details about next steps, and time of visit.
 class AddLog(forms.Form):
     TIME_CHOICES = (
         ('9:00', '9:00'),
@@ -165,7 +173,7 @@ class AddLog(forms.Form):
         print('##### log.intern =', log.intern.first_name)
         print('##### log.client =', log.client.first_name)
 
-##This function finds the client ID, finds all logs concerning that client, and directs the user to the client_profile page
+# This function finds the client ID, finds all logs concerning that client, and directs the user to the client_profile page
 @login_required(login_url = '/login/')
 def client_profile(request, id):
 
@@ -179,8 +187,8 @@ def client_profile(request, id):
 
     return render(request, 'homepage/client_profile.html', context)
 
-##This function finds the current client ID and directs the user to the EditClient form.
-##It also autofills the form with any information that is already recorded in the database.
+# This function finds the current client ID and directs the user to the EditClient form.
+# It also autofills the form with any information that is already recorded in the database.
 @login_required(login_url = '/login/')
 def edit_client(request, id):
 
@@ -214,8 +222,8 @@ def edit_client(request, id):
 
     return render(request, 'homepage/edit_client.html', context)
 
-#This form updates information about a client.
-##The fields will autofill with existing information allowing users to update them with new information.
+# This form updates information about a client.
+# The fields will autofill with existing information allowing users to update them with new information.
 class EditClient(forms.Form):
 
     GENDER_CHOICES = (
@@ -269,8 +277,8 @@ class EditClient(forms.Form):
 
         print('##### client.first_name =', client.first_name)
 
-##This function directs users to the AddClient form, allowing them to add a new client to the database.
-##After adding the new client to the database, users are redirected to the index page.
+# This function directs users to the AddClient form, allowing them to add a new client to the database.
+# After adding the new client to the database, users are redirected to the index page.
 @login_required(login_url = '/login/')
 def add_client(request):
     if request.method == 'POST':
@@ -290,7 +298,7 @@ def add_client(request):
 
     return render(request, 'homepage/add_client.html', context)
 
-##This form allows users to enter new clients into the database.
+# This form allows users to enter new clients into the database.
 class AddClient(forms.Form):
 
     GENDER_CHOICES = (
@@ -344,8 +352,8 @@ class AddClient(forms.Form):
 
         print('##### client.first_name =', client.first_name)
 
-##This takes a user input to search current clients in the database. Users can search for a client based on first name,
-##last name, or busienss name. It returns a list of clients ordered by the client's first name.
+# This takes a user input to search current clients in the database. Users can search for a client based on first name,
+# last name, or busienss name. It returns a list of clients ordered by the client's first name.
 @login_required(login_url = '/login/')
 def search(request):
     current_user = request.user
