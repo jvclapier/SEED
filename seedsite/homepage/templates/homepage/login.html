@@ -14,6 +14,7 @@
     <!-- Custom Css -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,300i,400,600,700,800" rel="stylesheet">
     <link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'homepage/login.css' %}" rel="stylesheet" type="text/css">
 
     {% block resources %}
     {% endblock resources %}
@@ -37,7 +38,7 @@
     <div class="container-fluid d-flex align-items-center justify-content-center" id="login-background">
         <div class="row">
           <div class="col-8 offset-2">
-              <img src="{% static "cr_logo-06.svg" %}" alt="" class="img-responsive" style="width:100%;">
+              <img src="{% static "cr_logo_soft-08.svg" %}" alt="" class="img-responsive mb-3" style="width:100%;">
               <form class="text-center" action="/login/" method="post">
                 {% csrf_token %}
                   <div class="row">

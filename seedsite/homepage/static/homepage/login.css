@@ -1,0 +1,31 @@
+.form-control, .form-control:focus {
+    background-color: rgba(0, 0, 0, 0);
+    color:white;
+    outline:0 !important;
+    box-shadow: none;
+    border-color: white;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, .3);
+}
+
+.btn {
+    background-color: rgba(0, 0, 0, 0);
+    color:white;
+    outline:0 !important;
+    box-shadow: none;
+    border-color: white;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+.btn:hover {
+    background-color: rgba(255, 255, 255, 1);
+    color: #509CFE;
+    outline:0 !important;
+    box-shadow: none;
+    border-color: white;
+}

@@ -1,0 +1,118 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1242 864">
+  <defs>
+    <style>
+      .cls-1, .cls-11, .cls-2, .cls-4 {
+        fill: #fff;
+      }
+
+      .cls-1 {
+        clip-rule: evenodd;
+      }
+
+      .cls-3 {
+        fill: none;
+      }
+
+      .cls-4 {
+        fill-rule: evenodd;
+      }
+
+      .cls-5 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-6 {
+        clip-path: url(#clip-path-2);
+      }
+
+      .cls-7 {
+        clip-path: url(#clip-path-3);
+      }
+
+      .cls-8 {
+        clip-path: url(#clip-path-5);
+      }
+
+      .cls-9 {
+        clip-path: url(#clip-path-7);
+      }
+
+      .cls-10 {
+        clip-path: url(#clip-path-9);
+      }
+
+      .cls-11 {
+        font-size: 458.28px;
+        font-family: NiveauGroteskMedium-SmallCaps, Niveau Grotesk;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <path class="cls-1" d="M95.86,718.2l391.67,83L164.25,651.88a28.63,28.63,0,0,1-16.63-26.13l1.95-431.21a28.63,28.63,0,0,0-23.68-28.34l-56.26-9.89,3.53,534.06A28.63,28.63,0,0,0,95.86,718.2Z"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect class="cls-2" x="-9.14" y="-1.22" width="1260.28" height="866.44"/>
+    </clipPath>
+    <clipPath id="clip-path-3">
+      <path class="cls-1" d="M198.52,56.06l3.94,532.56a28.66,28.66,0,0,0,16,25.51L543.41,773.36,293.24,588.63a28.62,28.62,0,0,1-11.63-23.06l.31-451.12a28.64,28.64,0,0,0-16.15-25.79Z"/>
+    </clipPath>
+    <clipPath id="clip-path-5">
+      <path class="cls-1" d="M961.26,114.45l.31,451.12a28.65,28.65,0,0,1-11.63,23.06L699.77,773.36l324.91-159.23a28.65,28.65,0,0,0,16-25.51l3.94-532.56-67.25,32.6A28.62,28.62,0,0,0,961.26,114.45Z"/>
+    </clipPath>
+    <clipPath id="clip-path-7">
+      <path class="cls-1" d="M1095,194.63l2,431.12a28.63,28.63,0,0,1-16.63,26.13L757.05,801.21l391.68-83a28.65,28.65,0,0,0,22.7-27.83L1175,156.63l-56.14,9.64A28.65,28.65,0,0,0,1095,194.63Z"/>
+    </clipPath>
+    <clipPath id="clip-path-9">
+      <rect class="cls-3" x="-9.14" y="-1.22" width="1260.28" height="866.44"/>
+    </clipPath>
+  </defs>
+  <title>cr_logo_soft</title>
+  <g>
+    <g>
+      <path class="cls-4" d="M95.86,718.2l391.67,83L164.25,651.88a28.63,28.63,0,0,1-16.63-26.13l1.95-431.21a28.63,28.63,0,0,0-23.68-28.34l-56.26-9.89,3.53,534.06A28.63,28.63,0,0,0,95.86,718.2Z"/>
+      <g class="cls-5">
+        <g>
+          <rect class="cls-2" x="-9.14" y="-1.22" width="1260.28" height="866.44"/>
+          <g class="cls-6">
+            <rect class="cls-2" x="33.83" y="120.51" width="489.51" height="716.5"/>
+          </g>
+        </g>
+      </g>
+    </g>
+    <g>
+      <path class="cls-4" d="M198.52,56.06l3.94,532.56a28.66,28.66,0,0,0,16,25.51L543.41,773.36,293.24,588.63a28.62,28.62,0,0,1-11.63-23.06l.31-451.12a28.64,28.64,0,0,0-16.15-25.79Z"/>
+      <g class="cls-7">
+        <g>
+          <rect class="cls-2" x="-9.14" y="-1.22" width="1260.28" height="866.44"/>
+          <g class="cls-6">
+            <rect class="cls-2" x="162.72" y="20.26" width="416.5" height="788.9"/>
+          </g>
+        </g>
+      </g>
+    </g>
+    <g>
+      <path class="cls-4" d="M961.26,114.45l.31,451.12a28.65,28.65,0,0,1-11.63,23.06L699.77,773.36l324.91-159.23a28.65,28.65,0,0,0,16-25.51l3.94-532.56-67.25,32.6A28.62,28.62,0,0,0,961.26,114.45Z"/>
+      <g class="cls-8">
+        <g>
+          <rect class="cls-2" x="-9.14" y="-1.22" width="1260.28" height="866.44"/>
+          <g class="cls-6">
+            <rect class="cls-2" x="663.96" y="20.26" width="416.5" height="788.9"/>
+          </g>
+        </g>
+      </g>
+    </g>
+    <g>
+      <path class="cls-4" d="M1095,194.63l2,431.12a28.63,28.63,0,0,1-16.63,26.13L757.05,801.21l391.68-83a28.65,28.65,0,0,0,22.7-27.83L1175,156.63l-56.14,9.64A28.65,28.65,0,0,0,1095,194.63Z"/>
+      <g class="cls-9">
+        <g>
+          <rect class="cls-2" x="-9.14" y="-1.22" width="1260.28" height="866.44"/>
+          <g class="cls-6">
+            <rect class="cls-2" x="721.25" y="120.83" width="489.51" height="716.18"/>
+          </g>
+        </g>
+      </g>
+    </g>
+    <g class="cls-10">
+      <text class="cls-11" transform="translate(399.02 478.54)">cr</text>
+    </g>
+  </g>
+</svg>
