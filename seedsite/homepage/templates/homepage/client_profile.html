@@ -9,20 +9,35 @@ Client Profile
 
 {% block content %}
 
-<h1>Client Profile</h1><br>
+<h1 class="text-center">Client History</h1>
+<hr>
+<h3 class="text-left">{{ current_client.first_name }} {{ current_client.last_name }}</h3>
+<h4 class="text-left">{{ current_client.business_name}}</h4>
+<hr>
+<div class="container mb-5">
+    {% for log in client_logs %}
+    <div class="row">
+        <div class="col-4 p-1">
+            <p class="log-label"><i class="fa fa-calendar-alt p-1"></i>{{ log.date_created }}</p>
+        </div>
+        <div class="col-4 p-1">
+            <p class="log-label"><i class="fa fa-clock p-1"></i>{{ log.time_of_visit }}</p>
+        </div>
+        <div class="col-4 p-1">
+            <p class="log-label"><i class="fa fa-user p-1"></i>{{ log.intern.first_name }}</p>
+        </div>
+        <div class="col-12">
+            <h5>Visit Description:</h5>
+            <p class="log-text">{{ log.visit_description }}</p>
+        </div>
+        <div class="col-12">
+            <h5>Next Steps:</h5>
+            <p class="log-text">{{ log.next_steps }}</p>
+        </div>
+    </div>
 
-<h3>{{ current_client.first_name }}
-  {{ current_client.last_name }}
-</h3><br>
-
-{% for log in client_logs %}
-
-{{ log.visit_description }}
-<br>
-{% endfor %}
-
-<a href="/edit_client/{{current_client.id}} ">
-  <button type="button" name="Edit client" href="/index">Edit Client</button>
-</a>
+    <hr>
+    {% endfor %}
+</div>
 
 {% endblock content %}

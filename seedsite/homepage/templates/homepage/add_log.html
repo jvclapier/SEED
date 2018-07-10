@@ -2,38 +2,48 @@
 {% load static %}
 
 {% block content %}
-<form class="" action="/add_log/{{current_client.id}}" method="post">
-  {% csrf_token %}
-  <p class="card-text">
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.visit_description.errors}}
-        <label for="{{form.visit_description.id_for_label}}">Visit Description</label>
-        <div class="input-group">
-          {{form.visit_description}}
+<h1 class="text-center">Add Log</h1>
+<hr>
+<div class="container mb-5">
+    <form class="" action="/add_log/{{current_client.id}}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 input-label">
+                {{form.visit_description.errors}}
+                <label for="{{form.visit_description.id_for_label}}">Visit Description</label>
+                <div class="input-group">
+                    {{form.visit_description}}
+                </div>
+                <br>
+            </div>
+            <div class="col-md-6 input-label">
+                {{form.next_steps.errors}}
+                <label for="{{form.next_steps.id_for_label}}">Next Steps</label>
+                <div class="input-group">
+                    {{form.next_steps}}
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 input-label d-flex align-items-center">
+                {{form.time_of_visit.errors}}
+                <label for="{{form.time_of_visit.id_for_label}}">Time Of Visit</label>
+            </div>
+
+            <div class="col-6 input-label d-flex align-items-center">
+                <div class="input-group">
+                    {{form.time_of_visit}}
+                </div>
+                <br>
+            </div>
         </div>
         <br>
-      </div>
-      <div class="col-md-6 input-label">
-        {{form.next_steps.errors}}
-        <label for="{{form.next_steps.id_for_label}}">Next Steps</label>
-        <div class="input-group">
-          {{form.next_steps}}
+        <div class="row d-flex justify-content-center">
+            <input class="btn btn-success" value="Save" type="submit"></input>
         </div>
-        <br>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 input-label">
-        {{form.time_of_visit.errors}}
-        <label for="{{form.time_of_visit.id_for_label}}">Time Of Visit</label>
-        <div class="input-group">
-          {{form.time_of_visit}}
-        </div>
-        <br>
-      </div>
-    </div>
-</p>
-<input class="btn btn-success" value="Save" type="submit"></input>
-</form>
+
+    </form>
+</div>
+
 {% endblock content %}
