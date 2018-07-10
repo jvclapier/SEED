@@ -16,7 +16,7 @@ Search
 </div>
 
 {% for client in assigned_clients_filtered %}
-<div class="card-flip mb-3" >
+<div class="card-flip mb-3 p-2" >
     <div class="flip">
         <div class="front card">
             <div class="card-body pb-0">
@@ -27,7 +27,7 @@ Search
                         </div>
                     </div>
                     <div class="row d-flex align-items-center justify-content-center p-4">
-                        <div class="container text-center">
+                        <div class="container text-center p-0">
                             <h3>
                                 {{ client.first_name }} {{ client.last_name}}
                             </h3>
@@ -88,6 +88,8 @@ Search
                             <p>
                                 {{ client.bio }}
                             </p>
+
+                            <a href="/edit_client/{{ client.id }}" class="btn btn-primary">Edit</a>
                         </div>
                     </div>
                 </div>
@@ -98,7 +100,7 @@ Search
 {% endfor %}
 
 {% for client in unassigned_clients_filtered %}
-<div class="card-flip mb-3" >
+<div class="card-flip mb-3 p-2" >
     <div class="flip">
         <div class="front card ">
             <div class="card-body pb-0">
@@ -109,7 +111,7 @@ Search
                         </div>
                     </div>
                     <div class="row d-flex align-items-center justify-content-center p-4">
-                        <div class="container text-center">
+                        <div class="container text-center p-0">
                             <h3>
                                 {{ client.first_name }} {{ client.last_name}}
                             </h3>
@@ -170,6 +172,8 @@ Search
                             <p>
                                 {{ client.bio }}
                             </p>
+
+                            <a href="/edit_client/{{ client.id }}" class="btn btn-primary">Edit</a>
                         </div>
                     </div>
                 </div>
