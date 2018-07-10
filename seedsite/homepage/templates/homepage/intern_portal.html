@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Intern Profile
+{% endblock title %}
+
+{% block content %}
+
+<h1>Admin User</h1>
+<h2>{{current_user.first_name }} {{current_user.last_name}}</h2>
+
+<a href="/index/">
+  <button type="button" name="Edit Profile">Edit Profile</button>
+</a>
+
+{% if perms.homepage.admin_portal %}
+<a href="/index/">
+  <button type="button" name="Add Intern">Add Intern</button>
+</a>
+{% endif %}
+
+{% endblock content %}

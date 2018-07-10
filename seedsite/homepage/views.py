@@ -389,6 +389,7 @@ def search(request):
 
     return render(request, 'homepage/search.html', context)
 
+@login_required(login_url = '/login/')
 def add_bookmark(request, id):
     # initialize variables
     current_user = request.user
@@ -416,3 +417,14 @@ def add_bookmark(request, id):
         new_assigned_client.save()
 
     return HttpResponseRedirect('/index/')
+
+@login_required(login_url = '/login/')
+def intern_portal(request):
+
+    current_user = request.user
+
+    context = {
+        'current_user':current_user,
+    }
+
+    return render(request, 'homepage/intern_portal.html', context)
