@@ -7,7 +7,12 @@ Intern Profile
 
 {% block content %}
 
+{% if perms.homepage.admin_portal %}
 <h1>Admin User</h1>
+{% else %}
+<h1>Intern User</h1>
+{% endif %}
+
 <h2>{{current_user.first_name }} {{current_user.last_name}}</h2>
 
 <a href="/index/">

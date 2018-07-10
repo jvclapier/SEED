@@ -27,7 +27,8 @@ class Client(models.Model):
     zipcode = models.TextField(blank=True, null=True)
     country = models.TextField(blank=True, null=True)
     barangay = models.TextField(blank=True, null=True)
-    # TODO: need to add lat and long coordinates, look at google API
+    lat = models.DecimalField(max_digits=20, decimal_places=15, blank=True, null=True)
+    lon = models.DecimalField(max_digits=20, decimal_places=15, blank=True, null=True)
     business_name = models.TextField(blank=True, null=True)
     business_type = models.TextField(blank=True, null=True)
     transportation_method = models.TextField(blank=True, null=True)
