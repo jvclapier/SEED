@@ -208,9 +208,9 @@ def edit_client(request, id):
             'email':current_client.email, 'phone_number': current_client.phone_number,
             'tagalog_needed': current_client.tagalog_needed, 'street_address': current_client.street_address,
             'city': current_client.city, 'zipcode': current_client.zipcode, 'country': current_client.country,
-            'barangay': current_client.barangay, 'business_name': current_client.business_name,
-            'business_type': current_client.business_type, 'transportation_method': current_client.transportation_method,
-            'bio': current_client.bio,
+            'barangay': current_client.barangay, 'lat': current_client.lat, 'lon':current_client.lon,
+            'business_name': current_client.business_name, 'business_type': current_client.business_type,
+            'transportation_method': current_client.transportation_method, 'bio': current_client.bio,
 
         })
 
@@ -237,16 +237,18 @@ class EditClient(forms.Form):
     email = forms.CharField(label="Email Address", required=True, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
     tagalog_needed = forms.BooleanField(label="Tagalog Needed", required=False, initial=False)
-    street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address', 'class':'form-control'}))
-    city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City', 'class':'form-control'}))
-    zipcode = forms.CharField(label="Zipcode", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Zipcode', 'class':'form-control'}))
-    country = forms.CharField(label="Country", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Country', 'class':'form-control'}))
-    barangay = forms.CharField(label="Barangay", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Barangay', 'class':'form-control'}))
-    ## TODO: Create google maps API
-    business_name = forms.CharField(label="Business Name", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Name', 'class':'form-control'}))
-    business_type = forms.CharField(label="Business Type", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Type', 'class':'form-control'}))
-    transportation_method = forms.CharField(label="Transportation Method", required=False, max_length=500, widget=forms.TextInput(attrs={'placeholder':'Please describe how you got there', 'class':'form-control'}))
-    bio = forms.CharField(label="Client Bio", required=False, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Write a brief bio about your overall experience with this client', 'class':'form-control'}))
+
+    street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address'}))
+    city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City'}))
+    zipcode = forms.CharField(label="Zipcode", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Zipcode'}))
+    country = forms.CharField(label="Country", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Country'}))
+    barangay = forms.CharField(label="Barangay", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Barangay'}))
+    lat = forms.CharField(label="Latitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Latitude'}))
+    lon = forms.CharField(label="Longitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Longitude'}))
+    business_name = forms.CharField(label="Business Name", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Name'}))
+    business_type = forms.CharField(label="Business Type", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Type'}))
+    transportation_method = forms.CharField(label="Transportation Method", required=False, max_length=500, widget=forms.TextInput(attrs={'placeholder':'Please describe how you got there'}))
+    bio = forms.CharField(label="Client Bio", required=False, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Write a brief bio about your overall experience with this client'}))
 
 
     def __init__(self, *args, **kwargs):
@@ -269,6 +271,8 @@ class EditClient(forms.Form):
         client.zipcode = self.cleaned_data.get('zipcode')
         client.country = self.cleaned_data.get('country')
         client.barangay = self.cleaned_data.get('barangay')
+        client.lat = self.cleaned_data.get('lat')
+        client.lon = self.cleaned_data.get('lon')
         client.business_name = self.cleaned_data.get('business_name')
         client.business_type = self.cleaned_data.get('business_type')
         client.transportation_method = self.cleaned_data.get('transportation_method')
@@ -312,16 +316,18 @@ class AddClient(forms.Form):
     email = forms.CharField(label="Email Address", required=True, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
     tagalog_needed = forms.BooleanField(label="Tagalog Needed", required=False, initial=False)
-    street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address', 'class':'form-control'}))
-    city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City', 'class':'form-control'}))
-    zipcode = forms.CharField(label="Zipcode", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Zipcode', 'class':'form-control'}))
-    country = forms.CharField(label="Country", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Country', 'class':'form-control'}))
-    barangay = forms.CharField(label="Barangay", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Barangay', 'class':'form-control'}))
-    ## TODO: Create google maps API
-    business_name = forms.CharField(label="Business Name", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Name', 'class':'form-control'}))
-    business_type = forms.CharField(label="Business Type", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Type', 'class':'form-control'}))
-    transportation_method = forms.CharField(label="Transportation Method", required=False, max_length=500, widget=forms.TextInput(attrs={'placeholder':'Please describe how you got there', 'class':'form-control'}))
-    bio = forms.CharField(label="Client Bio", required=False, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Write a brief bio about your overall experience with this client', 'class':'form-control'}))
+
+    street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address'}))
+    city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City'}))
+    zipcode = forms.CharField(label="Zipcode", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Zipcode'}))
+    country = forms.CharField(label="Country", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Country'}))
+    barangay = forms.CharField(label="Barangay", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Barangay'}))
+    lat = forms.CharField(label="Latitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Latitude'}))
+    lon = forms.CharField(label="Longitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Longitude'}))
+    business_name = forms.CharField(label="Business Name", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Name'}))
+    business_type = forms.CharField(label="Business Type", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Type'}))
+    transportation_method = forms.CharField(label="Transportation Method", required=False, max_length=500, widget=forms.TextInput(attrs={'placeholder':'Please describe how you got there'}))
+    bio = forms.CharField(label="Client Bio", required=False, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Write a brief bio about your overall experience with this client'}))
 
 
     def __init__(self, *arg, **kwargs):
@@ -344,6 +350,8 @@ class AddClient(forms.Form):
         client.zipcode = self.cleaned_data.get('zipcode')
         client.country = self.cleaned_data.get('country')
         client.barangay = self.cleaned_data.get('barangay')
+        client.lat = self.cleaned_data.get('lat')
+        client.lon = self.cleaned_data.get('lon')
         client.business_name = self.cleaned_data.get('business_name')
         client.business_type = self.cleaned_data.get('business_type')
         client.transportation_method = self.cleaned_data.get('transportation_method')

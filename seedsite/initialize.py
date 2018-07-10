@@ -113,7 +113,7 @@ CreateIntern('bdsmith98', 'password', 'Benton', 'Smith', 'bdsmith98@gmail.com', 
 CreateIntern('eaglauser', 'password', 'Eliza', 'Clapier', 'eaglauser@gmail.com', 'Summer')
 
 '''create client'''
-def CreateClient(first_name, last_name, gender, email, phone_number, tagalog_needed, street_address, city, zipcode, country, barangay, business_name, business_type, transportation_method, bio):
+def CreateClient(first_name, last_name, gender, email, phone_number, tagalog_needed, street_address, city, zipcode, country, barangay, lat, lon, business_name, business_type, transportation_method, bio):
     client = mod.Client()
     client.first_name = first_name
     client.last_name = last_name
@@ -126,6 +126,8 @@ def CreateClient(first_name, last_name, gender, email, phone_number, tagalog_nee
     client.zipcode = zipcode
     client.country = country
     client.barangay = barangay
+    client.lat = lat
+    client.lon = lon
     client.business_name = business_name
     client.business_type = business_name
     client.transportation_method = transportation_method
@@ -133,9 +135,9 @@ def CreateClient(first_name, last_name, gender, email, phone_number, tagalog_nee
     client.save()
     print("####### Client created: " + client.first_name)
 
-CreateClient('Zaldy', 'Conception', 'Male', 'zaldy@mailinator.com', '0927123456', True, '123 Market Avenue', 'Pasig', '12345', 'Philippines', 'San Miguel', 'Eloi & She Food Corner', 'Canteen', 'Tricycle', 'He is the man...or boyflux!')
-CreateClient('Reyna', 'Banatao', 'Female', 'reyna@mailinator.com', '0927123456', True, '123 Birthing Avenue', 'Pasig', '12345', 'Philippines', 'Nagpayong', 'God Gift Lying In', 'Birthing Clinic', 'Tricycle', 'She has great ideas!')
-CreateClient('Gerald', 'Taratao', 'Male', 'gerald@mailinator.com', '0927123456', True, '123 Petshop Avenue', 'Pasig', '12345', 'Philippines', 'Rosario', 'GAT Pet Shop', 'Petshop', 'Jeepney', 'Great guy!')
+CreateClient('Zaldy', 'Conception', 'Male', 'zaldy@mailinator.com', '0927123456', True, '123 Market Avenue', 'Pasig', '12345', 'Philippines', 'San Miguel', '14.563502', '121.084722', 'Eloi & She Food Corner', 'Canteen', 'Tricycle', 'He is the man...or boyflux!')
+CreateClient('Reyna', 'Banatao', 'Female', 'reyna@mailinator.com', '0927123456', True, '123 Birthing Avenue', 'Pasig', '12345', 'Philippines', 'Nagpayong', '14.543812', '121.100816', 'God Gift Lying In', 'Birthing Clinic', 'Tricycle', 'She has great ideas!')
+CreateClient('Gerald', 'Taratao', 'Male', 'gerald@mailinator.com', '0927123456', True, '123 Petshop Avenue', 'Pasig', '12345', 'Philippines', 'Rosario', '14.586477', '121.078430', 'GAT Pet Shop', 'Petshop', 'Jeepney', 'Great guy!')
 
 '''create assigned client'''
 def CreateAssignedClient(intern_username, client_first_name):
