@@ -31,24 +31,42 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
 </head>
 
 <body>
-    <a href="/logout">Logout</a>
-    <div class="container pt-3">
+    <!-- top navigation -->
+    <nav id="top" class="navbar navbar-light">
+      <a class="navbar-brand" href="/index">
+        <img src="{% static "cr_logo_soft_black-08.png" %}" width="55" height="auto" alt="The CR">
+      </a>
+      <!-- <a href="/logout"> <img src="{% static "sign-out.svg" %}" alt="Sign Out" width="30" height="auto"> </a> -->
+      <a href="/logout"> <i class="fa fa-sign-out-alt fa-2x" style="color:black;"></i> </a>
+    </nav>
+
+    <div class="container pt-3 pb-5">
         <div class="row">
-            <div class="col-9">
+            <div class="col-12">
                 {% block content %}
                 {% endblock content %}
             </div>
-            <div class="col-3 pl-0 fixed-top" id="left-side-nav">
-                <a href="/index">
-                    <img src="{% static "home_icon-02.svg" %}" alt="Home Icon" class="nav-button">
-                </a>
-
-                {% block navigation %}
-                {% endblock navigation %}
-            </div>
         </div>
     </div>
+
+    <!-- bottom navigation -->
+    <ul id="bottom-navbar" class="nav justify-content-around fixed-bottom">
+        <li class="nav-item">
+            <a class="nav-link active" href="/index"> <i class="fa fa-home fa-2x bottom-nav-link active"></i> </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#"> <i class="fa fa-user-astronaut fa-2x bottom-nav-link"></i> </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#top"> <i class="fa fa-search fa-2x bottom-nav-link"></i> </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#"> <i class="fa fa-user-plus fa-2x bottom-nav-link"></i> </a>
+        </li>
+    </ul>
 </body>

@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '192.168.1.20',
     '192.168.254.109',
+    
 ]
 
 AUTH_USER_MODEL = 'homepage.Intern'
