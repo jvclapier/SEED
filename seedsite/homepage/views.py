@@ -149,8 +149,8 @@ class AddLog(forms.Form):
         ('6:00', '6:00'),
     )
 
-    visit_description = forms.CharField(label="Visit Description", required=True, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Please describe your visit.'}))
-    next_steps = forms.CharField(label="Next Steps", required=True, max_length=250, widget=forms.Textarea(attrs={'placeholder':'Describe what you plan to do next.'}))
+    visit_description = forms.CharField(label="Visit Description", required=True, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Please describe your visit', 'class':'form-control'}))
+    next_steps = forms.CharField(label="Next Steps", required=True, max_length=250, widget=forms.Textarea(attrs={'placeholder':'Describe what you plan to do next', 'class':'form-control'}))
     time_of_visit = forms.ChoiceField(label="Time Of Visit", choices=TIME_CHOICES, required=True)
 
     def __init__(self, *args, **kwargs):
@@ -178,7 +178,7 @@ class AddLog(forms.Form):
 def client_profile(request, id):
 
     current_client = mod.Client.objects.get(id=id)
-    client_logs = mod.Log.objects.filter(client=current_client)
+    client_logs = mod.Log.objects.filter(client=current_client).order_by('-date_created')
 
     context = {
     'current_client':current_client,
@@ -231,12 +231,13 @@ class EditClient(forms.Form):
         ('Female', 'Female'),
     )
 
-    first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name'}))
-    last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name'}))
+    first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
+    last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
     gender = forms.ChoiceField(label="Client Gender", choices=GENDER_CHOICES, required=False)
-    email = forms.CharField(label="Email Address", required=True, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address'}))
-    phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number'}))
+    email = forms.CharField(label="Email Address", required=True, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
+    phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
     tagalog_needed = forms.BooleanField(label="Tagalog Needed", required=False, initial=False)
+
     street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address'}))
     city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City'}))
     zipcode = forms.CharField(label="Zipcode", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Zipcode'}))
@@ -309,12 +310,13 @@ class AddClient(forms.Form):
         ('Female', 'Female'),
     )
 
-    first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name'}))
-    last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name'}))
+    first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
+    last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
     gender = forms.ChoiceField(label="Client Gender", choices=GENDER_CHOICES, required=False)
-    email = forms.CharField(label="Email Address", required=True, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address'}))
-    phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number'}))
+    email = forms.CharField(label="Email Address", required=True, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
+    phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
     tagalog_needed = forms.BooleanField(label="Tagalog Needed", required=False, initial=False)
+
     street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address'}))
     city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City'}))
     zipcode = forms.CharField(label="Zipcode", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Zipcode'}))
