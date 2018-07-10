@@ -5,110 +5,177 @@
 Intern Portal
 {% endblock title %}
 
-{% block navigation %}
-    <a href="/index">
-        <img src="{% static "search_icon-03.svg" %}" alt="Search Icon" class="nav-button">
-    </a>
-    <a href="/add_client">
-        <img src="{% static "plus_icon-04.svg" %}" alt="Plus Icon" class="nav-button">
-    </a>
-    <a href="/intern_portal">
-        <img src="{% static "user_icon-05.svg" %}" alt="User Icon" class="nav-button">
-    </a>
-{% endblock navigation %}
-
 {% block content %}
 
-<h3>Hello {{ current_user.first_name}}</h3>
-
-<div class="col-lg-4 col-lg-offset-4">
+<div class="col-lg-4 col-lg-offset-4 mb-4">
 <form action="/search/">
     <div class="input-group">
-        <span class="input-group-btn">
-            <button class="btn btn-default" id="search_submit" type="submit" >Search</button>
-        </span>
-        <input  id="search_box" type="text" class="form-control" name="client_name"  placeholder="Search Client" >
+        <input  id="search_box" type="search" class="form-control mr-sm-2" name="client_name"  placeholder="Search Client" >
     </div>
 </form>
 </div>
 
 {% for client in assigned_clients_ordered %}
-<div class="card mb-3">
-  <a href="/client_profile/{{client.id}} ">
-    <div class="card-header p-2">
-      <div class="container">
-        <div class="row d-flex align-items-center">
-          <div class="col-4">
-            <img src="{% static "profile.JPG" %}" class="img-responsive rounded-image" alt="">
-          </div>
-          <div class="col-8">
-            {{ client.first_name }} {{ client.last_name}}
-          </div>
+<div class="card-flip mb-3" >
+    <div class="flip">
+        <div class="front card">
+            <div class="card-body pb-0">
+                <div class="container-fluid">
+                    <div class="row d-flex align-items-center justify-content-center">
+                        <div class="col-6">
+                            <img src="{% static "adult-beach-beard.jpg" %}" class="img-responsive rounded-image" alt="">
+                        </div>
+                    </div>
+                    <div class="row d-flex align-items-center justify-content-center p-4">
+                        <div class="container text-center">
+                            <h3>
+                                {{ client.first_name }} {{ client.last_name}}
+                            </h3>
+                            <h4>
+                                {{ client.business_name }}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid pb-4">
+                <ul class="nav justify-content-around">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/client_profile/{{client.id}}"> <i class="fa fa-list-ul fa-lg client-nav-link"></i> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"> <i class="fa fa-map-marker-alt fa-lg client-nav-link"></i> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add_bookmark/{{client.id}}"> <i class="fa fa-bookmark fa-lg client-nav-link bookmark-enabled" style="line-height: 1em;"></i> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add_log/{{client.id}}"> <i class="fa fa-plus fa-lg client-nav-link"></i> </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
+        <div class="back card mb-3">
+            <div class="card-body pb-0">
+                <div class="container-fluid">
+                    <div class="row d-flex align-items-center justify-content-center">
+                        <div class="container text-left">
+                            <h5>Contact Info</h5>
+                            <p>
+                                <strong>Phone Number:</strong> <a href="tel:{{ client.phone_number}}">{{ client.phone_number}}</a>
+                                <br>
+                                <strong>Email Address:</strong> <a href="mailto:{{ client.email}}">{{ client.email}}</a>
+                                <br>
+                                <strong>Barangay:</strong> {{ client.barangay }}
+                                <br>
+                                <strong>Tagalog Needed:</strong>
+                                {% if client.tagalog_needed %}
+                                    Yes
+                                {% else %}
+                                    No
+                                {% endif %}
+                                <br>
+                                <strong>Transportation Method:</strong> {{ client.transportation_method}}
+
+                            </p>
+                            <!-- <h5>Business Info</h5>
+                            <p>
+                                <strong>Business Type:</strong> {{ client.business_type}}
+                                <br>
+                                <strong>Transportation Method:</strong> {{ client.transportation_method}}
+                            </p> -->
+                            <h5>Bio</h5>
+                            <p>
+                                {{ client.bio }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </a>
-  <div class="card-body">
-    <p class="card-text">
-      <strong>Business Name: </strong>{{ client.business_name }}
-    </br>
-    <strong>Phone Number: </strong><a href="tel: {{client.phone_number}}">{{client.phone_number}}</a>
-    </p>
-    <div class="container">
-      <div class="row">
-        <div class="col-6 p-1">
-          <a href="/add_bookmark/{{client.id}} " class="btn btn-primary full-width">
-            <i class="fa fa-bookmark fa-2x"></i>
-          </a>
-        </div>
-        <div class="col-6 p-1">
-          <a href="/add_log/{{client.id}} " class="btn btn-success full-width">
-            <i class="fa fa-plus fa-2x"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 {% endfor %}
 
 {% for client in unassigned_clients %}
-<div class="card mb-3" style="background-color:red;">
-  <a href="/client_profile/{{client.id}} ">
-    <div class="card-header p-2">
-      <div class="container">
-        <div class="row d-flex align-items-center">
-          <div class="col-4">
-            <img src="{% static "profile.JPG" %}" class="img-responsive rounded-image" alt="">
-          </div>
-          <div class="col-8">
-            {{ client.first_name }} {{ client.last_name}}
-          </div>
+<div class="card-flip mb-3" >
+    <div class="flip">
+        <div class="front card ">
+            <div class="card-body pb-0">
+                <div class="container-fluid">
+                    <div class="row d-flex align-items-center justify-content-center">
+                        <div class="col-6">
+                            <img src="{% static "adult-beach-beard.jpg" %}" class="img-responsive rounded-image" alt="">
+                        </div>
+                    </div>
+                    <div class="row d-flex align-items-center justify-content-center p-4">
+                        <div class="container text-center">
+                            <h3>
+                                {{ client.first_name }} {{ client.last_name}}
+                            </h3>
+                            <h4>
+                                {{ client.business_name }}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid pb-4">
+                <ul class="nav justify-content-around">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/client_profile/{{client.id}}"> <i class="fa fa-list-ul fa-lg client-nav-link"></i> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"> <i class="fa fa-map-marker-alt fa-lg client-nav-link"></i> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add_bookmark/{{client.id}}"> <i class="fa fa-bookmark fa-lg client-nav-link" style="line-height: 1em;"></i> </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add_log/{{client.id}}"> <i class="fa fa-plus fa-lg client-nav-link"></i> </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
+        <div class="back card mb-3">
+            <div class="card-body pb-0">
+                <div class="container-fluid">
+                    <div class="row d-flex align-items-center justify-content-center">
+                        <div class="container text-left">
+                            <h5>Contact Info</h5>
+                            <p>
+                                <strong>Phone Number:</strong> <a href="tel:{{ client.phone_number}}">{{ client.phone_number}}</a>
+                                <br>
+                                <strong>Email Address:</strong> <a href="mailto:{{ client.email}}">{{ client.email}}</a>
+                                <br>
+                                <strong>Barangay:</strong> {{ client.barangay }}
+                                <br>
+                                <strong>Tagalog Needed:</strong>
+                                {% if client.tagalog_needed %}
+                                    Yes
+                                {% else %}
+                                    No
+                                {% endif %}
+                                <br>
+                                <strong>Transportation Method:</strong> {{ client.transportation_method}}
+
+                            </p>
+                            <!-- <h5>Business Info</h5>
+                            <p>
+                                <strong>Business Type:</strong> {{ client.business_type}}
+                                <br>
+                                <strong>Transportation Method:</strong> {{ client.transportation_method}}
+                            </p> -->
+                            <h5>Bio</h5>
+                            <p>
+                                {{ client.bio }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </a>
-  <div class="card-body">
-    <p class="card-text">
-      <strong>Business Name: </strong>{{ client.business_name }}
-    </br>
-    <strong>Phone Number: </strong><a href="tel: {{client.phone_number}}">{{client.phone_number}}</a>
-    </p>
-    <div class="container">
-      <div class="row">
-        <div class="col-6 p-1">
-          <a href="/add_bookmark/{{client.id}} " class="btn btn-primary full-width">
-            <i class="fa fa-bookmark fa-2x"></i>
-          </a>
-        </div>
-        <div class="col-6 p-1">
-          <a href="/add_log/{{client.id}} " class="btn btn-success full-width">
-            <i class="fa fa-plus fa-2x"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 {% endfor %}
 
