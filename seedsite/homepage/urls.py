@@ -27,5 +27,6 @@ urlpatterns = [
     path('edit_client/<int:id>', views.edit_client, name='edit_client'),
     path('add_client/', views.add_client, name='add_client'),
     path('search/', views.search, name='search'),
-    path('add_bookmark/<int:id>', views.add_bookmark, name='add_bookmark')
+    path('add_bookmark/<int:id>', views.add_bookmark, name='add_bookmark'),
+    path('intern_portal/', views.intern_portal, name='intern_portal')
 ]
