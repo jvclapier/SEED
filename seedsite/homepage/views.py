@@ -7,7 +7,7 @@ from django.contrib.auth import logout as auth_logout
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from datetime import datetime
 from django.core.mail import send_mail
 import re
@@ -15,49 +15,56 @@ from django.template.loader import render_to_string, get_template
 from django.conf import settings as django_settings
 from homepage import models as mod
 from django.db.models import Q
+from django.contrib.auth.models import Permission, Group
 
 @login_required(login_url = '/login/')
 def index(request):
-    #initialize variables
+
     current_user = request.user
-    all_clients = mod.Client.objects.all().order_by('first_name')
-    assigned_client_objects = mod.AssignedClient.objects.filter(intern = current_user)
-    assigned_clients = []
-    assigned_clients_ordered = []
-    unassigned_clients = []
-    # Loop through the assigned clients and add each to the assigned clients list
-    for item in assigned_client_objects:
-        client_to_add = mod.Client.objects.get(id = item.client.id)
-        assigned_clients.append(client_to_add)
-    # Looping through the all clients list to order the assigned client list
-    for item in all_clients:
-        for i in assigned_clients:
-            if item == i:
-                assigned_clients_ordered.append(item)
+
+    # run different logic depending on logged in user type
+    if current_user.has_perm('homepage.admin_portal'):
+        return HttpResponseRedirect('/admin_portal')
+    elif current_user.has_perm('homepage.intern_portal'):
+        #initialize variables
+        all_clients = mod.Client.objects.all().order_by('first_name')
+        assigned_client_objects = mod.AssignedClient.objects.filter(intern = current_user)
+        assigned_clients = []
+        assigned_clients_ordered = []
+        unassigned_clients = []
+        # Loop through the assigned clients and add each to the assigned clients list
+        for item in assigned_client_objects:
+            client_to_add = mod.Client.objects.get(id = item.client.id)
+            assigned_clients.append(client_to_add)
+        # Looping through the all clients list to order the assigned client list
+        for item in all_clients:
+            for i in assigned_clients:
+                if item == i:
+                    assigned_clients_ordered.append(item)
+                else:
+                    continue
+        # Loop through the all clients list
+        for item in all_clients:
+            client_exists = False
+            # Loop through the assigned clients list to see if the client exists.
+            # If the client does not exist, add it to the unassigned client list
+            for i in assigned_clients:
+                if item == i:
+                    client_exists = True
+                else:
+                    continue
+            if client_exists == False:
+                unassigned_clients.append(item)
             else:
                 continue
-    # Loop through the all clients list
-    for item in all_clients:
-        client_exists = False
-        # Loop through the assigned clients list to see if the client exists.
-        # If the client does not exist, add it to the unassigned client list
-        for i in assigned_clients:
-            if item == i:
-                client_exists = True
-            else:
-                continue
-        if client_exists == False:
-            unassigned_clients.append(item)
-        else:
-            continue
 
-    context = {
-        'assigned_clients_ordered':assigned_clients_ordered,
-        'unassigned_clients':unassigned_clients,
-        'current_user': current_user,
-    }
+        context = {
+            'assigned_clients_ordered':assigned_clients_ordered,
+            'unassigned_clients':unassigned_clients,
+            'current_user': current_user,
+        }
 
-    return render(request, 'homepage/index.html', context)
+        return render(request, 'homepage/index.html', context)
 
 # This directs users to the login form. Once they have successfully logged in, it sends them to the index page.
 def login(request):
@@ -427,7 +434,7 @@ def add_bookmark(request, id):
     return HttpResponseRedirect('/index/')
 
 @login_required(login_url = '/login/')
-def intern_portal(request):
+def admin_portal(request):
 
     current_user = request.user
     interns = mod.Intern.objects.all().order_by('-date_joined')
@@ -439,7 +446,7 @@ def intern_portal(request):
         'assigned_clients':assigned_clients,
     }
 
-    return render(request, 'homepage/intern_portal.html', context)
+    return render(request, 'homepage/admin_portal.html', context)
 
 @login_required(login_url = '/login/')
 def edit_profile(request):
@@ -486,3 +493,67 @@ class EditProfile(forms.Form):
         user.email = self.cleaned_data.get('email')
         user.semester = self.cleaned_data.get('semester')
         user.save()
+
+@permission_required('homepage.admin_portal')
+def add_intern(request):
+
+    if request.method == 'POST':
+        form = AddIntern(request.POST)
+        if form.is_valid():
+
+            form.commit(request)
+
+            return HttpResponseRedirect('/admin_portal/')
+    else:
+        form = AddIntern()
+
+    context = {
+        'form':form,
+    }
+
+    return render(request, 'homepage/add_intern.html', context)
+
+class AddIntern(forms.Form):
+
+    PERMISSIONS = (
+        ('intern_portal', 'Intern'),
+        ('admin_portal', 'Admin'),
+    )
+
+    SEMESTER = (
+        ('Summer', 'Summer'),
+        ('Fall', 'Fall'),
+        ('Spring', 'Spring'),
+    )
+
+    first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
+    last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
+    email = forms.CharField(label="Email Address", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
+    password = forms.CharField(label="Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Password', 'class':'form-control'}))
+    semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=True)
+    permissions = forms.ChoiceField(label="Permissions", choices=PERMISSIONS, required=True)
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(AddIntern, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data
+
+    def commit(self, request):
+        intern = mod.Intern()
+        intern.first_name = self.cleaned_data.get('first_name')
+        intern.last_name = self.cleaned_data.get('last_name')
+        intern.email = self.cleaned_data.get('email')
+        intern.semester = self.cleaned_data.get('semester')
+        intern.username = self.cleaned_data.get('email')
+        intern.set_password(self.cleaned_data.get('password'))
+        intern.save()
+        # add to group based on permission
+        if self.cleaned_data.get('permissions') == 'admin_portal':
+            admin_group = Group.objects.get(name='Admins')
+            admin_group.user_set.add(intern)
+        elif self.cleaned_data.get('permissions') == 'intern_portal':
+            intern_group = Group.objects.get(name='Interns')
+            intern_group.user_set.add(intern)

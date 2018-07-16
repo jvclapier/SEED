@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Intern Profile
+Admin Portal
 {% endblock title %}
 
 {% block content %}
@@ -33,7 +33,7 @@ Intern Profile
 </a>
 
 {% if perms.homepage.admin_portal %}
-<a href="/index/">
+<a href="/add_intern/">
   <button type="button" name="Add Intern">Add Intern</button>
 </a>
 {% endif %}
