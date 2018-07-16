@@ -32,4 +32,6 @@ urlpatterns = [
     path('intern_portal/', views.intern_portal, name='intern_portal'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('add_intern/', views.add_intern, name='add_intern'),
+    path('delete_client/<int:id>', views.delete_client, name='delete_client'),
+
 ]

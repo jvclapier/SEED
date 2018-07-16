@@ -33,9 +33,7 @@ def index(request):
 def intern_portal(request):
 
     current_user = request.user
-
-    #initialize variables
-    all_clients = mod.Client.objects.all().order_by('first_name')
+    all_clients = mod.Client.objects.filter(active = True).order_by('first_name')
     assigned_client_objects = mod.AssignedClient.objects.filter(intern = current_user)
     assigned_clients = []
     assigned_clients_ordered = []
@@ -238,6 +236,18 @@ def edit_client(request, id):
     }
 
     return render(request, 'homepage/edit_client.html', context)
+
+def delete_client(request, id):
+
+    current_client = mod.Client.objects.get(id=id)
+    if current_client.active == True:
+        current_client.active = False
+        current_client.save()
+    elif current_client.active == False:
+        current_client.active = True
+        current_client.save()
+
+    return HttpResponseRedirect('/index/')
 
 # This form updates information about a client.
 # The fields will autofill with existing information allowing users to update them with new information.

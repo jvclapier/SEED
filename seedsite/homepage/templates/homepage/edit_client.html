@@ -202,5 +202,10 @@ Edit Client
     </div>
 </p>
 <input class="btn btn-success" value="Save" type="submit"></input>
+{% if current_client.active == True %}
+<a href="/delete_client/{{current_client.id}}" class="btn btn-danger">Deactivate</a>
+{% elif current_client.active == False %}
+<a href="/delete_client/{{current_client.id}}" class="btn btn-danger">Reactivate</a>
+{% endif %}
 </form>
 {% endblock content %}
