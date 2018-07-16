@@ -37,9 +37,12 @@
 <body>
     <div class="container-fluid d-flex align-items-center justify-content-center" id="login-background">
         <div class="row">
-          <div class="col-8 offset-2">
-              <img src="{% static "cr_logo_soft-08.png" %}" alt="" class="img-responsive mb-3" style="width:100%;">
-              <form class="text-center" action="/login/" method="post">
+          <div class="col-10 offset-1 p-0">
+              <div id="intro-animation" class="container p-0">
+
+              </div>
+              <!-- <img src="{% static "CR_Logo_New_With_Title.svg" %}" alt="" class="img-responsive mb-3" style="width:100%;"> -->
+              <form id="login-form" class="text-center pl-5 pr-5 pb-5" action="/login/" method="post">
                 {% csrf_token %}
                   <div class="row">
                     <div class="col-12 input-label">
@@ -64,4 +67,9 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+        var path_intro = "{% static "intro_white_fast.json" %}"
+    </script>
+    <script type="text/javascript" src="{% static "lottie.js" %}"></script>
+    <script type="text/javascript" src="{% static "animation.js" %}"></script>
 </body>
