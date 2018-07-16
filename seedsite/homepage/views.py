@@ -456,7 +456,7 @@ def add_bookmark(request, id):
 def admin_portal(request):
 
     current_user = request.user
-    interns = mod.Intern.objects.all().order_by('-date_joined')
+    interns = mod.Intern.objects.filter(groups__name='Interns').order_by('-date_joined')
     assigned_clients = mod.AssignedClient.objects.all().prefetch_related('intern', 'client')
 
     context = {

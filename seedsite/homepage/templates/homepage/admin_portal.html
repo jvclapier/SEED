@@ -7,25 +7,43 @@ Admin Portal
 
 {% block content %}
 
-<h1>{{ current_user.first_name }} {{ current_user.last_name}}</h1>
+<h1 class="text-center">Intern Activity</h1>
+<hr>
+<div class="container mb-5">
+    {% for intern in interns %}
+    <div class="card mb-4 p-2">
+        <div class="card-body pb-0">
+            <div class="container-fluid">
+                <div class="row d-flex align-items-center justify-content-center">
+                    <div class="col-12">
+                        <h4>{{ intern.first_name }} {{ intern.last_name}}</h4>
+                    </div>
+                    <div class="col-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Client</th>
+                                    <th scope="col">Business</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for pair in assigned_clients %}
+                                    {% if pair.intern.id == intern.id %}
+                                        <tr>
+                                            <th scope="row">{{pair.client.first_name}} {{pair.client.last_name}}</th>
+                                            <td>{{pair.client.business_name}}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
 
-{% if perms.homepage.admin_portal %}
-<h1>Intern Activity</h1>
-
-
-
-{% for intern in interns %}
-
-<h2>{{ intern.first_name }} {{ intern.last_name}}</h2>
-  {% for pair in assigned_clients %}
-    {% if pair.intern.id == intern.id %}
-      <h4>{{pair.client.first_name}}</h4>
-    {% endif %}
-  {% endfor %}
-
-
-{% endfor %}
-{% endif %}
-
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
 {% endblock content %}
