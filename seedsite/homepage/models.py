@@ -37,6 +37,7 @@ class Client(models.Model):
 
 class Log(models.Model):
     date_created = models.DateField(auto_now_add=True)
+    date_visited = models.DateField(blank=True, null=True)
     visit_description = models.TextField(blank=True, null=True)
     next_steps = models.TextField(blank=True, null=True)
     time_of_visit = models.TextField(blank=True, null=True)
