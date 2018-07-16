@@ -49,7 +49,12 @@ Edit Client
         id: 'mapbox.streets',
         accessToken: 'pk.eyJ1IjoiYmVudG9uc21pdGgiLCJhIjoiY2pqZjl0ZjBvMGN1YjN2bXN1Y2ZvcDY0ayJ9.V8OFcjbPM7l1gaMsWQxudA'
     }).addTo(mymap);
-    var marker = L.marker([{{current_client.lat}}, {{current_client.lon}}], {draggable: 'True'}).addTo(mymap);
+    var myIcon = L.icon({
+      iconUrl: "{% static "map_pin.png" %}",
+      iconSize: [38, 70],
+      iconAnchor: [19, 70],
+    });
+    var marker = L.marker([{{current_client.lat}}, {{current_client.lon}}], {icon: myIcon, draggable: 'True', title:'Drag to set location', autoPan: 'True'}).addTo(mymap);
     marker.on('moveend', setlatlon);
     function setlatlon(){
 

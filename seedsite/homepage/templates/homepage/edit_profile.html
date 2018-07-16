@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Edit Profile
+{% endblock title %}
+
+{% block content %}
+
+<form class="" action="/edit_profile/" method="post">
+  {% csrf_token %}
+  <p class="card-text">
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.first_name.errors}}
+        <label for="{{form.first_name.id_for_label}}">First Name</label>
+        <div class="input-group">
+          {{form.first_name}}
+        </div>
+        <br>
+      </div>
+      <div class="col-md-6 input-label">
+        {{form.last_name.errors}}
+        <label for="{{form.last_name.id_for_label}}">Last Name</label>
+        <div class="input-group">
+          {{form.last_name}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.email.errors}}
+        <label for="{{form.email.id_for_label}}">Email</label>
+        <div class="input-group">
+          {{form.email}}
+        </div>
+        <br>
+      </div>
+      <div class="col-md-6 input-label">
+        {{form.semester.errors}}
+        <label for="{{form.semester.id_for_label}}">Semester</label>
+        <div class="input-group">
+          {{form.semester}}
+        </div>
+        <br>
+      </div>
+    </div>
+</p>
+<input class="btn btn-success" value="Save" type="submit"></input>
+</form>
+{% endblock content %}

@@ -43,12 +43,17 @@ Add Client
     <script>
     var mymap = L.map('mapid').setView([14.5591, 121.0802], 13);
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox.streets',
-        accessToken: 'pk.eyJ1IjoiYmVudG9uc21pdGgiLCJhIjoiY2pqZjl0ZjBvMGN1YjN2bXN1Y2ZvcDY0ayJ9.V8OFcjbPM7l1gaMsWQxudA'
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18,
+      id: 'mapbox.streets',
+      accessToken: 'pk.eyJ1IjoiYmVudG9uc21pdGgiLCJhIjoiY2pqZjl0ZjBvMGN1YjN2bXN1Y2ZvcDY0ayJ9.V8OFcjbPM7l1gaMsWQxudA'
     }).addTo(mymap);
-    var marker = L.marker([14.5591, 121.0802], {draggable: 'True'}).addTo(mymap);
+    var myIcon = L.icon({
+      iconUrl: "{% static "map_pin.png" %}",
+      iconSize: [38, 70],
+      iconAnchor: [19, 70],
+    });
+    var marker = L.marker([14.5591, 121.0802], {icon: myIcon, draggable: 'True', title:'Drag to set location', autoPan: 'True'}).addTo(mymap);
     marker.on('moveend', setlatlon);
     function setlatlon(){
 

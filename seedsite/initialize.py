@@ -155,9 +155,10 @@ CreateAssignedClient('bdsmith98', 'Reyna')
 CreateAssignedClient('jvclapier', 'Reyna')
 
 '''create logs'''
-def CreateLog(date_created, visit_description, next_steps, time_of_visit, intern_username, client_first_name):
+def CreateLog(date_created, date_visited, visit_description, next_steps, time_of_visit, intern_username, client_first_name):
     log = mod.Log()
     log.date_created = date_created
+    log.date_visited = date_visited
     log.visit_description = visit_description
     log.next_steps = next_steps
     log.time_of_visit = time_of_visit
@@ -166,6 +167,6 @@ def CreateLog(date_created, visit_description, next_steps, time_of_visit, intern
     log.save()
     print('####### New log for', log.client.first_name, 'created by', log.intern.first_name, 'on', log.date_created)
 
-CreateLog('2018-06-25', 'Today we visited with Reyna about marekting materials and it was good stuff.', 'We are doing some things for her.', '10:00AM', 'jvclapier', 'Reyna')
-CreateLog('2018-06-18', 'Today we visited with Gerald about an excel spreadsheet and he took us to lunch.', 'We are going to follow up and go to MOA.', '1:00PM', 'bdsmith98', 'Gerald')
-CreateLog('2018-06-12', 'Zaldy has an awesome ponytail.', 'We are going to cut his ponytail.', '9:00AM', 'eaglauser', 'Zaldy')
+CreateLog('2018-06-25', '2018-06-20', 'Today we visited with Reyna about marekting materials and it was good stuff.', 'We are doing some things for her.', '10:00AM', 'jvclapier', 'Reyna')
+CreateLog('2018-06-18', '2018-06-19', 'Today we visited with Gerald about an excel spreadsheet and he took us to lunch.', 'We are going to follow up and go to MOA.', '1:00PM', 'bdsmith98', 'Gerald')
+CreateLog('2018-06-12', '2018-06-18', 'Zaldy has an awesome ponytail.', 'We are going to cut his ponytail.', '9:00AM', 'eaglauser', 'Zaldy')

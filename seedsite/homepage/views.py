@@ -151,6 +151,7 @@ class AddLog(forms.Form):
 
     visit_description = forms.CharField(label="Visit Description", required=True, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Please describe your visit', 'class':'form-control'}))
     next_steps = forms.CharField(label="Next Steps", required=True, max_length=250, widget=forms.Textarea(attrs={'placeholder':'Describe what you plan to do next', 'class':'form-control'}))
+    date_visited = forms.CharField(label="Date Visited", required=True, widget=forms.TextInput(attrs={'placeholder':'MM/DD/YYY', 'class':'form-control'}))
     time_of_visit = forms.ChoiceField(label="Time Of Visit", choices=TIME_CHOICES, required=True)
 
     def __init__(self, *args, **kwargs):
@@ -201,7 +202,7 @@ def edit_client(request, id):
 
             form.commit(request, current_client)
 
-            return HttpResponseRedirect('/client_profile/'+str(id))
+            return HttpResponseRedirect('/index/')
     else:
         form = EditClient({'first_name':current_client.first_name,
             'last_name':current_client.last_name, 'gender': current_client.gender,
@@ -237,7 +238,6 @@ class EditClient(forms.Form):
     email = forms.CharField(label="Email Address", required=True, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
     tagalog_needed = forms.BooleanField(label="Tagalog Needed", required=False, initial=False)
-
     street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address', 'class':'form-control', 'class':'form-control'}))
     city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City', 'class':'form-control', 'class':'form-control'}))
     zipcode = forms.CharField(label="Zipcode", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Zipcode', 'class':'form-control', 'class':'form-control'}))
@@ -430,9 +430,59 @@ def add_bookmark(request, id):
 def intern_portal(request):
 
     current_user = request.user
+    interns = mod.Intern.objects.all().order_by('-date_joined')
+    assigned_clients = mod.AssignedClient.objects.all().prefetch_related('intern', 'client')
 
     context = {
         'current_user':current_user,
+        'interns':interns,
+        'assigned_clients':assigned_clients,
     }
 
     return render(request, 'homepage/intern_portal.html', context)
+
+@login_required(login_url = '/login/')
+def edit_profile(request):
+
+    current_user = request.user
+
+    if request.method == 'POST':
+        form = EditProfile(request.POST)
+        if form.is_valid():
+
+            form.commit(request, current_user)
+
+            return HttpResponseRedirect('/intern_portal/')
+    else:
+        form = EditProfile({'first_name':current_user.first_name, 'last_name':current_user.last_name,
+            'email':current_user.email, 'semester':current_user.semester
+        })
+
+    context = {
+        'form':form,
+        'current_user':current_user,
+    }
+
+    return render(request, 'homepage/edit_profile.html', context)
+
+class EditProfile(forms.Form):
+
+    first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
+    last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
+    email = forms.CharField(label="Email Address", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
+    semester = forms.CharField(label="Semester", required=False, max_length=15, widget=forms.TextInput(attrs={'placeholder':'Semester', 'class':'form-control'}))
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(EditProfile, self).__init__(*args, **kwargs)
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data
+
+    def commit(self, request, current_user):
+        user = current_user
+        user.first_name = self.cleaned_data.get('first_name')
+        user.last_name = self.cleaned_data.get('last_name')
+        user.email = self.cleaned_data.get('email')
+        user.semester = self.cleaned_data.get('semester')
+        user.save()
