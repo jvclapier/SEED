@@ -17,6 +17,7 @@ from homepage import models as mod
 from django.db.models import Q
 from django.contrib.auth.models import Permission, Group
 
+# use index to route based on user permission
 @login_required(login_url = '/login/')
 def index(request):
 
@@ -26,45 +27,53 @@ def index(request):
     if current_user.has_perm('homepage.admin_portal'):
         return HttpResponseRedirect('/admin_portal')
     elif current_user.has_perm('homepage.intern_portal'):
-        #initialize variables
-        all_clients = mod.Client.objects.all().order_by('first_name')
-        assigned_client_objects = mod.AssignedClient.objects.filter(intern = current_user)
-        assigned_clients = []
-        assigned_clients_ordered = []
-        unassigned_clients = []
-        # Loop through the assigned clients and add each to the assigned clients list
-        for item in assigned_client_objects:
-            client_to_add = mod.Client.objects.get(id = item.client.id)
-            assigned_clients.append(client_to_add)
-        # Looping through the all clients list to order the assigned client list
-        for item in all_clients:
-            for i in assigned_clients:
-                if item == i:
-                    assigned_clients_ordered.append(item)
-                else:
-                    continue
-        # Loop through the all clients list
-        for item in all_clients:
-            client_exists = False
-            # Loop through the assigned clients list to see if the client exists.
-            # If the client does not exist, add it to the unassigned client list
-            for i in assigned_clients:
-                if item == i:
-                    client_exists = True
-                else:
-                    continue
-            if client_exists == False:
-                unassigned_clients.append(item)
+        return HttpResponseRedirect('/intern_portal')
+
+@login_required(login_url = '/login/')
+def intern_portal(request):
+
+    current_user = request.user
+
+    #initialize variables
+    all_clients = mod.Client.objects.all().order_by('first_name')
+    assigned_client_objects = mod.AssignedClient.objects.filter(intern = current_user)
+    assigned_clients = []
+    assigned_clients_ordered = []
+    unassigned_clients = []
+    # Loop through the assigned clients and add each to the assigned clients list
+    for item in assigned_client_objects:
+        client_to_add = mod.Client.objects.get(id = item.client.id)
+        assigned_clients.append(client_to_add)
+    # Looping through the all clients list to order the assigned client list
+    for item in all_clients:
+        for i in assigned_clients:
+            if item == i:
+                assigned_clients_ordered.append(item)
             else:
                 continue
+    # Loop through the all clients list
+    for item in all_clients:
+        client_exists = False
+        # Loop through the assigned clients list to see if the client exists.
+        # If the client does not exist, add it to the unassigned client list
+        for i in assigned_clients:
+            if item == i:
+                client_exists = True
+            else:
+                continue
+        if client_exists == False:
+            unassigned_clients.append(item)
+        else:
+            continue
 
-        context = {
-            'assigned_clients_ordered':assigned_clients_ordered,
-            'unassigned_clients':unassigned_clients,
-            'current_user': current_user,
-        }
+    context = {
+        'assigned_clients_ordered':assigned_clients_ordered,
+        'unassigned_clients':unassigned_clients,
+        'current_user': current_user,
+    }
 
-        return render(request, 'homepage/index.html', context)
+    return render(request, 'homepage/intern_portal.html', context)
+
 
 # This directs users to the login form. Once they have successfully logged in, it sends them to the index page.
 def login(request):

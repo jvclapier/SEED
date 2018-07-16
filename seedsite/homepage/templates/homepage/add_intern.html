@@ -10,60 +10,65 @@ Add Intern
 {% endblock resources %}
 
 {% block content %}
-<form class="" action="/add_intern/" method="post">
-    {% csrf_token %}
-    <p class="card-text">
-        <div class="row">
-            <div class="col-12 input-label">
-                {{form.first_name.errors}}
-                <label for="{{form.first_name.id_for_label}}">First Name</label>
-                <div class="input-group">
-                    {{form.first_name}}
+<h1 class="text-center">Add Intern</h1>
+<hr>
+<div class="container mb-5">
+    <form class="" action="/add_intern/" method="post">
+        {% csrf_token %}
+        <p class="card-text">
+            <div class="row">
+                <div class="col-12 input-label">
+                    {{form.first_name.errors}}
+                    <label for="{{form.first_name.id_for_label}}">First Name</label>
+                    <div class="input-group">
+                        {{form.first_name}}
+                    </div>
+                    <br>
                 </div>
-                <br>
-            </div>
-            <div class="col-12 input-label">
-                {{form.last_name.errors}}
-                <label for="{{form.last_name.id_for_label}}">Last Name</label>
-                <div class="input-group">
-                    {{form.last_name}}
+                <div class="col-12 input-label">
+                    {{form.last_name.errors}}
+                    <label for="{{form.last_name.id_for_label}}">Last Name</label>
+                    <div class="input-group">
+                        {{form.last_name}}
+                    </div>
+                    <br>
                 </div>
-                <br>
-            </div>
-            <div class="col-12 input-label">
-                {{form.email.errors}}
-                <label for="{{form.email.id_for_label}}">Email</label>
-                <div class="input-group">
-                    {{form.email}}
+                <div class="col-12 input-label">
+                    {{form.email.errors}}
+                    <label for="{{form.email.id_for_label}}">Email</label>
+                    <div class="input-group">
+                        {{form.email}}
+                    </div>
+                    <br>
                 </div>
-                <br>
-            </div>
-            <div class="col-12 input-label">
-                {{form.password.errors}}
-                <label for="{{form.password.id_for_label}}">Password</label>
-                <div class="input-group">
-                    {{form.password}}
+                <div class="col-12 input-label">
+                    {{form.password.errors}}
+                    <label for="{{form.password.id_for_label}}">Password</label>
+                    <div class="input-group">
+                        {{form.password}}
+                    </div>
+                    <br>
                 </div>
-                <br>
-            </div>
-            <div class="col-12 input-label">
-                {{form.semester.errors}}
-                <label for="{{form.semester.id_for_label}}">Semester</label>
-                <div class="input-group">
-                    {{form.semester}}
+                <div class="col-12 input-label">
+                    {{form.semester.errors}}
+                    <label for="{{form.semester.id_for_label}}">Semester</label>
+                    <div class="input-group">
+                        {{form.semester}}
+                    </div>
+                    <br>
                 </div>
-                <br>
-            </div>
-            <div class="col-12 input-label">
-                {{form.permissions.errors}}
-                <label for="{{form.permissions.id_for_label}}">Permissions</label>
-                <div class="input-group">
-                    {{form.permissions}}
+                <div class="col-12 input-label">
+                    {{form.permissions.errors}}
+                    <label for="{{form.permissions.id_for_label}}">Permissions</label>
+                    <div class="input-group">
+                        {{form.permissions}}
+                    </div>
+                    <br>
                 </div>
-                <br>
             </div>
-        </div>
-    </p>
-    <input class="btn btn-success" value="Save" type="submit"></input>
-</form>
+        </p>
+        <input class="btn btn-success" value="Save" type="submit"></input>
+    </form>
+</div>
+
 {% endblock content %}

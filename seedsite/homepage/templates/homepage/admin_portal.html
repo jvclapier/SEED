@@ -28,14 +28,4 @@ Admin Portal
 {% endif %}
 
 
-<a href="/edit_profile/">
-  <button type="button" name="Edit Profile">Edit Profile</button>
-</a>
-
-{% if perms.homepage.admin_portal %}
-<a href="/add_intern/">
-  <button type="button" name="Add Intern">Add Intern</button>
-</a>
-{% endif %}
-
 {% endblock content %}

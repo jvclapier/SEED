@@ -29,6 +29,7 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('add_bookmark/<int:id>', views.add_bookmark, name='add_bookmark'),
     path('admin_portal/', views.admin_portal, name='admin_portal'),
+    path('intern_portal/', views.intern_portal, name='intern_portal'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('add_intern/', views.add_intern, name='add_intern'),
 ]
