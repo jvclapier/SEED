@@ -106,11 +106,13 @@ def CreateIntern(username, password, first_name, last_name, email, semester):
     intern.email = email
     intern.semester = semester
     intern.save()
+    intern_group = Group.objects.get(name='Interns')
+    intern_group.user_set.add(intern)
     print("####### Intern created: " + intern.first_name)
 
-CreateIntern('jvclapier', 'password', 'Jessee', 'Clapier', 'jvclapier@gmail.com', 'Summer')
-CreateIntern('bdsmith98', 'password', 'Benton', 'Smith', 'bdsmith98@gmail.com', 'Summer')
-CreateIntern('eaglauser', 'password', 'Eliza', 'Clapier', 'eaglauser@gmail.com', 'Summer')
+CreateIntern('jvclapier@gmail.com', 'password', 'Jessee', 'Clapier', 'jvclapier@gmail.com', 'Summer')
+CreateIntern('bdsmith98@gmail.com', 'password', 'Benton', 'Smith', 'bdsmith98@gmail.com', 'Summer')
+CreateIntern('eaglauser@gmail.com', 'password', 'Eliza', 'Clapier', 'eaglauser@gmail.com', 'Summer')
 
 '''create client'''
 def CreateClient(first_name, last_name, gender, email, phone_number, tagalog_needed, street_address, city, zipcode, country, barangay, lat, lon, business_name, business_type, transportation_method, bio):
@@ -147,12 +149,12 @@ def CreateAssignedClient(intern_username, client_first_name):
     assigned_client.save()
     print("####### assignment created: " + assigned_client.intern.first_name + ' has bookmarked ' + assigned_client.client.first_name)
 
-CreateAssignedClient('jvclapier', 'Zaldy')
-CreateAssignedClient('eaglauser', 'Zaldy')
-CreateAssignedClient('bdsmith98', 'Gerald')
-CreateAssignedClient('eaglauser', 'Reyna')
-CreateAssignedClient('bdsmith98', 'Reyna')
-CreateAssignedClient('jvclapier', 'Reyna')
+CreateAssignedClient('jvclapier@gmail.com', 'Zaldy')
+CreateAssignedClient('eaglauser@gmail.com', 'Zaldy')
+CreateAssignedClient('bdsmith98@gmail.com', 'Gerald')
+CreateAssignedClient('eaglauser@gmail.com', 'Reyna')
+CreateAssignedClient('bdsmith98@gmail.com', 'Reyna')
+CreateAssignedClient('jvclapier@gmail.com', 'Reyna')
 
 '''create logs'''
 def CreateLog(date_created, date_visited, visit_description, next_steps, time_of_visit, intern_username, client_first_name):
@@ -167,6 +169,6 @@ def CreateLog(date_created, date_visited, visit_description, next_steps, time_of
     log.save()
     print('####### New log for', log.client.first_name, 'created by', log.intern.first_name, 'on', log.date_created)
 
-CreateLog('2018-06-25', '2018-06-20', 'Today we visited with Reyna about marekting materials and it was good stuff.', 'We are doing some things for her.', '10:00AM', 'jvclapier', 'Reyna')
-CreateLog('2018-06-18', '2018-06-19', 'Today we visited with Gerald about an excel spreadsheet and he took us to lunch.', 'We are going to follow up and go to MOA.', '1:00PM', 'bdsmith98', 'Gerald')
-CreateLog('2018-06-12', '2018-06-18', 'Zaldy has an awesome ponytail.', 'We are going to cut his ponytail.', '9:00AM', 'eaglauser', 'Zaldy')
+CreateLog('2018-06-25', '2018-06-20', 'Today we visited with Reyna about marekting materials and it was good stuff.', 'We are doing some things for her.', '10:00AM', 'jvclapier@gmail.com', 'Reyna')
+CreateLog('2018-06-18', '2018-06-19', 'Today we visited with Gerald about an excel spreadsheet and he took us to lunch.', 'We are going to follow up and go to MOA.', '1:00PM', 'bdsmith98@gmail.com', 'Gerald')
+CreateLog('2018-06-12', '2018-06-18', 'Zaldy has an awesome ponytail.', 'We are going to cut his ponytail.', '9:00AM', 'eaglauser@gmail.com', 'Zaldy')
