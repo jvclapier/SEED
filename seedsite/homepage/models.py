@@ -6,10 +6,11 @@ from django.conf import settings
 class Intern(AbstractUser):
     # username
     # password
-    first_name = models.TextField(blank=True, null=True)
-    last_name = models.TextField(blank=True, null=True)
+    first_name = models.TextField(blank=False, null=True)
+    last_name = models.TextField(blank=False, null=True)
     email = models.EmailField()
-    semester = models.TextField(blank=True, null=True)
+    semester = models.TextField(blank=False, null=True)
+    year = models.TextField(blank=False, null=True)
 
 class AssignedClient(models.Model):
     intern = models.ForeignKey('Intern', on_delete=models.CASCADE)
@@ -33,6 +34,7 @@ class Client(models.Model):
     business_type = models.TextField(blank=True, null=True)
     transportation_method = models.TextField(blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
+    active = models.BooleanField(blank=False, default=True)
     # TODO: add image field
 
 class Log(models.Model):

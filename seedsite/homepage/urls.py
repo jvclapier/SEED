@@ -30,4 +30,5 @@ urlpatterns = [
     path('add_bookmark/<int:id>', views.add_bookmark, name='add_bookmark'),
     path('intern_portal/', views.intern_portal, name='intern_portal'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
+    path('delete_client/<int:id>', views.delete_client, name='delete_client'),
 ]
