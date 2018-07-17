@@ -24,11 +24,11 @@ def index(request):
     current_user = request.user
     # prompt user to change password if on first login
     if current_user.is_previously_logged_in == False:
-        print('##### User has not logged in')
         current_user.is_previously_logged_in = True
         current_user.save()
+        return HttpResponseRedirect('/edit_profile')
     # run different logic depending on logged in user type
-    if current_user.has_perm('homepage.admin_portal'):
+    elif current_user.has_perm('homepage.admin_portal'):
         return HttpResponseRedirect('/admin_portal')
     elif current_user.has_perm('homepage.intern_portal'):
         return HttpResponseRedirect('/intern_portal')
@@ -394,26 +394,35 @@ class AddClient(forms.Form):
 # last name, or busienss name. It returns a list of clients ordered by the client's first name.
 @login_required(login_url = '/login/')
 def search(request):
+    # intiialize variables
     current_user = request.user
     user_input = request.GET.get('client_name')
+    # redirect user back to intern if search is empty
     if user_input is None:
         return HttpResponseRedirect('/index/')
 
-    filtered_clients = mod.Client.objects.filter(Q(first_name__icontains=user_input) | Q(last_name__icontains=user_input) | Q(business_name__icontains=user_input)).order_by('first_name')
+    # initialize search variables
+    filtered_clients = mod.Client.objects.filter(Q(first_name__icontains=user_input) | Q(last_name__icontains=user_input) | \
+    Q(business_name__icontains=user_input)).order_by('first_name')
     assigned_client_objects = mod.AssignedClient.objects.filter(intern = current_user).order_by('client')
     assigned_clients_filtered = []
     unassigned_clients_filtered = []
+    # check assigned client objects to find pairs where intern exists
     for item in assigned_client_objects:
         for i in filtered_clients:
+            # if intern exists in assigned client pair, add it to the assigned clients filtered list
             if item.client == i:
                 assigned_clients_filtered.append(i)
+    # check to see which clients have already been added to the assigned clients filtered list
     for item in filtered_clients:
         client_exists = False
         for i in assigned_clients_filtered:
+            # if the intern exists, set the client_exists variable list to true
             if item == i:
                 client_exists = True
             else:
                 continue
+        # if the client does not exist, add it to the unassigned_clients_filtered list
         if client_exists == False:
             unassigned_clients_filtered.append(item)
         else:
@@ -605,3 +614,23 @@ class AddIntern(forms.Form):
         elif self.cleaned_data.get('permissions') == 'intern_portal':
             intern_group = Group.objects.get(name='Interns')
             intern_group.user_set.add(intern)
+
+@login_required(login_url = '/login/')
+def search_interns(request):
+    # initialize variables
+    user_input = request.GET.get('intern_name')
+    assigned_clients = mod.AssignedClient.objects.all().prefetch_related('intern', 'client')
+    # redirect user to index if search is empty
+    if user_input is None:
+        return HttpResponseRedirect('/index/')
+    # query database to find interns that match user entered content
+    filtered_interns = mod.Intern.objects.filter(groups__name='Interns').filter(Q(first_name__icontains=user_input) | \
+    Q(last_name__icontains=user_input) | Q(semester__icontains=user_input) | Q(year__icontains=user_input)| \
+    Q(email__icontains=user_input)).order_by('-date_joined')
+
+    context = {
+        'filtered_interns':filtered_interns,
+        'assigned_clients':assigned_clients
+    }
+
+    return render(request, 'homepage/search_interns.html', context)

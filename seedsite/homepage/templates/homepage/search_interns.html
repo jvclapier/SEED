@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Admin Portal
+Search Interns
 {% endblock title %}
 
 {% block content %}
@@ -15,17 +15,16 @@ Admin Portal
 </form>
 </div>
 
-
-<h1 class="text-center">Intern Activity</h1>
+<h1 class="text-center">Interns</h1>
 <hr>
 <div class="container mb-5">
-    {% for intern in interns %}
+    {% for intern in filtered_interns %}
     <div class="card mb-4 p-2">
-        <div class="card-body pl-0 pr-0">
+        <div class="card-body pb-0">
             <div class="container-fluid">
                 <div class="row d-flex align-items-center justify-content-center">
                     <div class="col-12">
-                        <h4> <strong>{{ intern.first_name }} {{ intern.last_name}}</strong> | <span style="font-size:1rem;">{{ intern.semester }} {{ intern.year }}</span></h4>
+                        <h4>{{ intern.first_name }} {{ intern.last_name}}</h4>
                     </div>
                     <div class="col-12">
                         <table class="table table-striped">
@@ -39,7 +38,7 @@ Admin Portal
                                 {% for pair in assigned_clients %}
                                     {% if pair.intern.id == intern.id %}
                                         <tr>
-                                            <th scope="row"> <a href="/client_profile/{{pair.client.id}}">{{pair.client.first_name}} {{pair.client.last_name}}</a> </th>
+                                            <th scope="row">{{pair.client.first_name}} {{pair.client.last_name}}</th>
                                             <td>{{pair.client.business_name}}</td>
                                         </tr>
                                     {% endif %}
