@@ -97,7 +97,7 @@ admin_group = Group.objects.get(name='Admins')
 admin_group.user_set.add(admin)
 
 '''create interns'''
-def CreateIntern(username, password, first_name, last_name, email, semester):
+def CreateIntern(username, password, first_name, last_name, email, semester, year):
     intern = mod.Intern()
     intern.username = username
     intern.set_password(password)
@@ -105,14 +105,15 @@ def CreateIntern(username, password, first_name, last_name, email, semester):
     intern.last_name = last_name
     intern.email = email
     intern.semester = semester
+    intern.year = year
     intern.save()
     intern_group = Group.objects.get(name='Interns')
     intern_group.user_set.add(intern)
     print("####### Intern created: " + intern.first_name)
 
-CreateIntern('jvclapier@gmail.com', 'password', 'Jessee', 'Clapier', 'jvclapier@gmail.com', 'Summer')
-CreateIntern('bdsmith98@gmail.com', 'password', 'Benton', 'Smith', 'bdsmith98@gmail.com', 'Summer')
-CreateIntern('eaglauser@gmail.com', 'password', 'Eliza', 'Clapier', 'eaglauser@gmail.com', 'Summer')
+CreateIntern('jvclapier@gmail.com', 'password', 'Jessee', 'Clapier', 'jvclapier@gmail.com', 'Summer', '2018')
+CreateIntern('bdsmith98@gmail.com', 'password', 'Benton', 'Smith', 'bdsmith98@gmail.com', 'Summer', '2018')
+CreateIntern('eaglauser@gmail.com', 'password', 'Eliza', 'Clapier', 'eaglauser@gmail.com', 'Summer', '2018')
 
 '''create client'''
 def CreateClient(first_name, last_name, gender, email, phone_number, tagalog_needed, street_address, city, zipcode, country, barangay, lat, lon, business_name, business_type, transportation_method, bio, active):

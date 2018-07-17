@@ -11,6 +11,7 @@ class Intern(AbstractUser):
     email = models.EmailField()
     semester = models.TextField(blank=False, null=True)
     year = models.TextField(blank=False, null=True)
+    is_previously_logged_in = models.BooleanField(default=False)
 
 class AssignedClient(models.Model):
     intern = models.ForeignKey('Intern', on_delete=models.CASCADE)

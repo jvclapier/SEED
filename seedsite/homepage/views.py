@@ -22,7 +22,11 @@ from django.contrib.auth.models import Permission, Group
 def index(request):
 
     current_user = request.user
-
+    # prompt user to change password if on first login
+    if current_user.is_previously_logged_in == False:
+        print('##### User has not logged in')
+        current_user.is_previously_logged_in = True
+        current_user.save()
     # run different logic depending on logged in user type
     if current_user.has_perm('homepage.admin_portal'):
         return HttpResponseRedirect('/admin_portal')
