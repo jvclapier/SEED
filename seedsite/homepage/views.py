@@ -486,7 +486,7 @@ def edit_profile(request):
     current_user = request.user
 
     if request.method == 'POST':
-        form = EditProfile(request.POST)
+        form = EditProfile(request.POST, request=request)
         if form.is_valid():
 
             form.commit(request, current_user)
@@ -506,16 +506,35 @@ def edit_profile(request):
 
 class EditProfile(forms.Form):
 
+    SEMESTER = (
+        ('Summer', 'Summer'),
+        ('Fall', 'Fall'),
+        ('Spring', 'Spring'),
+    )
+
     first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
     last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
     email = forms.CharField(label="Email Address", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
-    semester = forms.CharField(label="Semester", required=False, max_length=15, widget=forms.TextInput(attrs={'placeholder':'Semester', 'class':'form-control'}))
+    semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=True)
+    current_password = forms.CharField(label="Current Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Current Password', 'class':'form-control'}))
+    new_password = forms.CharField(label="New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'New Password', 'class':'form-control'}))
+    confirm_new_password = forms.CharField(label="Confirm New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Confirm New Password', 'class':'form-control'}))
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(EditProfile, self).__init__(*args, **kwargs)
+
     def clean(self):
         cleaned_data = super().clean()
+
+        if self.cleaned_data.get('current_password') != '' and self.cleaned_data.get('current_password') is not None:
+            temp_user = authenticate(username=self.request.user.username, password=self.cleaned_data.get('current_password'))
+            if temp_user is None:
+                self._errors['current_password'] = self.error_class(['Incorrect password'])
+
+            if self.cleaned_data.get('new_password') != self.cleaned_data.get('confirm_new_password'):
+                self._errors['new_password'] = self.error_class(['Passwords do not match'])
+
         return cleaned_data
 
     def commit(self, request, current_user):
@@ -524,7 +543,13 @@ class EditProfile(forms.Form):
         user.last_name = self.cleaned_data.get('last_name')
         user.email = self.cleaned_data.get('email')
         user.semester = self.cleaned_data.get('semester')
+        if self.cleaned_data.get('current_password') != '' and self.cleaned_data.get('current_password') is not None:
+            if self.cleaned_data.get('confirm_new_password') != '' and self.cleaned_data.get('confirm_new_password') is not None:
+                user.set_password(self.cleaned_data.get('confirm_new_password'))
         user.save()
+        temp_user = authenticate(username=self.request.user.username, password=self.cleaned_data.get('confirm_new_password'))
+        auth_login(self.request, temp_user)
+
 
 @permission_required('homepage.admin_portal')
 def add_intern(request):

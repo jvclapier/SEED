@@ -13,7 +13,7 @@ Edit Profile
         {% csrf_token %}
         <p class="card-text">
             <div class="row">
-                <div class="col-md-6 input-label">
+                <div class="col-12 col-md-6 input-label">
                     {{form.first_name.errors}}
                     <label for="{{form.first_name.id_for_label}}">First Name</label>
                     <div class="input-group">
@@ -21,7 +21,7 @@ Edit Profile
                     </div>
                     <br>
                 </div>
-                <div class="col-md-6 input-label">
+                <div class="col-12 col-md-6 input-label">
                     {{form.last_name.errors}}
                     <label for="{{form.last_name.id_for_label}}">Last Name</label>
                     <div class="input-group">
@@ -31,7 +31,7 @@ Edit Profile
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 input-label">
+                <div class="col-12 col-md-6 input-label">
                     {{form.email.errors}}
                     <label for="{{form.email.id_for_label}}">Email</label>
                     <div class="input-group">
@@ -39,11 +39,35 @@ Edit Profile
                     </div>
                     <br>
                 </div>
-                <div class="col-md-6 input-label">
+                <div class="col-12 col-md-6 input-label">
                     {{form.semester.errors}}
                     <label for="{{form.semester.id_for_label}}">Semester</label>
                     <div class="input-group">
                         {{form.semester}}
+                    </div>
+                    <br>
+                </div>
+                <div class="col-12 col-md-6 input-label">
+                    {{form.current_password.errors}}
+                    <label for="{{form.current_password.id_for_label}}">Current Password</label>
+                    <div class="input-group">
+                        {{form.current_password}}
+                    </div>
+                    <br>
+                </div>
+                <div class="col-12 col-md-6 input-label">
+                    {{form.new_password.errors}}
+                    <label for="{{form.new_password.id_for_label}}">New Password</label>
+                    <div class="input-group">
+                        {{form.new_password}}
+                    </div>
+                    <br>
+                </div>
+                <div class="col-12 col-md-6 input-label">
+                    {{form.confirm_new_password.errors}}
+                    <label for="{{form.confirm_new_password.id_for_label}}">Confirm New Password</label>
+                    <div class="input-group">
+                        {{form.confirm_new_password}}
                     </div>
                     <br>
                 </div>
