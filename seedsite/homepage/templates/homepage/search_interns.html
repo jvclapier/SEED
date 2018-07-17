@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Admin Portal
+Search Interns
 {% endblock title %}
 
 {% block content %}
@@ -15,10 +15,10 @@ Admin Portal
 </form>
 </div>
 
-<h1 class="text-center">Intern Activity</h1>
+<h1 class="text-center">Interns</h1>
 <hr>
 <div class="container mb-5">
-    {% for intern in interns %}
+    {% for intern in filtered_interns %}
     <div class="card mb-4 p-2">
         <div class="card-body pb-0">
             <div class="container-fluid">
