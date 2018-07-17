@@ -21,7 +21,7 @@ Edit Profile
 <h1 class="text-center">Edit Profile</h1>
 <hr>
 <div class="container mb-5">
-    <form class="" action="/edit_profile/" method="post">
+    <form class="" action="/admin_edit_profile/{{selected_intern.id}}" method="post">
         {% csrf_token %}
         <p class="card-text">
             <div class="row">
@@ -51,21 +51,11 @@ Edit Profile
                     </div>
                     <br>
                 </div>
-                {% if not perms.homepage.admin_portal %}
-                    <div class="col-12 col-md-6 input-label">
-                        {{form.semester.errors}}
-                        <label for="{{form.semester.id_for_label}}">Semester</label>
-                        <div class="input-group">
-                            {{form.semester}}
-                        </div>
-                        <br>
-                    </div>
-                {% endif %}
                 <div class="col-12 col-md-6 input-label">
-                    {{form.current_password.errors}}
-                    <label for="{{form.current_password.id_for_label}}">Current Password</label>
+                    {{form.semester.errors}}
+                    <label for="{{form.semester.id_for_label}}">Semester</label>
                     <div class="input-group">
-                        {{form.current_password}}
+                        {{form.semester}}
                     </div>
                     <br>
                 </div>

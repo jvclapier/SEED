@@ -489,7 +489,7 @@ def edit_profile(request):
 
             form.commit(request, current_user)
 
-            return HttpResponseRedirect('/intern_portal/')
+            return HttpResponseRedirect('/index/')
     else:
         form = EditProfile({'first_name':current_user.first_name, 'last_name':current_user.last_name,
             'email':current_user.email, 'semester':current_user.semester
@@ -542,10 +542,10 @@ class EditProfile(forms.Form):
         user.last_name = self.cleaned_data.get('last_name')
         user.email = self.cleaned_data.get('email')
         user.semester = self.cleaned_data.get('semester')
-        user.is_previously_logged_in = True
         if self.cleaned_data.get('current_password') != '' and self.cleaned_data.get('current_password') is not None:
             if self.cleaned_data.get('confirm_new_password') != '' and self.cleaned_data.get('confirm_new_password') is not None:
                 user.set_password(self.cleaned_data.get('confirm_new_password'))
+                user.is_previously_logged_in = True
         user.save()
         temp_user = authenticate(username=self.request.user.username, password=self.cleaned_data.get('confirm_new_password'))
         auth_login(self.request, temp_user)
@@ -574,7 +574,7 @@ def admin_edit_profile(request, id):
         'selected_intern':selected_intern,
     }
 
-    return render(request, 'homepage/edit_profile.html', context)
+    return render(request, 'homepage/admin_edit_profile.html', context)
 
 class AdminEditProfile(forms.Form):
 
