@@ -15,9 +15,6 @@ Admin Portal
 </form>
 </div>
 
-
-<h1 class="text-center">Intern Activity</h1>
-<hr>
 <div class="container mb-5">
     {% for intern in interns %}
     <div class="card mb-4 p-2">
@@ -25,7 +22,9 @@ Admin Portal
             <div class="container-fluid">
                 <div class="row d-flex align-items-center justify-content-center">
                     <div class="col-12">
-                        <h4> <strong>{{ intern.first_name }} {{ intern.last_name}}</strong> | <span style="font-size:1rem;">{{ intern.semester }} {{ intern.year }}</span></h4>
+                        <a href="/admin_edit_profile/{{intern.id}}">
+                            <h4> <strong>{{ intern.first_name }} {{ intern.last_name}}</strong> | <span style="font-size:1rem;">{{ intern.semester }} {{ intern.year }}</span></h4>
+                        </a>
                     </div>
                     <div class="col-12">
                         <table class="table table-striped">

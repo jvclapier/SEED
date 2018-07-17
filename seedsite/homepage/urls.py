@@ -31,6 +31,7 @@ urlpatterns = [
     path('admin_portal/', views.admin_portal, name='admin_portal'),
     path('intern_portal/', views.intern_portal, name='intern_portal'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
+    path('admin_edit_profile/<int:id>', views.admin_edit_profile, name='admin_edit_profile'),
     path('add_intern/', views.add_intern, name='add_intern'),
     path('delete_client/<int:id>', views.delete_client, name='delete_client'),
     path('search_interns/', views.search_interns, name='search_interns')

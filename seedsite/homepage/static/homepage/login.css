@@ -3,7 +3,7 @@
     animation-name: appear;
     animation-duration: 2s;
     animation-timing-function: ease-out;
-    animation-delay: 3s;
+    animation-delay: 0.5s;
     animation-direction: normal;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;

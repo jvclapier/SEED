@@ -24,8 +24,6 @@ def index(request):
     current_user = request.user
     # prompt user to change password if on first login
     if current_user.is_previously_logged_in == False:
-        current_user.is_previously_logged_in = True
-        current_user.save()
         return HttpResponseRedirect('/edit_profile')
     # run different logic depending on logged in user type
     elif current_user.has_perm('homepage.admin_portal'):
@@ -504,6 +502,7 @@ def edit_profile(request):
 
     return render(request, 'homepage/edit_profile.html', context)
 
+
 class EditProfile(forms.Form):
 
     SEMESTER = (
@@ -515,7 +514,7 @@ class EditProfile(forms.Form):
     first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
     last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
     email = forms.CharField(label="Email Address", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
-    semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=True)
+    semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=False)
     current_password = forms.CharField(label="Current Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Current Password', 'class':'form-control'}))
     new_password = forms.CharField(label="New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'New Password', 'class':'form-control'}))
     confirm_new_password = forms.CharField(label="Confirm New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Confirm New Password', 'class':'form-control'}))
@@ -543,6 +542,7 @@ class EditProfile(forms.Form):
         user.last_name = self.cleaned_data.get('last_name')
         user.email = self.cleaned_data.get('email')
         user.semester = self.cleaned_data.get('semester')
+        user.is_previously_logged_in = True
         if self.cleaned_data.get('current_password') != '' and self.cleaned_data.get('current_password') is not None:
             if self.cleaned_data.get('confirm_new_password') != '' and self.cleaned_data.get('confirm_new_password') is not None:
                 user.set_password(self.cleaned_data.get('confirm_new_password'))
@@ -551,6 +551,71 @@ class EditProfile(forms.Form):
         auth_login(self.request, temp_user)
 
 
+@login_required(login_url = '/login/')
+@permission_required('homepage.admin_portal')
+def admin_edit_profile(request, id):
+
+    selected_intern = mod.Intern.objects.get(id=id)
+
+    if request.method == 'POST':
+        form = AdminEditProfile(request.POST, request=request)
+        if form.is_valid():
+
+            form.commit(request, selected_intern)
+
+            return HttpResponseRedirect('/admin_portal/')
+    else:
+        form = AdminEditProfile({'first_name':selected_intern.first_name, 'last_name':selected_intern.last_name,
+            'email':selected_intern.email, 'semester':selected_intern.semester, 'year':selected_intern.year,
+        })
+
+    context = {
+        'form':form,
+        'selected_intern':selected_intern,
+    }
+
+    return render(request, 'homepage/edit_profile.html', context)
+
+class AdminEditProfile(forms.Form):
+
+    SEMESTER = (
+        ('Summer', 'Summer'),
+        ('Fall', 'Fall'),
+        ('Spring', 'Spring'),
+    )
+
+    first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
+    last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
+    email = forms.CharField(label="Email Address", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
+    semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=False)
+    new_password = forms.CharField(label="New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'New Password', 'class':'form-control'}))
+    confirm_new_password = forms.CharField(label="Confirm New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Confirm New Password', 'class':'form-control'}))
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(AdminEditProfile, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        if self.cleaned_data.get('new_password') != self.cleaned_data.get('confirm_new_password'):
+            self._errors['new_password'] = self.error_class(['Passwords do not match'])
+
+        return cleaned_data
+
+    def commit(self, request, selected_intern):
+        user = selected_intern
+        user.first_name = self.cleaned_data.get('first_name')
+        user.last_name = self.cleaned_data.get('last_name')
+        user.email = self.cleaned_data.get('email')
+        user.semester = self.cleaned_data.get('semester')
+        user.is_previously_logged_in = False
+        if self.cleaned_data.get('confirm_new_password') != '' and self.cleaned_data.get('confirm_new_password') is not None:
+            user.set_password(self.cleaned_data.get('confirm_new_password'))
+        user.save()
+
+
+@login_required(login_url = '/login/')
 @permission_required('homepage.admin_portal')
 def add_intern(request):
 

@@ -1,15 +1,31 @@
 {% extends "base.html" %}
 {% load static %}
+{% block alerts %}
+    {% if current_user.is_previously_logged_in == False %}
+    <div class="alert alert-warning alert-dismissible fade show m-0" role="alert" style="position:absolute; z-index:1000;">
+        <strong>Welcome Cancho!</strong> We see it is your first time logging in. Please change your password to continue.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+{% endblock alerts %}
 
 {% block title %}
 Edit Profile
 {% endblock title %}
 
 {% block content %}
+
+
 <h1 class="text-center">Edit Profile</h1>
 <hr>
 <div class="container mb-5">
+    {% if perms.homepage.admin_portal %}
+    <form class="" action="/admin_edit_profile/{{selected_intern.id}}" method="post">
+    {% else %}
     <form class="" action="/edit_profile/" method="post">
+    {% endif %}
         {% csrf_token %}
         <p class="card-text">
             <div class="row">
@@ -47,6 +63,24 @@ Edit Profile
                     </div>
                     <br>
                 </div>
+                {% if perms.homepage.admin_portal %}
+                <div class="col-12 col-md-6 input-label">
+                    {{form.new_password.errors}}
+                    <label for="{{form.new_password.id_for_label}}">New Password</label>
+                    <div class="input-group">
+                        {{form.new_password}}
+                    </div>
+                    <br>
+                </div>
+                <div class="col-12 col-md-6 input-label">
+                    {{form.confirm_new_password.errors}}
+                    <label for="{{form.confirm_new_password.id_for_label}}">Confirm New Password</label>
+                    <div class="input-group">
+                        {{form.confirm_new_password}}
+                    </div>
+                    <br>
+                </div>
+                {% else %}
                 <div class="col-12 col-md-6 input-label">
                     {{form.current_password.errors}}
                     <label for="{{form.current_password.id_for_label}}">Current Password</label>
@@ -71,6 +105,8 @@ Edit Profile
                     </div>
                     <br>
                 </div>
+                {% endif %}
+
             </div>
         </p>
         <input class="btn btn-success" value="Save" type="submit"></input>

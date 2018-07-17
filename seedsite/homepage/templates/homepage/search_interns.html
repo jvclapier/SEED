@@ -15,7 +15,7 @@ Search Interns
 </form>
 </div>
 
-<h1 class="text-center">Interns</h1>
+<h4 class="text-left">Search results...</h4>
 <hr>
 <div class="container mb-5">
     {% for intern in filtered_interns %}
@@ -24,7 +24,7 @@ Search Interns
             <div class="container-fluid">
                 <div class="row d-flex align-items-center justify-content-center">
                     <div class="col-12">
-                        <h4>{{ intern.first_name }} {{ intern.last_name}}</h4>
+                        <h4> <strong>{{ intern.first_name }} {{ intern.last_name}}</strong> | <span style="font-size:1rem;">{{ intern.semester }} {{ intern.year }}</span></h4>
                     </div>
                     <div class="col-12">
                         <table class="table table-striped">
