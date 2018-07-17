@@ -35,7 +35,19 @@
 </head>
 
 <body>
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissible fade show m-0" role="alert" style="position:absolute;">
+                <strong>Holy guacamole!</strong> Your username or password is invalid. Sorry:)
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <div class="container-fluid d-flex align-items-center justify-content-center" id="login-background">
+
         <div class="row">
           <div class="col-10 offset-1 p-0">
               <div id="intro-animation" class="container p-0">

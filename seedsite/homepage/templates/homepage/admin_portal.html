@@ -7,16 +7,22 @@ Admin Portal
 
 {% block content %}
 
-<h1 class="text-center">Intern Activity</h1>
-<hr>
+<div class="col-lg-4 col-lg-offset-4 mb-4">
+<form action="/search_interns/">
+    <div class="input-group">
+        <input  id="search_box" type="search" class="form-control mr-sm-2" name="client_name"  placeholder="Search Intern" >
+    </div>
+</form>
+</div>
+
 <div class="container mb-5">
     {% for intern in interns %}
     <div class="card mb-4 p-2">
-        <div class="card-body pb-0">
+        <div class="card-body pl-0 pr-0">
             <div class="container-fluid">
                 <div class="row d-flex align-items-center justify-content-center">
                     <div class="col-12">
-                        <h4>{{ intern.first_name }} {{ intern.last_name}}</h4>
+                        <h4> <strong>{{ intern.first_name }} {{ intern.last_name}}</strong> | <span style="font-size:1rem;">{{ intern.semester }} {{ intern.year }}</span></h4>
                     </div>
                     <div class="col-12">
                         <table class="table table-striped">
@@ -30,7 +36,7 @@ Admin Portal
                                 {% for pair in assigned_clients %}
                                     {% if pair.intern.id == intern.id %}
                                         <tr>
-                                            <th scope="row">{{pair.client.first_name}} {{pair.client.last_name}}</th>
+                                            <th scope="row"> <a href="/client_profile/{{pair.client.id}}">{{pair.client.first_name}} {{pair.client.last_name}}</a> </th>
                                             <td>{{pair.client.business_name}}</td>
                                         </tr>
                                     {% endif %}
