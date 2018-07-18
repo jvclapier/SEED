@@ -18,7 +18,7 @@ Edit Profile
 {% block content %}
 
 
-<h1 class="text-center">Edit Profile</h1>
+<h1 class="text-center">Edit Intern</h1>
 <hr>
 <div class="container mb-5">
     <form class="" action="/admin_edit_profile/{{selected_intern.id}}" method="post">
@@ -60,6 +60,14 @@ Edit Profile
                     <br>
                 </div>
                 <div class="col-12 col-md-6 input-label">
+                    {{form.year.errors}}
+                    <label for="{{form.year.id_for_label}}">Year</label>
+                    <div class="input-group">
+                        {{form.year}}
+                    </div>
+                    <br>
+                </div>
+                <div class="col-12 col-md-6 input-label">
                     {{form.new_password.errors}}
                     <label for="{{form.new_password.id_for_label}}">New Password</label>
                     <div class="input-group">
@@ -79,6 +87,11 @@ Edit Profile
             </div>
         </p>
         <input class="btn btn-success" value="Save" type="submit"></input>
+        {% if selected_intern.is_active == True %}
+        <a href="/deactivate_intern/{{selected_intern.id}}" class="btn btn-danger">Deactivate</a>
+        {% elif selected_intern.is_active == False %}
+        <a href="/deactivate_intern/{{selected_intern.id}}" class="btn btn-danger">Reactivate</a>
+        {% endif %}
     </form>
 </div>
 

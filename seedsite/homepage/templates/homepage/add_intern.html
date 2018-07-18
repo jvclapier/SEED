@@ -58,6 +58,14 @@ Add Intern
                     <br>
                 </div>
                 <div class="col-12 input-label">
+                    {{form.year.errors}}
+                    <label for="{{form.year.id_for_label}}">Year</label>
+                    <div class="input-group">
+                        {{form.year}}
+                    </div>
+                    <br>
+                </div>
+                <div class="col-12 input-label">
                     {{form.permissions.errors}}
                     <label for="{{form.permissions.id_for_label}}">Permissions</label>
                     <div class="input-group">
