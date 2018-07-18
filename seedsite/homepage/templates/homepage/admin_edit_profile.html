@@ -68,6 +68,14 @@ Edit Profile
                     <br>
                 </div>
                 <div class="col-12 col-md-6 input-label">
+                    {{form.permissions.errors}}
+                    <label for="{{form.permissions.id_for_label}}">Permissions</label>
+                    <div class="input-group">
+                        {{form.permissions}}
+                    </div>
+                    <br>
+                </div>
+                <div class="col-12 col-md-6 input-label">
                     {{form.new_password.errors}}
                     <label for="{{form.new_password.id_for_label}}">New Password</label>
                     <div class="input-group">
@@ -88,12 +96,32 @@ Edit Profile
         </p>
         <input class="btn btn-success" value="Save" type="submit"></input>
         {% if selected_intern.is_active == True %}
-        <a href="/deactivate_intern/{{selected_intern.id}}" class="btn btn-danger">Deactivate</a>
+        <!-- Button trigger modal -->
+        <a class="btn btn-danger" data-toggle="modal" data-target="#Modal">Deactivate</a>
         {% elif selected_intern.is_active == False %}
         <a href="/deactivate_intern/{{selected_intern.id}}" class="btn btn-danger">Reactivate</a>
         {% endif %}
     </form>
 </div>
 
-
+<!-- Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">Are you sure?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      Are you sure you want to deactivate this intern? The intern will only be viewable from the search bar.
+      </div>
+      <div class="modal-footer">
+        <a type="button" class="btn btn-success" data-dismiss="modal">Close</a>
+        <a type="button" class="btn btn-danger" href="/deactivate_intern/{{selected_intern.id}}">Deactivate</a>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}

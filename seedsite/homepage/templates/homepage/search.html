@@ -181,8 +181,10 @@ Search
         </div>
     </div>
 </div>
-{% empty %}
-<h5>No search results</h5>
 {% endfor %}
+
+{% if not assigned_clients_filtered and not unassigned_clients_filtered %}
+<h5>No search results</h5>
+{% endif %}
 
 {% endblock content %}

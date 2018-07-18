@@ -464,6 +464,7 @@ def add_bookmark(request, id):
     return HttpResponseRedirect('/index/')
 
 @login_required(login_url = '/login/')
+@permission_required('homepage.admin_portal', login_url='/index/')
 def admin_portal(request):
 
     current_user = request.user
@@ -552,6 +553,13 @@ class EditProfile(forms.Form):
         temp_user = authenticate(username=self.request.user.username, password=self.cleaned_data.get('confirm_new_password'))
         auth_login(self.request, temp_user)
 
+def get_current_group(selected_intern):
+    current_group = None
+    if selected_intern.groups.filter(name='Interns').exists():
+        current_group = 'intern_portal'
+    elif selected_intern.groups.filter(name='Admins').exists():
+        current_group = 'admin_portal'
+    return current_group
 
 @login_required(login_url = '/login/')
 @permission_required('homepage.admin_portal')
@@ -568,7 +576,7 @@ def admin_edit_profile(request, id):
             return HttpResponseRedirect('/admin_portal/')
     else:
         form = AdminEditProfile({'first_name':selected_intern.first_name, 'last_name':selected_intern.last_name,
-            'email':selected_intern.email, 'semester':selected_intern.semester, 'year':selected_intern.year,
+            'email':selected_intern.email, 'semester':selected_intern.semester, 'year':selected_intern.year, 'permissions':get_current_group(selected_intern),
         })
 
     context = {
@@ -580,7 +588,13 @@ def admin_edit_profile(request, id):
 
 class AdminEditProfile(forms.Form):
 
+    PERMISSIONS = (
+        ('intern_portal', 'Intern'),
+        ('admin_portal', 'Admin'),
+    )
+
     SEMESTER = (
+        ('',''),
         ('Summer', 'Summer'),
         ('Fall', 'Fall'),
         ('Spring', 'Spring'),
@@ -591,6 +605,7 @@ class AdminEditProfile(forms.Form):
     email = forms.CharField(label="Email Address", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=False)
     year = forms.CharField(label="Year", required=False, max_length=4, widget=forms.TextInput(attrs={'placeholder':'YYYY', 'class':'form-control'}))
+    permissions = forms.ChoiceField(label="Permissions", choices=PERMISSIONS, required=True)
     new_password = forms.CharField(label="New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'New Password', 'class':'form-control'}))
     confirm_new_password = forms.CharField(label="Confirm New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Confirm New Password', 'class':'form-control'}))
 
@@ -608,16 +623,22 @@ class AdminEditProfile(forms.Form):
 
     def commit(self, request, selected_intern):
         user = selected_intern
+        current_group = 'Interns' if get_current_group(user) == 'intern_portal'  else 'Admins'
         user.first_name = self.cleaned_data.get('first_name')
         user.last_name = self.cleaned_data.get('last_name')
         user.email = self.cleaned_data.get('email')
         user.semester = self.cleaned_data.get('semester')
         user.year = self.cleaned_data.get('year')
-        user.is_previously_logged_in = False
         if self.cleaned_data.get('confirm_new_password') != '' and self.cleaned_data.get('confirm_new_password') is not None:
             user.set_password(self.cleaned_data.get('confirm_new_password'))
+            user.is_previously_logged_in = False
         user.save()
-
+        if current_group != self.cleaned_data.get('permissions'):
+            old_group = Group.objects.get(name=current_group)
+            old_group.user_set.remove(user)
+            new_group_name = 'Interns' if self.cleaned_data.get('permissions') == 'intern_portal' else 'Admins'
+            new_group = Group.objects.get(name=new_group_name)
+            new_group.user_set.add(user)
 
 @login_required(login_url = '/login/')
 @permission_required('homepage.admin_portal')
@@ -695,7 +716,7 @@ def search_interns(request):
     if user_input is None:
         return HttpResponseRedirect('/index/')
     # query database to find interns that match user entered content
-    filtered_interns = mod.Intern.objects.filter(groups__name='Interns').filter(Q(first_name__icontains=user_input) | \
+    filtered_interns = mod.Intern.objects.filter(Q(first_name__icontains=user_input) | \
     Q(last_name__icontains=user_input) | Q(semester__icontains=user_input) | Q(year__icontains=user_input)| \
     Q(email__icontains=user_input)).order_by('-date_joined')
 
