@@ -27,30 +27,22 @@ Admin Portal
                 <div class="row d-flex align-items-center justify-content-center">
                     <div class="col-12">
                         <a href="/admin_edit_profile/{{intern.id}}">
-                            <h4> <strong>{{ intern.first_name }} {{ intern.last_name}}</strong> | <span style="font-size:1rem;">{{ intern.semester }} {{ intern.year }}</span></h4>
+                            <h4 class="text-center"> <strong>{{ intern.first_name }} {{ intern.last_name}}</strong> | <span style="font-size:1rem;">{{ intern.semester }} {{ intern.year }}</span></h4>
                         </a>
+                        <a href="mailto:{{intern.email}}">
+                            <h6 class="text-center">{{ intern.email }}</h6>
+                        </a>
+                        <br>
+                        <h5 class="text-center">Assigned Clients</h5>
+                        <hr class="mt-1 mb-1">
+                        {% for pair in assigned_clients %}
+                            {% if pair.intern.id == intern.id %}
+                                    <h5 class="text-center p-2" style="font-weight:200;"><a href="/client_profile/{{pair.client.id}}">{{pair.client.first_name}} {{pair.client.last_name}}</a></h5>
+                            {% endif %}
+                        {% endfor %}
+                        <h5></h5>
                     </div>
-                    <div class="col-12">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Client</th>
-                                    <th scope="col">Business</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for pair in assigned_clients %}
-                                    {% if pair.intern.id == intern.id %}
-                                        <tr>
-                                            <th scope="row"> <a href="/client_profile/{{pair.client.id}}">{{pair.client.first_name}} {{pair.client.last_name}}</a> </th>
-                                            <td>{{pair.client.business_name}}</td>
-                                        </tr>
-                                    {% endif %}
-                                {% endfor %}
 
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>
