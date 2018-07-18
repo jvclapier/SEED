@@ -34,6 +34,7 @@ urlpatterns = [
     path('admin_edit_profile/<int:id>', views.admin_edit_profile, name='admin_edit_profile'),
     path('add_intern/', views.add_intern, name='add_intern'),
     path('delete_client/<int:id>', views.delete_client, name='delete_client'),
-    path('search_interns/', views.search_interns, name='search_interns')
+    path('search_interns/', views.search_interns, name='search_interns'),
+    path('deactivate_intern/<int:id>', views.deactivate_intern, name='deactivate_intern'),
 
 ]

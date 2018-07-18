@@ -467,7 +467,7 @@ def add_bookmark(request, id):
 def admin_portal(request):
 
     current_user = request.user
-    interns = mod.Intern.objects.filter(groups__name='Interns').order_by('-date_joined')
+    interns = mod.Intern.objects.filter(groups__name='Interns').filter(is_active = True).order_by('-date_joined')
     assigned_clients = mod.AssignedClient.objects.all().prefetch_related('intern', 'client')
 
     context = {
@@ -492,7 +492,7 @@ def edit_profile(request):
             return HttpResponseRedirect('/index/')
     else:
         form = EditProfile({'first_name':current_user.first_name, 'last_name':current_user.last_name,
-            'email':current_user.email, 'semester':current_user.semester
+            'email':current_user.email, 'semester':current_user.semester, 'year':current_user.year
         })
 
     context = {
@@ -515,9 +515,16 @@ class EditProfile(forms.Form):
     last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
     email = forms.CharField(label="Email Address", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=False)
+<<<<<<< HEAD
     current_password = forms.CharField(label="Current Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Current Password', 'class':'form-control step'}))
     new_password = forms.CharField(label="New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'New Password', 'class':'form-control step', 'disabled':True}))
     confirm_new_password = forms.CharField(label="Confirm New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Confirm New Password', 'class':'form-control step', 'disabled':True}))
+=======
+    year = forms.CharField(label="Year", required=False, max_length=4, widget=forms.TextInput(attrs={'placeholder':'YYYY', 'class':'form-control'}))
+    current_password = forms.CharField(label="Current Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Current Password', 'class':'form-control'}))
+    new_password = forms.CharField(label="New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'New Password', 'class':'form-control'}))
+    confirm_new_password = forms.CharField(label="Confirm New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Confirm New Password', 'class':'form-control'}))
+>>>>>>> origin/backend
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
@@ -542,6 +549,7 @@ class EditProfile(forms.Form):
         user.last_name = self.cleaned_data.get('last_name')
         user.email = self.cleaned_data.get('email')
         user.semester = self.cleaned_data.get('semester')
+        user.year = self.cleaned_data.get('year')
         if self.cleaned_data.get('current_password') != '' and self.cleaned_data.get('current_password') is not None:
             if self.cleaned_data.get('confirm_new_password') != '' and self.cleaned_data.get('confirm_new_password') is not None:
                 user.set_password(self.cleaned_data.get('confirm_new_password'))
@@ -588,6 +596,7 @@ class AdminEditProfile(forms.Form):
     last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
     email = forms.CharField(label="Email Address", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=False)
+    year = forms.CharField(label="Year", required=False, max_length=4, widget=forms.TextInput(attrs={'placeholder':'YYYY', 'class':'form-control'}))
     new_password = forms.CharField(label="New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'New Password', 'class':'form-control'}))
     confirm_new_password = forms.CharField(label="Confirm New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Confirm New Password', 'class':'form-control'}))
 
@@ -609,6 +618,7 @@ class AdminEditProfile(forms.Form):
         user.last_name = self.cleaned_data.get('last_name')
         user.email = self.cleaned_data.get('email')
         user.semester = self.cleaned_data.get('semester')
+        user.year = self.cleaned_data.get('year')
         user.is_previously_logged_in = False
         if self.cleaned_data.get('confirm_new_password') != '' and self.cleaned_data.get('confirm_new_password') is not None:
             user.set_password(self.cleaned_data.get('confirm_new_password'))
@@ -653,6 +663,7 @@ class AddIntern(forms.Form):
     email = forms.CharField(label="Email Address", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     password = forms.CharField(label="Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Password', 'class':'form-control'}))
     semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=True)
+    year = forms.CharField(label="Year", required=False, max_length=4, widget=forms.TextInput(attrs={'placeholder':'YYYY', 'class':'form-control'}))
     permissions = forms.ChoiceField(label="Permissions", choices=PERMISSIONS, required=True)
 
     def __init__(self, *args, **kwargs):
@@ -669,6 +680,7 @@ class AddIntern(forms.Form):
         intern.last_name = self.cleaned_data.get('last_name')
         intern.email = self.cleaned_data.get('email')
         intern.semester = self.cleaned_data.get('semester')
+        intern.year = self.cleaned_data.get('year')
         intern.username = self.cleaned_data.get('email')
         intern.set_password(self.cleaned_data.get('password'))
         intern.save()
@@ -699,3 +711,15 @@ def search_interns(request):
     }
 
     return render(request, 'homepage/search_interns.html', context)
+
+def deactivate_intern(request, id):
+
+    current_intern = mod.Intern.objects.get(id=id)
+    if current_intern.is_active == True:
+        current_intern.is_active = False
+        current_intern.save()
+    elif current_intern.is_active == False:
+        current_intern.is_active = True
+        current_intern.save()
+
+    return HttpResponseRedirect('/index/')
