@@ -229,3 +229,7 @@ button, input, optgroup, select, textarea {
     font-style: normal;
     font-weight: 300;
 }
+
+.where-am-i {
+    display: none;
+}
