@@ -1,7 +1,7 @@
 // The change event is fired when a form element loses focus
 // and its value has changed since the last time we interacted with it
 $(function(){
-    $('#id_current_password').change(function() {
+    $('#id_current_password').on('keyup touchend', function() {
         console.log("current_password has been changed");
         // If the element *has* a value
         if ($(this).val()) {
