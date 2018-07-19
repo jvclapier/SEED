@@ -261,23 +261,23 @@ class EditClient(forms.Form):
         ('Female', 'Female'),
     )
 
-    first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
-    last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
+    first_name = forms.CharField(label="First Name", required=True, max_length=12, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
+    last_name = forms.CharField(label="Last Name", required=True, max_length=12, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
     gender = forms.ChoiceField(label="Client Gender", choices=GENDER_CHOICES, required=False)
-    email = forms.CharField(label="Email Address", required=True, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
+    email = forms.CharField(label="Email Address", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
     tagalog_needed = forms.BooleanField(label="Tagalog Needed", required=False, initial=False)
     street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address', 'class':'form-control', 'class':'form-control'}))
     city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City', 'class':'form-control', 'class':'form-control'}))
-    zipcode = forms.CharField(label="Zipcode", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Zipcode', 'class':'form-control', 'class':'form-control'}))
-    country = forms.CharField(label="Country", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Country', 'class':'form-control', 'class':'form-control'}))
-    barangay = forms.CharField(label="Barangay", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Barangay', 'class':'form-control', 'class':'form-control'}))
+    zipcode = forms.CharField(label="Zipcode", required=False, max_length=10, widget=forms.TextInput(attrs={'placeholder':'Zipcode', 'class':'form-control', 'class':'form-control'}))
+    country = forms.CharField(label="Country", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Country', 'class':'form-control', 'class':'form-control'}))
+    barangay = forms.CharField(label="Barangay", required=False, max_length=15, widget=forms.TextInput(attrs={'placeholder':'Barangay', 'class':'form-control', 'class':'form-control'}))
     lat = forms.CharField(label="Latitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Latitude', 'class':'form-control', 'class':'form-control'}))
     lon = forms.CharField(label="Longitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Longitude', 'class':'form-control', 'class':'form-control'}))
-    business_name = forms.CharField(label="Business Name", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Name', 'class':'form-control', 'class':'form-control'}))
-    business_type = forms.CharField(label="Business Type", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Type', 'class':'form-control', 'class':'form-control'}))
-    transportation_method = forms.CharField(label="Transportation Method", required=False, max_length=500, widget=forms.TextInput(attrs={'placeholder':'Please describe how you got there', 'class':'form-control', 'class':'form-control'}))
-    bio = forms.CharField(label="Client Bio", required=False, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Write a brief bio about your overall experience with this client', 'class':'form-control', 'class':'form-control'}))
+    business_name = forms.CharField(label="Business Name", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Business Name', 'class':'form-control', 'class':'form-control'}))
+    business_type = forms.CharField(label="Business Type", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Business Type', 'class':'form-control', 'class':'form-control'}))
+    transportation_method = forms.CharField(label="Transportation Method", required=False, max_length=100, widget=forms.Textarea(attrs={'placeholder':'Please describe how you got there', 'class':'form-control', 'class':'form-control', 'width':'100%', 'rows':'3'}))
+    bio = forms.CharField(label="Client Bio", required=False, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Write a brief bio about your overall experience with this client', 'class':'form-control', 'class':'form-control', 'width':'100%', 'rows':'7'}))
 
 
     def __init__(self, *args, **kwargs):
@@ -339,24 +339,23 @@ class AddClient(forms.Form):
         ('Female', 'Female'),
     )
 
-    first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
-    last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
+    first_name = forms.CharField(label="First Name", required=True, max_length=12, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
+    last_name = forms.CharField(label="Last Name", required=True, max_length=12, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
     gender = forms.ChoiceField(label="Client Gender", choices=GENDER_CHOICES, required=False)
-    email = forms.CharField(label="Email Address", required=True, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
+    email = forms.CharField(label="Email Address", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
     tagalog_needed = forms.BooleanField(label="Tagalog Needed", required=False, initial=False)
-
     street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address', 'class':'form-control'}))
     city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City', 'class':'form-control'}))
-    zipcode = forms.CharField(label="Zipcode", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Zipcode', 'class':'form-control'}))
-    country = forms.CharField(label="Country", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Country', 'class':'form-control'}))
-    barangay = forms.CharField(label="Barangay", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Barangay', 'class':'form-control'}))
+    zipcode = forms.CharField(label="Zipcode", required=False, max_length=10, widget=forms.TextInput(attrs={'placeholder':'Zipcode', 'class':'form-control'}))
+    country = forms.CharField(label="Country", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Country', 'class':'form-control'}))
+    barangay = forms.CharField(label="Barangay", required=False, max_length=15, widget=forms.TextInput(attrs={'placeholder':'Barangay', 'class':'form-control'}))
     lat = forms.CharField(label="Latitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Latitude', 'class':'form-control'}))
     lon = forms.CharField(label="Longitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Longitude', 'class':'form-control'}))
-    business_name = forms.CharField(label="Business Name", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Name', 'class':'form-control'}))
-    business_type = forms.CharField(label="Business Type", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Business Type', 'class':'form-control'}))
-    transportation_method = forms.CharField(label="Transportation Method", required=False, max_length=500, widget=forms.TextInput(attrs={'placeholder':'Please describe how you got there', 'class':'form-control'}))
-    bio = forms.CharField(label="Client Bio", required=False, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Write a brief bio about your overall experience with this client', 'class':'form-control'}))
+    business_name = forms.CharField(label="Business Name", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Business Name', 'class':'form-control'}))
+    business_type = forms.CharField(label="Business Type", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Business Type', 'class':'form-control'}))
+    transportation_method = forms.CharField(label="Transportation Method", required=False, max_length=100, widget=forms.Textarea(attrs={'placeholder':'Please describe how you got there', 'class':'form-control', 'width':'100%', 'rows':'3'}))
+    bio = forms.CharField(label="Client Bio", required=False, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Write a brief bio about your overall experience with this client', 'class':'form-control', 'width':'100%', 'rows':'7'}))
 
 
     def __init__(self, *arg, **kwargs):
@@ -729,6 +728,7 @@ def get_query(query_string, search_fields):
             query = query & temp_query
     return query
 
+@permission_required('homepage.admin_portal')
 @login_required(login_url = '/login/')
 def search_interns(request):
     query_string = ''
@@ -746,6 +746,7 @@ def search_interns(request):
 
     return render(request, 'homepage/search_interns.html', context)
 
+@permission_required('homepage.admin_portal')
 @login_required(login_url = '/login/')
 def deactivate_intern(request, id):
 
