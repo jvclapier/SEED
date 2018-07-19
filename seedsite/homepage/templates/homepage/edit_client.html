@@ -18,6 +18,8 @@ Edit Client
 {% endblock resources %}
 
 {% block content %}
+<h1 class="text-center">Edit Client</h1>
+<hr>
 
 <form class="" action="/edit_client/{{current_client.id}}" method="post">
   {% csrf_token %}
@@ -40,30 +42,6 @@ Edit Client
         <br>
       </div>
     </div>
-    <div id='mapid' style="width: 400px; height: 300px"></div>
-    <script>
-    var mymap = L.map('mapid').setView([{{current_client.lat}}, {{current_client.lon}}], 13);
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox.streets',
-        accessToken: 'pk.eyJ1IjoiYmVudG9uc21pdGgiLCJhIjoiY2pqZjl0ZjBvMGN1YjN2bXN1Y2ZvcDY0ayJ9.V8OFcjbPM7l1gaMsWQxudA'
-    }).addTo(mymap);
-    var myIcon = L.icon({
-      iconUrl: "{% static "map_pin.png" %}",
-      iconSize: [38, 70],
-      iconAnchor: [19, 70],
-    });
-    var marker = L.marker([{{current_client.lat}}, {{current_client.lon}}], {icon: myIcon, draggable: 'True', title:'Drag to set location', autoPan: 'True'}).addTo(mymap);
-    marker.on('moveend', setlatlon);
-    function setlatlon(){
-
-      var newlocation = marker.getLatLng();
-      console.log(newlocation);
-      $('#id_lat').attr('value', newlocation.lat);
-      $('#id_lon').attr('value', newlocation.lng);
-    }
-    </script>
     <div class="row">
       <div class="col-md-6 input-label">
         {{form.gender.errors}}
@@ -137,6 +115,36 @@ Edit Client
       </div>
     </div>
     <div class="row">
+      <div class="col-md-12 mb-4">
+          <label for="{{form.country.id_for_label}}">Place Pin</label>
+          <div id='mapid' class="container"></div>
+          <script>
+          var mymap = L.map('mapid').setView([{{current_client.lat}}, {{current_client.lon}}], 13);
+          L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+              attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+              maxZoom: 18,
+              id: 'mapbox.streets',
+              accessToken: 'pk.eyJ1IjoiYmVudG9uc21pdGgiLCJhIjoiY2pqZjl0ZjBvMGN1YjN2bXN1Y2ZvcDY0ayJ9.V8OFcjbPM7l1gaMsWQxudA'
+          }).addTo(mymap);
+          var myIcon = L.icon({
+            iconUrl: "{% static "map_pin.png" %}",
+            iconSize: [38, 70],
+            iconAnchor: [19, 70],
+          });
+          var marker = L.marker([{{current_client.lat}}, {{current_client.lon}}], {icon: myIcon, draggable: 'True', title:'Drag to set location', autoPan: 'True'}).addTo(mymap);
+          marker.on('moveend', setlatlon);
+          function setlatlon(){
+
+            var newlocation = marker.getLatLng();
+            console.log(newlocation);
+            $('#id_lat').attr('value', newlocation.lat);
+            $('#id_lon').attr('value', newlocation.lng);
+          }
+          </script>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.barangay.errors}}
         <label for="{{form.barangay.id_for_label}}">Barangay</label>
@@ -147,7 +155,7 @@ Edit Client
       </div>
       <div class="col-md-6 input-label">
         {{form.lat.errors}}
-        <label for="{{form.lat.id_for_label}}">Latitude</label>
+        <label for="{{form.lat.id_for_label}}">Latitude <span style="font-size:1rem;">(auto-populated from map)</span></label>
         <div id="enterlat" class="input-group">
           {{form.lat}}
         </div>
@@ -157,7 +165,7 @@ Edit Client
     <div class="row">
       <div class="col-md-6 input-label">
         {{form.lon.errors}}
-        <label for="{{form.lon.id_for_label}}">Longitude</label>
+        <label for="{{form.lon.id_for_label}}">Longitude <span style="font-size:1rem;">(auto-populated from map)</span> </label>
         <div id="enterlon" class="input-group">
           {{form.lon}}
         </div>
@@ -201,12 +209,15 @@ Edit Client
       </div>
     </div>
 </p>
-<input class="btn btn-success" value="Save" type="submit"></input>
+<div class="container d-flex justify-content-center">
+    <input class="btn btn-success" value="Save" type="submit"></input>
+</div>
+
 {% if current_client.active == True %}
 <!-- Button trigger modal -->
-<a class="btn btn-danger" data-toggle="modal" data-target="#Modal">Deactivate</a>
+<a class="btn deactivate d-flex justify-content-center" data-toggle="modal" data-target="#Modal">Deactivate</a>
 {% elif current_client.active == False %}
-<a href="/delete_client/{{current_client.id}}" class="btn btn-danger">Reactivate</a>
+<a href="/delete_client/{{current_client.id}}" class="btn reactivate d-flex justify-content-center">Reactivate</a>
 {% endif %}
 </form>
 

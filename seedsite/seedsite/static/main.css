@@ -11,6 +11,9 @@ background-image: linear-gradient(-19deg, #21D4FD 0%, #B721FF 100%);
 
 green-yellow:
 background-image: linear-gradient(-5deg, #00E3AE 0%, #9BE15D 100%);
+
+blue-blue:
+background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 51%, #4facfe 100%);
 */
 
 /* GLOBAL STYLES */
@@ -141,6 +144,32 @@ button, input, optgroup, select, textarea {
     box-shadow: 0 1px 4px -1px rgba(0,0,0,0.50);
 }
 
+.btn-primary, .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+    /* background-image: linear-gradient(-5deg, #00E3AE 0%, #9BE15D 100%); */
+    background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 51%, #4facfe 100%);
+    border-radius: 5px;
+    color: #FFFFFF;
+    text-align: center;
+    font-family: "niveau-grotesk-small-caps",sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.25rem;
+    border: none;
+    margin-left:25%;
+    margin-right: 25%;
+}
+
+.btn-primary:focus {
+    box-shadow: 0 1px 4px -1px rgba(0,0,0,0.50);
+}
+
+a.deactivate {
+    color: #d30000 !important;
+    font-family: "niveau-grotesk-small-caps",sans-serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
 /* CLIENT CARDS */
 .rounded-image {
     border-radius: 50%;
@@ -233,3 +262,33 @@ button, input, optgroup, select, textarea {
 .where-am-i {
     display: none;
 }
+
+/* CLIENT MAP */
+#mapid {
+    width: 350px;
+    height: 200px;
+}
+
+/* MEDIA QUERIES */
+/* // Small devices (landscape phones, 576px and up) */
+/* @media (min-width: 576px) {
+
+} */
+
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    #mapid {
+        width: 700px;
+        height: 400px;
+    }
+}
+
+/* // Large devices (desktops, 992px and up) */
+/* @media (min-width: 992px) {
+
+} */
+
+/* // Extra large devices (large desktops, 1200px and up) */
+/* @media (min-width: 1200px) {
+
+} */
