@@ -24,7 +24,11 @@ Search
                 <div class="container-fluid">
                     <div class="row d-flex align-items-center justify-content-center">
                         <div class="col-6">
-                            <img src="{% static "adult-beach-beard.jpg" %}" class="img-responsive rounded-image" alt="">
+                          {% if client.gender == 'Male' %}
+                            <img src="{% static "profile-image-male.jpg" %}" class="img-responsive rounded-image" alt="">
+                          {% else %}
+                            <img src="{% static "profile-image-female.jpg" %}" class="img-responsive rounded-image" alt="">
+                          {% endif %}
                         </div>
                     </div>
                     <div class="row d-flex align-items-center justify-content-center p-4">
@@ -45,7 +49,7 @@ Search
                         <a class="nav-link active" href="/client_profile/{{client.id}}"> <i class="fa fa-list-ul fa-lg client-nav-link"></i> </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> <i class="fa fa-map-marker-alt fa-lg client-nav-link"></i> </a>
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query={{client.lat}}, {{client.lon}}"> <i class="fa fa-map-marker-alt fa-lg client-nav-link"></i> </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/add_bookmark/{{client.id}}"> <i class="fa fa-bookmark fa-lg client-nav-link bookmark-enabled" style="line-height: 1em;"></i> </a>
@@ -108,7 +112,11 @@ Search
                 <div class="container-fluid">
                     <div class="row d-flex align-items-center justify-content-center">
                         <div class="col-6">
-                            <img src="{% static "adult-beach-beard.jpg" %}" class="img-responsive rounded-image" alt="">
+                          {% if client.gender == 'Male' %}
+                            <img src="{% static "profile-image-male.jpg" %}" class="img-responsive rounded-image" alt="">
+                          {% else %}
+                            <img src="{% static "profile-image-female.jpg" %}" class="img-responsive rounded-image" alt="">
+                          {% endif %}
                         </div>
                     </div>
                     <div class="row d-flex align-items-center justify-content-center p-4">
@@ -129,7 +137,7 @@ Search
                         <a class="nav-link active" href="/client_profile/{{client.id}}"> <i class="fa fa-list-ul fa-lg client-nav-link"></i> </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"> <i class="fa fa-map-marker-alt fa-lg client-nav-link"></i> </a>
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query={{client.lat}}, {{client.lon}}"> <i class="fa fa-map-marker-alt fa-lg client-nav-link"></i> </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/add_bookmark/{{client.id}}"> <i class="fa fa-bookmark fa-lg client-nav-link" style="line-height: 1em;"></i> </a>

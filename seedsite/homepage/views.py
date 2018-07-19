@@ -167,7 +167,7 @@ class AddLog(forms.Form):
 
     visit_description = forms.CharField(label="Visit Description", required=True, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Please describe your visit', 'class':'form-control'}))
     next_steps = forms.CharField(label="Next Steps", required=True, max_length=250, widget=forms.Textarea(attrs={'placeholder':'Describe what you plan to do next', 'class':'form-control'}))
-    date_visited = forms.CharField(label="Date Visited", required=True, widget=forms.TextInput(attrs={'placeholder':'MM/DD/YYY', 'class':'form-control'}))
+    date_visited = forms.DateField(label="Date Visited", required=True, widget=forms.DateInput(format='%m/%d/%Y', attrs={'placeholder':'MM/DD/YYYY', 'class':'form-control'}))
     time_of_visit = forms.ChoiceField(label="Time Of Visit", choices=TIME_CHOICES, required=True)
 
     def __init__(self, *args, **kwargs):
@@ -183,6 +183,7 @@ class AddLog(forms.Form):
         log.visit_description = self.cleaned_data.get('visit_description')
         log.next_steps = self.cleaned_data.get('next_steps')
         log.time_of_visit = self.cleaned_data.get('time_of_visit')
+        log.date_visited = self.cleaned_data.get('date_visited')
         log.intern = mod.Intern.objects.get(id = request.user.id)
         log.client = mod.Client.objects.get(id = current_client.id)
         log.save()
@@ -195,7 +196,7 @@ class AddLog(forms.Form):
 def client_profile(request, id):
 
     current_client = mod.Client.objects.get(id=id)
-    client_logs = mod.Log.objects.filter(client=current_client).order_by('-date_created')
+    client_logs = mod.Log.objects.filter(client=current_client).order_by('-date_visited')
 
     context = {
     'current_client':current_client,
@@ -394,23 +395,21 @@ class AddClient(forms.Form):
 def search(request):
     # intiialize variables
     current_user = request.user
-    user_input = request.GET.get('client_name')
-    # redirect user back to intern if search is empty
-    if user_input is None:
-        return HttpResponseRedirect('/index/')
-
-    # initialize search variables
-    filtered_clients = mod.Client.objects.filter(Q(first_name__icontains=user_input) | Q(last_name__icontains=user_input) | \
-    Q(business_name__icontains=user_input)).order_by('first_name')
-    assigned_client_objects = mod.AssignedClient.objects.filter(intern = current_user).order_by('client')
+    query_string = ''
+    filtered_clients = None
     assigned_clients_filtered = []
     unassigned_clients_filtered = []
+    if ('client_name' in request.GET) and request.GET['client_name'].strip():
+        query_string = request.GET.get('client_name')
+        query = get_query(query_string, ['first_name', 'last_name', 'business_name'])
+        filtered_clients = mod.Client.objects.filter(query).order_by('first_name')
+    assigned_client_objects = mod.AssignedClient.objects.filter(intern = current_user).order_by('client')
     # check assigned client objects to find pairs where intern exists
-    for item in assigned_client_objects:
-        for i in filtered_clients:
+    for item in filtered_clients:
+        for i in assigned_client_objects:
             # if intern exists in assigned client pair, add it to the assigned clients filtered list
-            if item.client == i:
-                assigned_clients_filtered.append(i)
+            if item == i.client:
+                assigned_clients_filtered.append(item)
     # check to see which clients have already been added to the assigned clients filtered list
     for item in filtered_clients:
         client_exists = False
@@ -707,18 +706,38 @@ class AddIntern(forms.Form):
             intern_group = Group.objects.get(name='Interns')
             intern_group.user_set.add(intern)
 
+# splits strings up into individual terms
+def normalize_query(query_string):
+    normalized_query = query_string.split(' ')
+    return normalized_query
+
+# building a query using the specified search fields and the normalized query
+def get_query(query_string, search_fields):
+    query = None # final search query
+    terms = normalize_query(query_string)
+    for term in terms:
+        temp_query = None # query to search for each term in each field
+        for field_name in search_fields:
+            part = Q(**{"%s__icontains" % field_name: term})
+            if temp_query is None:
+                temp_query = part
+            else:
+                temp_query = temp_query | part
+        if query is None:
+            query = temp_query
+        else:
+            query = query & temp_query
+    return query
+
 @login_required(login_url = '/login/')
 def search_interns(request):
-    # initialize variables
-    user_input = request.GET.get('intern_name')
-    assigned_clients = mod.AssignedClient.objects.all().prefetch_related('intern', 'client')
-    # redirect user to index if search is empty
-    if user_input is None:
-        return HttpResponseRedirect('/index/')
-    # query database to find interns that match user entered content
-    filtered_interns = mod.Intern.objects.filter(Q(first_name__icontains=user_input) | \
-    Q(last_name__icontains=user_input) | Q(semester__icontains=user_input) | Q(year__icontains=user_input)| \
-    Q(email__icontains=user_input)).order_by('-date_joined')
+    query_string = ''
+    filtered_interns = None
+    if ('intern_name' in request.GET) and request.GET['intern_name'].strip():
+        assigned_clients = mod.AssignedClient.objects.all().prefetch_related('intern', 'client')
+        query_string = request.GET['intern_name']
+        entry_query = get_query(query_string, ['first_name', 'last_name', 'semester', 'year', 'email'])
+        filtered_interns = mod.Intern.objects.filter(entry_query).order_by('-date_joined')
 
     context = {
         'filtered_interns':filtered_interns,
@@ -727,6 +746,7 @@ def search_interns(request):
 
     return render(request, 'homepage/search_interns.html', context)
 
+@login_required(login_url = '/login/')
 def deactivate_intern(request, id):
 
     current_intern = mod.Intern.objects.get(id=id)
