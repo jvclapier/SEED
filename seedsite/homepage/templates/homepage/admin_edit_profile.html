@@ -94,22 +94,24 @@ Edit Profile
 
             </div>
         </p>
-        <input class="btn btn-success" value="Save" type="submit"></input>
+        <div class="container d-flex justify-content-center">
+            <input class="btn btn-success" value="Save" type="submit"></input>
+        </div>
         {% if selected_intern.is_active == True %}
         <!-- Button trigger modal -->
-        <a class="btn btn-danger" data-toggle="modal" data-target="#Modal">Deactivate</a>
+        <a class="btn deactivate d-flex justify-content-center" data-toggle="modal" data-target="#Modal">Deactivate</a>
         {% elif selected_intern.is_active == False %}
-        <a href="/deactivate_intern/{{selected_intern.id}}" class="btn btn-danger">Reactivate</a>
+        <a href="/deactivate_intern/{{selected_intern.id}}" class="btn reactivate d-flex justify-content-center">Reactivate</a>
         {% endif %}
     </form>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+<div class="modal fade mt-5" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabel">Are you sure?</h5>
+        <h5 class="modal-title" id="ModalLabel">Hold up! Wait a minute.</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -118,8 +120,9 @@ Edit Profile
       Are you sure you want to deactivate this intern? The intern will only be viewable from the search bar.
       </div>
       <div class="modal-footer">
-        <a type="button" class="btn btn-success" data-dismiss="modal">Close</a>
-        <a type="button" class="btn btn-danger" href="/deactivate_intern/{{selected_intern.id}}">Deactivate</a>
+        <a class="btn btn-danger modal-danger ml-auto" href="/deactivate_intern/{{selected_intern.id}}">Deactivate</a>
+        <a class="btn btn-primary mr-auto" data-dismiss="modal" style="color:white;">Close</a>
+        <img id="waiting-gif" src="{% static "waiting.gif" %}" alt="">
       </div>
     </div>
   </div>
