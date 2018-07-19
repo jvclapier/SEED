@@ -3,7 +3,7 @@
 {% block alerts %}
     {% if current_user.is_previously_logged_in == False %}
     <div class="alert alert-warning alert-dismissible fade show m-0" role="alert" style="position:absolute; z-index:1000;">
-        <strong>Welcome Chancho!</strong> We see it is your first time logging in. Please change your password to continue.
+        <strong>Hey Joe!</strong> We see it is your first time logging in. Please change your password to continue.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -99,7 +99,9 @@ Edit Profile
 
             </div>
         </p>
-        <input class="btn btn-success" value="Save" type="submit"></input>
+        <div class="container d-flex justify-content-center">
+            <input class="btn btn-success" value="Save" type="submit"></input>
+        </div>
     </form>
 </div>
 
