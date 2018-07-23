@@ -139,7 +139,7 @@ def CreateClient(first_name, last_name, gender, email, phone_number, tagalog_nee
     client.save()
     print("####### Client created: " + client.first_name)
 
-CreateClient('Zaldy', 'Conception', 'Male', 'zaldy@mailinator.com', '0927123456', True, '123 Market Avenue', 'Pasig', '12345', 'Philippines', 'San Miguel', '14.563502', '121.084722', 'Eloi & She Food Corner', 'Canteen', 'Tricycle', 'He is the man...or boyflux!', True)
+CreateClient('Zaldy', 'Conception', 'Male', 'zaldy@mailinator.com', '0927123456', True, '123 Market Avenue', 'Pasig', '12345', 'Philippines', 'San Miguel', '14.563502', '121.084722', 'Eloi & She Food Corner', 'Canteen', 'Tricycle', 'He is the man!', True)
 CreateClient('Reyna', 'Banatao', 'Female', 'reyna@mailinator.com', '0927123456', True, '123 Birthing Avenue', 'Pasig', '12345', 'Philippines', 'Nagpayong', '14.543812', '121.100816', 'God Gift Lying In', 'Birthing Clinic', 'Tricycle', 'She has great ideas!', True)
 CreateClient('Gerald', 'Taratao', 'Male', 'gerald@mailinator.com', '0927123456', True, '123 Petshop Avenue', 'Pasig', '12345', 'Philippines', 'Rosario', '14.586477', '121.078430', 'GAT Pet Shop', 'Petshop', 'Jeepney', 'Great guy!', True)
 
