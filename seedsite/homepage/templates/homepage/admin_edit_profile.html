@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 {% block alerts %}
-    {% if current_user.is_previously_logged_in == False %}
-    <div class="alert alert-warning alert-dismissible fade show m-0" role="alert" style="position:absolute; z-index:1000;">
-        <strong>Welcome Chancho!</strong> We see it is your first time logging in. Please change your password to continue.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {% endif %}
+{% if current_user.is_previously_logged_in == False %}
+<div class="alert alert-warning alert-dismissible fade show m-0" role="alert" style="position:absolute; z-index:1000;">
+  <strong>Welcome Chancho!</strong> We see it is your first time logging in. Please change your password to continue.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %}
 {% endblock alerts %}
 
 {% block title %}
@@ -21,95 +21,98 @@ Edit Profile
 <h1 class="text-center">Edit Intern</h1>
 <hr>
 <div class="container mb-5">
-    <form class="" action="/admin_edit_profile/{{selected_intern.id}}" method="post">
-        {% csrf_token %}
-        <p class="card-text">
-            <div class="row">
-                <div class="col-12 col-md-6 input-label">
-                    {{form.first_name.errors}}
-                    <label for="{{form.first_name.id_for_label}}">First Name</label>
-                    <div class="input-group">
-                        {{form.first_name}}
-                    </div>
-                    <br>
-                </div>
-                <div class="col-12 col-md-6 input-label">
-                    {{form.last_name.errors}}
-                    <label for="{{form.last_name.id_for_label}}">Last Name</label>
-                    <div class="input-group">
-                        {{form.last_name}}
-                    </div>
-                    <br>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-6 input-label">
-                    {{form.email.errors}}
-                    <label for="{{form.email.id_for_label}}">Email</label>
-                    <div class="input-group">
-                        {{form.email}}
-                    </div>
-                    <br>
-                </div>
-                <div class="col-12 col-md-6 input-label">
-                    {{form.semester.errors}}
-                    <label for="{{form.semester.id_for_label}}">Semester</label>
-                    <div class="input-group">
-                        {{form.semester}}
-                    </div>
-                    <br>
-                </div>
-                <div class="col-12 col-md-6 input-label">
-                    {{form.year.errors}}
-                    <label for="{{form.year.id_for_label}}">Year</label>
-                    <div class="input-group">
-                        {{form.year}}
-                    </div>
-                    <br>
-                </div>
-                <div class="col-12 col-md-6 input-label">
-                    {{form.permissions.errors}}
-                    <label for="{{form.permissions.id_for_label}}">Permissions</label>
-                    <div class="input-group">
-                        {{form.permissions}}
-                    </div>
-                    <br>
-                </div>
-                <div class="col-12 col-md-6 input-label">
-                    {{form.new_password.errors}}
-                    <label for="{{form.new_password.id_for_label}}">New Password</label>
-                    <div class="input-group">
-                        {{form.new_password}}
-                    </div>
-                    <br>
-                </div>
-                <div class="col-12 col-md-6 input-label">
-                    {{form.confirm_new_password.errors}}
-                    <label for="{{form.confirm_new_password.id_for_label}}">Confirm New Password</label>
-                    <div class="input-group">
-                        {{form.confirm_new_password}}
-                    </div>
-                    <br>
-                </div>
+  <form class="" action="/admin_edit_profile/{{selected_intern.id}}" method="post">
+    {% csrf_token %}
+    <p class="card-text">
+      <div class="row">
+        <div class="col-12 col-md-6 input-label">
+          {{form.first_name.errors}}
+          <label for="{{form.first_name.id_for_label}}">First Name</label>
+          <div class="input-group">
+            {{form.first_name}}
+          </div>
+          <br>
+        </div>
+        <div class="col-12 col-md-6 input-label">
+          {{form.last_name.errors}}
+          <label for="{{form.last_name.id_for_label}}">Last Name</label>
+          <div class="input-group">
+            {{form.last_name}}
+          </div>
+          <br>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6 input-label">
+          {{form.email.errors}}
+          <label for="{{form.email.id_for_label}}">Email</label>
+          <div class="input-group">
+            {{form.email}}
+          </div>
+          <br>
+        </div>
+        <div class="col-12 col-md-6 input-label">
+          {{form.semester.errors}}
+          <label for="{{form.semester.id_for_label}}">Semester</label>
+          <div class="input-group">
+            {{form.semester}}
+          </div>
+          <br>
+        </div>
+        <div class="col-12 col-md-6 input-label">
+          {{form.year.errors}}
+          <label for="{{form.year.id_for_label}}">Year</label>
+          <div class="input-group">
+            {{form.year}}
+          </div>
+          <br>
+        </div>
+        <div class="col-12 col-md-6 input-label">
+          {{form.permissions.errors}}
+          <label for="{{form.permissions.id_for_label}}">Permissions</label>
+          <div class="input-group">
+            {{form.permissions}}
+          </div>
+          <br>
+        </div>
+        <div class="col-12 col-md-6 input-label">
+          {{form.new_password.errors}}
+          <label for="{{form.new_password.id_for_label}}">New Password</label>
+          <div class="input-group">
+            {{form.new_password}}
+          </div>
+          <br>
+        </div>
+        <div class="col-12 col-md-6 input-label">
+          {{form.confirm_new_password.errors}}
+          <label for="{{form.confirm_new_password.id_for_label}}">Confirm New Password</label>
+          <div class="input-group">
+            {{form.confirm_new_password}}
+          </div>
+          <br>
+        </div>
 
-            </div>
-        </p>
-        <input class="btn btn-success" value="Save" type="submit"></input>
-        {% if selected_intern.is_active == True %}
-        <!-- Button trigger modal -->
-        <a class="btn btn-danger" data-toggle="modal" data-target="#Modal">Deactivate</a>
-        {% elif selected_intern.is_active == False %}
-        <a href="/deactivate_intern/{{selected_intern.id}}" class="btn btn-danger">Reactivate</a>
-        {% endif %}
-    </form>
+      </div>
+    </p>
+    <div class="container d-flex justify-content-center">
+      <input class="btn btn-success" value="Save" type="submit"></input>
+    </div>
+
+    {% if selected_intern.is_active == True %}
+    <!-- Button trigger modal -->
+    <a class="btn deactivate d-flex justify-content-center" data-toggle="modal" data-target="#Modal">Deactivate</a>
+    {% elif selected_intern.is_active == False %}
+    <a href="/deactivate_intern/{{selected_intern.id}}" class="btn reactivate d-flex justify-content-center">Reactivate</a>
+    {% endif %}
+  </form>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+<div class="modal fade mt-5" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabel">Are you sure?</h5>
+        <h5 class="modal-title" id="ModalLabel">Hold up! Wait a minute.</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -118,8 +121,9 @@ Edit Profile
       Are you sure you want to deactivate this intern? The intern will only be viewable from the search bar.
       </div>
       <div class="modal-footer">
-        <a type="button" class="btn btn-success" data-dismiss="modal">Close</a>
-        <a type="button" class="btn btn-danger" href="/deactivate_intern/{{selected_intern.id}}">Deactivate</a>
+        <a class="btn btn-danger modal-danger ml-auto" href="/deactivate_intern/{{selected_intern.id}}">Deactivate</a>
+        <a class="btn btn-primary mr-auto" data-dismiss="modal" style="color:white;">Close</a>
+        <img id="waiting-gif" src="{% static "waiting.gif" %}" alt="">
       </div>
     </div>
   </div>

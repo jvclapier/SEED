@@ -19,11 +19,12 @@ Edit Client
 
 {% block content %}
 <h1 class="text-center">Edit Client</h1>
-<hr>
-
+<!-- <hr> -->
 <form class="" action="/edit_client/{{current_client.id}}" method="post">
   {% csrf_token %}
   <p class="card-text">
+    <h3 class="text-left">Personal Information:</h3>
+    <hr>
     <div class="row">
       <div class="col-md-6 input-label">
         {{form.first_name.errors}}
@@ -78,33 +79,39 @@ Edit Client
         <br>
       </div>
     </div>
+    <h3 class="text-left">Bio:</h3>
+    <hr>
+    <div class="row">
+      <div class="col-md-12 input-label">
+        {{form.bio.errors}}
+        <!-- <label for="{{form.bio.id_for_label}}">Bio</label> -->
+        <div class="input-group">
+          {{form.bio}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <h3 class="text-left">Business Information:</h3>
+    <hr>
     <div class="row">
       <div class="col-md-6 input-label">
-        {{form.street_address.errors}}
-        <label for="{{form.street_address.id_for_label}}">Street Address</label>
+        {{form.business_name.errors}}
+        <label for="{{form.business_name.id_for_label}}">Business Name</label>
         <div class="input-group">
-          {{form.street_address}}
+          {{form.business_name}}
         </div>
         <br>
       </div>
       <div class="col-md-6 input-label">
-        {{form.city.errors}}
-        <label for="{{form.city.id_for_label}}">City</label>
+        {{form.business_type.errors}}
+        <label for="{{form.business_type.id_for_label}}">Business Type</label>
         <div class="input-group">
-          {{form.city}}
+          {{form.business_type}}
         </div>
         <br>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.zipcode.errors}}
-        <label for="{{form.zipcode.id_for_label}}">Zipcode</label>
-        <div class="input-group">
-          {{form.zipcode}}
-        </div>
-        <br>
-      </div>
       <div class="col-md-6 input-label">
         {{form.country.errors}}
         <label for="{{form.country.id_for_label}}">Country</label>
@@ -113,37 +120,33 @@ Edit Client
         </div>
         <br>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 mb-4">
-          <label for="{{form.country.id_for_label}}">Place Pin</label>
-          <div id='mapid' class="container"></div>
-          <script>
-          var mymap = L.map('mapid').setView([{{current_client.lat}}, {{current_client.lon}}], 13);
-          L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-              attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-              maxZoom: 18,
-              id: 'mapbox.streets',
-              accessToken: 'pk.eyJ1IjoiYmVudG9uc21pdGgiLCJhIjoiY2pqZjl0ZjBvMGN1YjN2bXN1Y2ZvcDY0ayJ9.V8OFcjbPM7l1gaMsWQxudA'
-          }).addTo(mymap);
-          var myIcon = L.icon({
-            iconUrl: "{% static "map_pin.png" %}",
-            iconSize: [38, 70],
-            iconAnchor: [19, 70],
-          });
-          var marker = L.marker([{{current_client.lat}}, {{current_client.lon}}], {icon: myIcon, draggable: 'True', title:'Drag to set location', autoPan: 'True'}).addTo(mymap);
-          marker.on('moveend', setlatlon);
-          function setlatlon(){
-
-            var newlocation = marker.getLatLng();
-            console.log(newlocation);
-            $('#id_lat').attr('value', newlocation.lat);
-            $('#id_lon').attr('value', newlocation.lng);
-          }
-          </script>
+      <div class="col-md-6 input-label">
+        {{form.street_address.errors}}
+        <label for="{{form.street_address.id_for_label}}">Street Address</label>
+        <div class="input-group">
+          {{form.street_address}}
+        </div>
+        <br>
       </div>
     </div>
-
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.city.errors}}
+        <label for="{{form.city.id_for_label}}">City</label>
+        <div class="input-group">
+          {{form.city}}
+        </div>
+        <br>
+      </div>
+      <div class="col-md-6 input-label">
+        {{form.zipcode.errors}}
+        <label for="{{form.zipcode.id_for_label}}">Zipcode</label>
+        <div class="input-group">
+          {{form.zipcode}}
+        </div>
+        <br>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-6 input-label">
         {{form.barangay.errors}}
@@ -153,6 +156,39 @@ Edit Client
         </div>
         <br>
       </div>
+    </div>
+    <h3 class="text-left">Getting There:</h3>
+    <hr>
+    <div class="row">
+      <div class="col-md-12 mb-4">
+        <label for="{{form.country.id_for_label}}">Place Pin</label>
+        <div id='mapid' class="container"></div>
+        <script>
+        var mymap = L.map('mapid').setView([{{current_client.lat}}, {{current_client.lon}}], 13);
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox.streets',
+          accessToken: 'pk.eyJ1IjoiYmVudG9uc21pdGgiLCJhIjoiY2pqZjl0ZjBvMGN1YjN2bXN1Y2ZvcDY0ayJ9.V8OFcjbPM7l1gaMsWQxudA'
+        }).addTo(mymap);
+        var myIcon = L.icon({
+          iconUrl: "{% static "map_pin.png" %}",
+          iconSize: [38, 70],
+          iconAnchor: [19, 70],
+        });
+        var marker = L.marker([{{current_client.lat}}, {{current_client.lon}}], {icon: myIcon, draggable: 'True', title:'Drag to set location', autoPan: 'True'}).addTo(mymap);
+        marker.on('moveend', setlatlon);
+        function setlatlon(){
+
+          var newlocation = marker.getLatLng();
+          console.log(newlocation);
+          $('#id_lat').attr('value', newlocation.lat);
+          $('#id_lon').attr('value', newlocation.lng);
+        }
+        </script>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.lat.errors}}
         <label for="{{form.lat.id_for_label}}">Latitude <span style="font-size:1rem;">(auto-populated from map)</span></label>
@@ -161,8 +197,6 @@ Edit Client
         </div>
         <br>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-6 input-label">
         {{form.lon.errors}}
         <label for="{{form.lon.id_for_label}}">Longitude <span style="font-size:1rem;">(auto-populated from map)</span> </label>
@@ -171,24 +205,8 @@ Edit Client
         </div>
         <br>
       </div>
-      <div class="col-md-6 input-label">
-        {{form.business_name.errors}}
-        <label for="{{form.business_name.id_for_label}}">Business Name</label>
-        <div class="input-group">
-          {{form.business_name}}
-        </div>
-        <br>
-      </div>
     </div>
     <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.business_type.errors}}
-        <label for="{{form.business_type.id_for_label}}">Business Type</label>
-        <div class="input-group">
-          {{form.business_type}}
-        </div>
-        <br>
-      </div>
       <div class="col-md-6 input-label">
         {{form.transportation_method.errors}}
         <label for="{{form.transportation_method.id_for_label}}">Transportation Method</label>
@@ -198,20 +216,10 @@ Edit Client
         <br>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.bio.errors}}
-        <label for="{{form.bio.id_for_label}}">Bio</label>
-        <div class="input-group">
-          {{form.bio}}
-        </div>
-        <br>
-      </div>
-    </div>
-</p>
-<div class="container d-flex justify-content-center">
-    <input class="btn btn-success" value="Save" type="submit"></input>
-</div>
+  </p>
+  <div class="container d-flex justify-content-center">
+      <input class="btn btn-success" value="Save" type="submit"></input>
+  </div>
 
 {% if current_client.active == True %}
 <!-- Button trigger modal -->
@@ -222,11 +230,11 @@ Edit Client
 </form>
 
 <!-- Modal -->
-<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+<div class="modal fade mt-5" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabel">Are you sure?</h5>
+        <h5 class="modal-title" id="ModalLabel">Hold up! Wait a minute.</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -235,8 +243,9 @@ Edit Client
       Are you sure you want to deactivate this client? The client will only be viewable from the search bar.
       </div>
       <div class="modal-footer">
-        <a type="button" class="btn btn-success" data-dismiss="modal">Close</a>
-        <a type="button" class="btn btn-danger" href="/delete_client/{{current_client.id}}">Deactivate</a>
+        <a class="btn btn-danger modal-danger ml-auto" href="/delete_client/{{current_client.id}}">Deactivate</a>
+        <a class="btn btn-primary mr-auto" data-dismiss="modal" style="color:white;">Close</a>
+        <img id="waiting-gif" src="{% static "waiting.gif" %}" alt="">
       </div>
     </div>
   </div>
