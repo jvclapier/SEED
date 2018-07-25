@@ -11,7 +11,7 @@ Admin Portal
 
 {% block content %}
 <div class="where-am-i">id-admin-portal</div>
-<div class="col-lg-4 col-lg-offset-4 mb-4">
+<div class="col-12 col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-12 offset-md-0 col-lg-12 offset-lg-0 col-mb-4">
 <form action="/search_interns/">
     <div class="input-group">
         <input  id="search_box" type="search" class="form-control mr-sm-2" name="intern_name"  placeholder="Search Intern" >
@@ -20,8 +20,9 @@ Admin Portal
 </div>
 
 <div class="container mb-5">
+  <div class="row">
     {% for intern in interns %}
-    <div class="card mb-4 p-2">
+    <div class="card col-12 col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-6 offset-md-0 col-lg-4 offset-lg-0 mb-4 p-2">
         <div class="card-body pl-0 pr-0">
             <div class="container-fluid">
                 <div class="row d-flex align-items-center justify-content-center">
@@ -47,9 +48,8 @@ Admin Portal
             </div>
         </div>
     </div>
-    {% empty %}
-    <h5>No Assigned Clients</h5>
     {% endfor %}
+  </div>
 </div>
 
 {% endblock content %}

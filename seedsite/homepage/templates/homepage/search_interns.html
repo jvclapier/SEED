@@ -11,8 +11,7 @@ Search Interns
 
 {% block content %}
 <div class="where-am-i">id-search</div>
-
-<div class="col-lg-4 col-lg-offset-4 mb-4">
+<div class="col-12 col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-12 offset-md-0 col-lg-12 offset-lg-0 col-mb-4">
 <form action="/search_interns/">
     <div class="input-group">
         <input  id="search_box" type="search" class="form-control mr-sm-2" name="intern_name"  placeholder="Search Intern" >
@@ -23,32 +22,33 @@ Search Interns
 <h4 class="text-left">Search results...</h4>
 <hr>
 <div class="container mb-5">
+  <div class="row">
     {% for intern in filtered_interns %}
-    <div class="card mb-4 p-2">
-        <div class="card-body pl-0 pr-0">
-            <div class="container-fluid">
-                <div class="row d-flex align-items-center justify-content-center">
-                    <div class="col-12">
-                        <a href="/admin_edit_profile/{{intern.id}}">
-                            <h4 class="text-center"> <strong>{{ intern.first_name }} {{ intern.last_name}}</strong> | <span style="font-size:1rem;">{{ intern.semester }} {{ intern.year }}</span></h4>
-                        </a>
-                        <a href="mailto:{{intern.email}}">
-                            <h6 class="text-center">{{ intern.email }}</h6>
-                        </a>
-                        <br>
-                        <h5 class="text-center">Assigned Clients</h5>
-                        <hr class="mt-1 mb-1">
-                        {% for pair in assigned_clients %}
-                            {% if pair.intern.id == intern.id %}
-                                    <h5 class="text-center p-2" style="font-weight:200;"><a href="/client_profile/{{pair.client.id}}">{{pair.client.first_name}} {{pair.client.last_name}}</a></h5>
-                            {% endif %}
-                        {% endfor %}
-                        <h5></h5>
-                    </div>
-
-                </div>
+    <div class="card col-12 col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-6 offset-md-0 col-lg-4 offset-lg-0 mb-4 p-2">
+      <div class="card-body pl-0 pr-0">
+        <div class="container-fluid">
+          <div class="row d-flex align-items-center justify-content-center">
+            <div class="col-12">
+              <a href="/admin_edit_profile/{{intern.id}}">
+                <h4 class="text-center"> <strong>{{ intern.first_name }} {{ intern.last_name}}</strong> | <span style="font-size:1rem;">{{ intern.semester }} {{ intern.year }}</span></h4>
+              </a>
+              <a href="mailto:{{intern.email}}">
+                <h6 class="text-center">{{ intern.email }}</h6>
+              </a>
+              <br>
+              <h5 class="text-center">Assigned Clients</h5>
+              <hr class="mt-1 mb-1">
+              {% for pair in assigned_clients %}
+              {% if pair.intern.id == intern.id %}
+              <h5 class="text-center p-2" style="font-weight:200;"><a href="/client_profile/{{pair.client.id}}">{{pair.client.first_name}} {{pair.client.last_name}}</a></h5>
+              {% endif %}
+              {% endfor %}
+              <h5></h5>
             </div>
+
+          </div>
         </div>
+      </div>
     </div>
     {% empty %}
     <h5>No search results</h5>
@@ -57,6 +57,7 @@ Search Interns
     <div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/12zV7u6Bh0vHpu" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div>
     <!-- <div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/ApCJEN78bm8vu" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div> -->
     {% endfor %}
+  </div>
 </div>
 
 {% endblock content %}

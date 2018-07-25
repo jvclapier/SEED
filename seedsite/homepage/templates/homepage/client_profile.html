@@ -15,7 +15,11 @@ Client Profile
 <h4 class="text-left">{{ current_client.business_name}}</h4>
 <hr>
 <h5 class="text-left">Client Bio</h5>
-<p class="log-text">{{ current_client.bio }}</p>
+{% if current_client.bio %}
+  <p class="log-text">{{ current_client.bio }}</p>
+{% else %}
+  <p class="log-text">No bio entered</p>
+{% endif %}
 <hr>
 <div class="container mb-5">
     {% for log in client_logs %}
