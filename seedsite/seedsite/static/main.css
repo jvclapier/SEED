@@ -170,6 +170,27 @@ a.deactivate {
     font-weight: 400;
 }
 
+.btn-danger, .btn-danger:not(:disabled):not(.disabled).active, .btn-danger:not(:disabled):not(.disabled):active, .show>.btn-danger.dropdown-toggle {
+    /* background-image: linear-gradient(-5deg, #00E3AE 0%, #9BE15D 100%); */
+    background-image: linear-gradient(to left, #ffb199 0%, #ff0844 51%, #ffb199 100%);
+    /* background-image: linear-gradient(to top, #e14fad 0%, #f9d423 100%); */
+    border-radius: 5px;
+    color: #FFFFFF;
+    text-align: center;
+    font-family: "niveau-grotesk-small-caps",sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.25rem;
+    border: none;
+    margin-left:25%;
+    margin-right: 25%;
+}
+
+.btn-danger:focus {
+    box-shadow: 0 1px 4px -1px rgba(0,0,0,0.50);
+}
+
+
 /* CLIENT CARDS */
 .rounded-image {
     border-radius: 50%;
@@ -294,3 +315,18 @@ a.deactivate {
 } */
 
 /* MODAL */
+#waiting-gif {
+    /* width: 100%; */
+    position: absolute;
+    z-index: 1000;
+    top: -41px;
+    left: 200px;
+    width: 140px;
+}
+
+#failed-login {
+    width: 50%;
+    position: absolute;
+    bottom: 0;
+    z-index: 1000;
+}
