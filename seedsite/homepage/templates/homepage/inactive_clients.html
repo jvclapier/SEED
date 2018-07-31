@@ -2,11 +2,10 @@
 {% load static %}
 
 {% block title %}
-Intern Portal
+Inactive Clients
 {% endblock title %}
 
 {% block content %}
-<div class="where-am-i">id-intern-portal</div>
 <div class="col-12 col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-12 offset-md-0 col-lg-12 offset-lg-0 col-mb-4">
 <form action="/search/">
     <div class="input-group">
@@ -18,7 +17,7 @@ Intern Portal
 
 <div class="container">
   <div class="row">
-    {% for client in assigned_clients_ordered %}
+    {% for client in inactive_assigned %}
     <div class="card-flip col-12 col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-6 offset-md-0 col-lg-4 offset-lg-0 mb-4 p-2" >
       <div class="flip">
         <div class="front card">
@@ -96,7 +95,7 @@ Intern Portal
       </div>
     </div>
     {% endfor %}
-    {% for client in unassigned_clients %}
+    {% for client in inactive_unassigned %}
     <div class="card-flip col-12 col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-6 offset-md-0 col-lg-4 offset-lg-0 mb-4 p-2" >
       <div class="flip">
         <div class="front card ">
@@ -177,7 +176,5 @@ Intern Portal
     {% endfor %}
   </div>
 </div>
-
-<a class="btn deactivate d-flex justify-content-center" href="/inactive_clients/">See Inactive Clients</a>
 
 {% endblock content %}

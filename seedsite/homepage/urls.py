@@ -36,5 +36,6 @@ urlpatterns = [
     path('delete_client/<int:id>', views.delete_client, name='delete_client'),
     path('search_interns/', views.search_interns, name='search_interns'),
     path('deactivate_intern/<int:id>', views.deactivate_intern, name='deactivate_intern'),
+    path('inactive_clients/', views.inactive_clients, name='inactive_clients'),
 
 ]
