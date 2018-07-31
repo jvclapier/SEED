@@ -7,7 +7,7 @@ Intern Portal
 
 {% block content %}
 <div class="where-am-i">id-intern-portal</div>
-<div class="col-lg-4 col-lg-offset-4 mb-4">
+<div class="col-12 col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-12 offset-md-0 col-lg-12 offset-lg-0 col-mb-4">
 <form action="/search/">
     <div class="input-group">
         <input  id="search_box" type="search" class="form-control mr-sm-2" name="client_name"  placeholder="Search Client" >
@@ -15,165 +15,168 @@ Intern Portal
 </form>
 </div>
 
-{% for client in assigned_clients_ordered %}
 
-<div class="card-flip mb-4 p-2" >
-    <div class="flip">
+<div class="container">
+  <div class="row">
+    {% for client in assigned_clients_ordered %}
+    <div class="card-flip col-12 col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-6 offset-md-0 col-lg-4 offset-lg-0 mb-4 p-2" >
+      <div class="flip">
         <div class="front card">
-            <div class="card-body pb-0">
-                <div class="container-fluid">
-                    <div class="row d-flex align-items-center justify-content-center">
-                        <div class="col-6">
-                          {% if client.gender == 'Male' %}
-                            <img src="{% static "profile-image-male.jpg" %}" class="img-responsive rounded-image" alt="">
-                          {% else %}
-                            <img src="{% static "profile-image-female.jpg" %}" class="img-responsive rounded-image" alt="">
-                          {% endif %}
-                        </div>
-                    </div>
-                    <div class="row d-flex align-items-center justify-content-center p-4">
-                        <div class="container text-center p-0">
-                            <h3>
-                                {{ client.first_name }} {{ client.last_name}}
-                            </h3>
-                            <h4>
-                                {{ client.business_name }}
-                            </h4>
-                        </div>
-                    </div>
+          <div class="card-body pb-0">
+            <div class="container-fluid">
+              <div class="row d-flex align-items-center justify-content-center">
+                <div class="col-6">
+                  {% if client.gender == 'Male' %}
+                  <img src="{% static "profile-image-male.jpg" %}" class="img-responsive rounded-image" alt="">
+                  {% else %}
+                  <img src="{% static "profile-image-female.jpg" %}" class="img-responsive rounded-image" alt="">
+                  {% endif %}
                 </div>
+              </div>
+              <div class="row d-flex align-items-center justify-content-center p-4">
+                <div class="container text-center p-0">
+                  <h3>
+                    {{ client.first_name }} {{ client.last_name}}
+                  </h3>
+                  <h4>
+                    {{ client.business_name }}
+                  </h4>
+                </div>
+              </div>
             </div>
-            <div class="container-fluid pb-4">
-                <ul class="nav justify-content-around">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/client_profile/{{client.id}}"> <i class="fa fa-list-ul fa-lg client-nav-link"></i> </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query={{client.lat}}, {{client.lon}}"> <i class="fa fa-map-marker-alt fa-lg client-nav-link"></i> </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/add_bookmark/{{client.id}}"> <i class="fa fa-bookmark fa-lg client-nav-link bookmark-enabled" style="line-height: 1em;"></i> </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/add_log/{{client.id}}"> <i class="fa fa-plus fa-lg client-nav-link"></i> </a>
-                    </li>
-                </ul>
-            </div>
+          </div>
+          <div class="container-fluid pb-4">
+            <ul class="nav justify-content-around">
+              <li class="nav-item">
+                <a class="nav-link active" href="/client_profile/{{client.id}}"> <i class="fa fa-list-ul fa-lg client-nav-link"></i> </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query={{client.lat}}, {{client.lon}}"> <i class="fa fa-map-marker-alt fa-lg client-nav-link"></i> </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/add_bookmark/{{client.id}}"> <i class="fa fa-bookmark fa-lg client-nav-link bookmark-enabled" style="line-height: 1em;"></i> </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/add_log/{{client.id}}"> <i class="fa fa-plus fa-lg client-nav-link"></i> </a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="back card mb-3">
-            <div class="card-body pb-0">
-                <div class="container-fluid">
-                    <div class="row d-flex align-items-center justify-content-center">
-                        <div class="container text-left">
-                            <h5>Contact Info</h5>
-                            <p>
-                                <strong>Phone Number:</strong> <a href="tel:{{ client.phone_number}}">{{ client.phone_number}}</a>
-                                <br>
-                                <strong>Email Address:</strong> <a href="mailto:{{ client.email}}">{{ client.email}}</a>
-                                <br>
-                                <strong>Barangay:</strong> {{ client.barangay }}
-                                <br>
-                                <strong>Tagalog Needed:</strong>
-                                {% if client.tagalog_needed %}
-                                    Yes
-                                {% else %}
-                                    No
-                                {% endif %}
-                                <br>
-                                <strong>Transportation Method:</strong> {{ client.transportation_method}}
+          <div class="card-body pb-0">
+            <div class="container-fluid">
+              <div class="row d-flex align-items-center justify-content-center">
+                <div class="container text-left">
+                  <h5>Contact Info</h5>
+                  <p>
+                    <strong>Phone Number:</strong> <a href="tel:{{ client.phone_number}}">{{ client.phone_number}}</a>
+                    <br>
+                    <strong>Email Address:</strong> <a href="mailto:{{ client.email}}">{{ client.email}}</a>
+                    <br>
+                    <strong>Barangay:</strong> {{ client.barangay }}
+                    <br>
+                    <strong>Tagalog Needed:</strong>
+                    {% if client.tagalog_needed %}
+                    Yes
+                    {% else %}
+                    No
+                    {% endif %}
+                    <br>
+                    <strong>Transportation Method:</strong> {{ client.transportation_method}}
 
-                            </p>
-                            <div class="container d-flex justify-content-center">
-                                <a href="/edit_client/{{ client.id }}" class="btn btn-primary">Edit</a>
-                            </div>
-                        </div>
-                    </div>
+                  </p>
+                  <div class="container d-flex justify-content-center">
+                    <a href="/edit_client/{{ client.id }}" class="btn btn-primary">Edit</a>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-{% endfor %}
-
-{% for client in unassigned_clients %}
-<div class="card-flip mb-4 p-2" >
-    <div class="flip">
+    {% endfor %}
+    {% for client in unassigned_clients %}
+    <div class="card-flip col-12 col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-6 offset-md-0 col-lg-4 offset-lg-0 mb-4 p-2" >
+      <div class="flip">
         <div class="front card ">
-            <div class="card-body pb-0">
-                <div class="container-fluid">
-                    <div class="row d-flex align-items-center justify-content-center">
-                        <div class="col-6">
-                          {% if client.gender == 'Male' %}
-                            <img src="{% static "profile-image-male.jpg" %}" class="img-responsive rounded-image" alt="">
-                          {% else %}
-                            <img src="{% static "profile-image-female.jpg" %}" class="img-responsive rounded-image" alt="">
-                          {% endif %}
-                        </div>
-                    </div>
-                    <div class="row d-flex align-items-center justify-content-center p-4">
-                        <div class="container text-center p-0">
-                            <h3>
-                                {{ client.first_name }} {{ client.last_name}}
-                            </h3>
-                            <h4>
-                                {{ client.business_name }}
-                            </h4>
-                        </div>
-                    </div>
+          <div class="card-body pb-0">
+            <div class="container-fluid">
+              <div class="row d-flex align-items-center justify-content-center">
+                <div class="col-6">
+                  {% if client.gender == 'Male' %}
+                  <img src="{% static "profile-image-male.jpg" %}" class="img-responsive rounded-image" alt="">
+                  {% else %}
+                  <img src="{% static "profile-image-female.jpg" %}" class="img-responsive rounded-image" alt="">
+                  {% endif %}
                 </div>
+              </div>
+              <div class="row d-flex align-items-center justify-content-center p-4">
+                <div class="container text-center p-0">
+                  <h3>
+                    {{ client.first_name }} {{ client.last_name}}
+                  </h3>
+                  <h4>
+                    {{ client.business_name }}
+                  </h4>
+                </div>
+              </div>
             </div>
-            <div class="container-fluid pb-4">
-                <ul class="nav justify-content-around">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/client_profile/{{client.id}}"> <i class="fa fa-list-ul fa-lg client-nav-link"></i> </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query={{client.lat}}, {{client.lon}}"> <i class="fa fa-map-marker-alt fa-lg client-nav-link"></i> </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/add_bookmark/{{client.id}}"> <i class="fa fa-bookmark fa-lg client-nav-link" style="line-height: 1em;"></i> </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/add_log/{{client.id}}"> <i class="fa fa-plus fa-lg client-nav-link"></i> </a>
-                    </li>
-                </ul>
-            </div>
+          </div>
+          <div class="container-fluid pb-4">
+            <ul class="nav justify-content-around">
+              <li class="nav-item">
+                <a class="nav-link active" href="/client_profile/{{client.id}}"> <i class="fa fa-list-ul fa-lg client-nav-link"></i> </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query={{client.lat}}, {{client.lon}}"> <i class="fa fa-map-marker-alt fa-lg client-nav-link"></i> </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/add_bookmark/{{client.id}}"> <i class="fa fa-bookmark fa-lg client-nav-link" style="line-height: 1em;"></i> </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/add_log/{{client.id}}"> <i class="fa fa-plus fa-lg client-nav-link"></i> </a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="back card mb-3">
-            <div class="card-body pb-0">
-                <div class="container-fluid">
-                    <div class="row d-flex align-items-center justify-content-center">
-                        <div class="container text-left">
-                            <h5>Contact Info</h5>
-                            <p>
-                                <strong>Phone Number:</strong> <a href="tel:{{ client.phone_number}}">{{ client.phone_number}}</a>
-                                <br>
-                                <strong>Email Address:</strong> <a href="mailto:{{ client.email}}">{{ client.email}}</a>
-                                <br>
-                                <strong>Barangay:</strong> {{ client.barangay }}
-                                <br>
-                                <strong>Tagalog Needed:</strong>
-                                {% if client.tagalog_needed %}
-                                    Yes
-                                {% else %}
-                                    No
-                                {% endif %}
-                                <br>
-                                <strong>Transportation Method:</strong> {{ client.transportation_method}}
+          <div class="card-body pb-0">
+            <div class="container-fluid">
+              <div class="row d-flex align-items-center justify-content-center">
+                <div class="container text-left">
+                  <h5>Contact Info</h5>
+                  <p>
+                    <strong>Phone Number:</strong> <a href="tel:{{ client.phone_number}}">{{ client.phone_number}}</a>
+                    <br>
+                    <strong>Email Address:</strong> <a href="mailto:{{ client.email}}">{{ client.email}}</a>
+                    <br>
+                    <strong>Barangay:</strong> {{ client.barangay }}
+                    <br>
+                    <strong>Tagalog Needed:</strong>
+                    {% if client.tagalog_needed %}
+                    Yes
+                    {% else %}
+                    No
+                    {% endif %}
+                    <br>
+                    <strong>Transportation Method:</strong> {{ client.transportation_method}}
 
-                            </p>
+                  </p>
 
-                            <div class="container d-flex justify-content-center">
-                                <a href="/edit_client/{{ client.id }}" class="btn btn-primary">Edit</a>
-                            </div>
-                        </div>
-                    </div>
+                  <div class="container d-flex justify-content-center">
+                    <a href="/edit_client/{{ client.id }}" class="btn btn-primary">Edit</a>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+    {% endfor %}
+  </div>
 </div>
-{% endfor %}
 
 
 {% endblock content %}
