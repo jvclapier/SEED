@@ -35,36 +35,8 @@ def index(request):
 def intern_portal(request):
 
     current_user = request.user
-    all_clients = mod.Client.objects.filter(active = True).order_by('first_name')
-    assigned_client_objects = mod.AssignedClient.objects.filter(intern = current_user)
-    assigned_clients = []
-    assigned_clients_ordered = []
-    unassigned_clients = []
-    # Loop through the assigned clients and add each to the assigned clients list
-    for item in assigned_client_objects:
-        client_to_add = mod.Client.objects.get(id = item.client.id)
-        assigned_clients.append(client_to_add)
-    # Looping through the all clients list to order the assigned client list
-    for item in all_clients:
-        for i in assigned_clients:
-            if item == i:
-                assigned_clients_ordered.append(item)
-            else:
-                continue
-    # Loop through the all clients list
-    for item in all_clients:
-        client_exists = False
-        # Loop through the assigned clients list to see if the client exists.
-        # If the client does not exist, add it to the unassigned client list
-        for i in assigned_clients:
-            if item == i:
-                client_exists = True
-            else:
-                continue
-        if client_exists == False:
-            unassigned_clients.append(item)
-        else:
-            continue
+    assigned_clients_ordered = mod.Client.objects.filter(active = True, assignedclient__intern = current_user).order_by('first_name')
+    unassigned_clients = mod.Client.objects.filter(active = True).exclude(assignedclient__intern = current_user).order_by('first_name')
 
     context = {
         'assigned_clients_ordered':assigned_clients_ordered,
@@ -395,34 +367,13 @@ def search(request):
     # intiialize variables
     current_user = request.user
     query_string = ''
-    filtered_clients = None
-    assigned_clients_filtered = []
-    unassigned_clients_filtered = []
+    assigned_clients_filtered = None
+    unassigned_clients_filtered = None
     if ('client_name' in request.GET) and request.GET['client_name'].strip():
         query_string = request.GET.get('client_name')
         query = get_query(query_string, ['first_name', 'last_name', 'business_name'])
-        filtered_clients = mod.Client.objects.filter(query).order_by('first_name')
-    assigned_client_objects = mod.AssignedClient.objects.filter(intern = current_user).order_by('client')
-    # check assigned client objects to find pairs where intern exists
-    for item in filtered_clients:
-        for i in assigned_client_objects:
-            # if intern exists in assigned client pair, add it to the assigned clients filtered list
-            if item == i.client:
-                assigned_clients_filtered.append(item)
-    # check to see which clients have already been added to the assigned clients filtered list
-    for item in filtered_clients:
-        client_exists = False
-        for i in assigned_clients_filtered:
-            # if the intern exists, set the client_exists variable list to true
-            if item == i:
-                client_exists = True
-            else:
-                continue
-        # if the client does not exist, add it to the unassigned_clients_filtered list
-        if client_exists == False:
-            unassigned_clients_filtered.append(item)
-        else:
-            continue
+        assigned_clients_filtered = mod.Client.objects.filter(query, assignedclient__intern = current_user).order_by('first_name')
+        unassigned_clients_filtered = mod.Client.objects.filter(query).exclude(assignedclient__intern = current_user).order_by('first_name')
 
     context = {
         'assigned_clients_filtered':assigned_clients_filtered,
@@ -440,6 +391,11 @@ def add_bookmark(request, id):
     print('#### Add bookmark funciton called')
     bookmark_exists = False
     existing_bookmark = None
+
+    # check to see if the selected client is is_active
+    if current_client.active == False:
+        current_client.active = True
+        current_client.save()
 
     # check to see if clients and intern have an object in AssignedClient
     all_assigned_clients = mod.AssignedClient.objects.all()
@@ -746,6 +702,7 @@ def search_interns(request):
 
     return render(request, 'homepage/search_interns.html', context)
 
+# toggling between an active and inactive client
 @permission_required('homepage.admin_portal')
 @login_required(login_url = '/login/')
 def deactivate_intern(request, id):
@@ -759,3 +716,17 @@ def deactivate_intern(request, id):
         current_intern.save()
 
     return HttpResponseRedirect('/index/')
+
+# getting a list of all inactive clients
+def inactive_clients(request):
+
+    current_user = request.user
+    inactive_assigned = mod.Client.objects.filter(active=False, assignedclient__intern = current_user).order_by('first_name')
+    inactive_unassigned = mod.Client.objects.filter(active=False).exclude(assignedclient__intern = current_user).order_by('first_name')
+
+    context = {
+        'inactive_assigned': inactive_assigned,
+        'inactive_unassigned':inactive_unassigned
+    }
+
+    return render(request, 'homepage/inactive_clients.html', context)
