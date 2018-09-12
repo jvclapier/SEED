@@ -114,22 +114,23 @@ Add Client
     </div>
     <div class="row">
       <div class="col-md-6 input-label">
-        {{form.country.errors}}
-        <label for="{{form.country.id_for_label}}">Country</label>
+        {{form.location.errors}}
+        <label for="{{form.location.id_for_label}}">Location</label>
         <div class="input-group">
-          {{form.country}}
+          {{form.location}}
         </div>
         <br>
       </div>
-      <div class="col-md-6 input-label">
+    </div>
+      <!-- <div class="col-md-6 input-label">
         {{form.street_address.errors}}
         <label for="{{form.street_address.id_for_label}}">Street Address</label>
         <div class="input-group">
           {{form.street_address}}
         </div>
         <br>
-      </div>
-    </div>
+      </div> -->
+    <!-- </div>
     <div class="row">
       <div class="col-md-6 input-label">
         {{form.city.errors}}
@@ -147,8 +148,8 @@ Add Client
         </div>
         <br>
       </div>
-    </div>
-    <div class="row">
+    </div> -->
+    <!-- <div class="row">
       <div class="col-md-6 input-label">
         {{form.barangay.errors}}
         <label for="{{form.barangay.id_for_label}}">Barangay</label>
@@ -157,12 +158,12 @@ Add Client
         </div>
         <br>
       </div>
-    </div>
+    </div> -->
     <h3 class="text-left">Getting There:</h3>
     <hr>
     <div class="row">
       <div class="col-md-12 mb-4">
-        <label for="{{form.country.id_for_label}}">Place Pin</label>
+        <label for="{{form.location.id_for_label}}">Place Pin</label>
         <div id='mapid' class="container"></div>
         <script>
         var mymap = L.map('mapid').setView([14.5591, 121.0802], 13);

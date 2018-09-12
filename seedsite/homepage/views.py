@@ -35,8 +35,8 @@ def index(request):
 def intern_portal(request):
 
     current_user = request.user
-    assigned_clients_ordered = mod.Client.objects.filter(active = True, assignedclient__intern = current_user).order_by('first_name')
-    unassigned_clients = mod.Client.objects.filter(active = True).exclude(assignedclient__intern = current_user).order_by('first_name')
+    assigned_clients_ordered = mod.Client.objects.filter(active = True, location = current_user.location, assignedclient__intern = current_user).order_by('first_name')
+    unassigned_clients = mod.Client.objects.filter(active = True, location = current_user.location).exclude(assignedclient__intern = current_user).order_by('first_name')
 
     context = {
         'assigned_clients_ordered':assigned_clients_ordered,
@@ -233,17 +233,26 @@ class EditClient(forms.Form):
         ('Female', 'Female'),
     )
 
+    LOCATION = (
+        ('',''),
+        ('Philippines', 'Philippines'),
+        ('Trujillo', 'Trujillo'),
+        ('Lima', 'Lima'),
+        ('DR', 'DR'),
+        ('Ghana', 'Ghana'),
+    )
+
     first_name = forms.CharField(label="First Name", required=True, max_length=12, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
     last_name = forms.CharField(label="Last Name", required=True, max_length=12, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
     gender = forms.ChoiceField(label="Client Gender", choices=GENDER_CHOICES, required=False)
     email = forms.CharField(label="Email Address", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
     tagalog_needed = forms.BooleanField(label="Tagalog Needed", required=False, initial=False)
-    street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address', 'class':'form-control', 'class':'form-control'}))
-    city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City', 'class':'form-control', 'class':'form-control'}))
-    zipcode = forms.CharField(label="Zipcode", required=False, max_length=10, widget=forms.TextInput(attrs={'placeholder':'Zipcode', 'class':'form-control', 'class':'form-control'}))
-    country = forms.CharField(label="Country", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Country', 'class':'form-control', 'class':'form-control'}))
-    barangay = forms.CharField(label="Barangay", required=False, max_length=15, widget=forms.TextInput(attrs={'placeholder':'Barangay', 'class':'form-control', 'class':'form-control'}))
+    # street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address', 'class':'form-control', 'class':'form-control'}))
+    # city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City', 'class':'form-control', 'class':'form-control'}))
+    # zipcode = forms.CharField(label="Zipcode", required=False, max_length=10, widget=forms.TextInput(attrs={'placeholder':'Zipcode', 'class':'form-control', 'class':'form-control'}))
+    location = location = forms.ChoiceField(label="Location", choices=LOCATION, required=True)
+    # barangay = forms.CharField(label="Barangay", required=False, max_length=15, widget=forms.TextInput(attrs={'placeholder':'Barangay', 'class':'form-control', 'class':'form-control'}))
     lat = forms.CharField(label="Latitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Latitude', 'class':'form-control', 'class':'form-control'}))
     lon = forms.CharField(label="Longitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Longitude', 'class':'form-control', 'class':'form-control'}))
     business_name = forms.CharField(label="Business Name", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Business Name', 'class':'form-control', 'class':'form-control'}))
@@ -311,17 +320,26 @@ class AddClient(forms.Form):
         ('Female', 'Female'),
     )
 
+    LOCATION = (
+        ('',''),
+        ('Philippines', 'Philippines'),
+        ('Trujillo', 'Trujillo'),
+        ('Lima', 'Lima'),
+        ('DR', 'DR'),
+        ('Ghana', 'Ghana'),
+    )
+
     first_name = forms.CharField(label="First Name", required=True, max_length=12, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
     last_name = forms.CharField(label="Last Name", required=True, max_length=12, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
     gender = forms.ChoiceField(label="Client Gender", choices=GENDER_CHOICES, required=False)
     email = forms.CharField(label="Email Address", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
     tagalog_needed = forms.BooleanField(label="Tagalog Needed", required=False, initial=False)
-    street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address', 'class':'form-control'}))
-    city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City', 'class':'form-control'}))
-    zipcode = forms.CharField(label="Zipcode", required=False, max_length=10, widget=forms.TextInput(attrs={'placeholder':'Zipcode', 'class':'form-control'}))
-    country = forms.CharField(label="Country", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Country', 'class':'form-control'}))
-    barangay = forms.CharField(label="Barangay", required=False, max_length=15, widget=forms.TextInput(attrs={'placeholder':'Barangay', 'class':'form-control'}))
+    # street_address = forms.CharField(label="Street Address", required=False, max_length=100, widget=forms.TextInput(attrs={'placeholder':'Street Address', 'class':'form-control'}))
+    # city = forms.CharField(label="City", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'City', 'class':'form-control'}))
+    # zipcode = forms.CharField(label="Zipcode", required=False, max_length=10, widget=forms.TextInput(attrs={'placeholder':'Zipcode', 'class':'form-control'}))
+    location = location = forms.ChoiceField(label="Location", choices=LOCATION, required=True)
+    # barangay = forms.CharField(label="Barangay", required=False, max_length=15, widget=forms.TextInput(attrs={'placeholder':'Barangay', 'class':'form-control'}))
     lat = forms.CharField(label="Latitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Latitude', 'class':'form-control'}))
     lon = forms.CharField(label="Longitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Longitude', 'class':'form-control'}))
     business_name = forms.CharField(label="Business Name", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Business Name', 'class':'form-control'}))
@@ -372,8 +390,8 @@ def search(request):
     if ('client_name' in request.GET) and request.GET['client_name'].strip():
         query_string = request.GET.get('client_name')
         query = get_query(query_string, ['first_name', 'last_name', 'business_name'])
-        assigned_clients_filtered = mod.Client.objects.filter(query, assignedclient__intern = current_user).order_by('first_name')
-        unassigned_clients_filtered = mod.Client.objects.filter(query).exclude(assignedclient__intern = current_user).order_by('first_name')
+        assigned_clients_filtered = mod.Client.objects.filter(query, assignedclient__intern = current_user, location = current_user.location).order_by('first_name')
+        unassigned_clients_filtered = mod.Client.objects.filter(query, location = current_user.location).exclude(assignedclient__intern = current_user).order_by('first_name')
 
     context = {
         'assigned_clients_filtered':assigned_clients_filtered,
@@ -554,11 +572,21 @@ class AdminEditProfile(forms.Form):
         ('Spring', 'Spring'),
     )
 
+    LOCATION = (
+        ('',''),
+        ('Philippines', 'Philippines'),
+        ('Trujillo', 'Trujillo'),
+        ('Lima', 'Lima'),
+        ('DR', 'DR'),
+        ('Ghana', 'Ghana'),
+    )
+
     first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
     last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
     email = forms.CharField(label="Email Address", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=False)
     year = forms.CharField(label="Year", required=False, max_length=4, widget=forms.TextInput(attrs={'placeholder':'YYYY', 'class':'form-control'}))
+    location = forms.ChoiceField(label="Location", choices=LOCATION, required=True)
     permissions = forms.ChoiceField(label="Permissions", choices=PERMISSIONS, required=True)
     new_password = forms.CharField(label="New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'New Password', 'class':'form-control'}))
     confirm_new_password = forms.CharField(label="Confirm New Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Confirm New Password', 'class':'form-control'}))
@@ -627,11 +655,21 @@ class AddIntern(forms.Form):
         ('Spring', 'Spring'),
     )
 
+    LOCATION = (
+        ('',''),
+        ('Philippines', 'Philippines'),
+        ('Trujillo', 'Trujillo'),
+        ('Lima', 'Lima'),
+        ('DR', 'DR'),
+        ('Ghana', 'Ghana'),
+    )
+
     first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
     last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
     email = forms.CharField(label="Email Address", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     password = forms.CharField(label="Password", required=False, max_length=100, widget=forms.PasswordInput(attrs={'placeholder':'Password', 'class':'form-control'}))
     semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=True)
+    location = forms.ChoiceField(label="Location", choices=LOCATION, required=True)
     year = forms.CharField(label="Year", required=False, max_length=4, widget=forms.TextInput(attrs={'placeholder':'YYYY', 'class':'form-control'}))
     permissions = forms.ChoiceField(label="Permissions", choices=PERMISSIONS, required=True)
 

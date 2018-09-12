@@ -11,6 +11,7 @@ class Intern(AbstractUser):
     email = models.EmailField()
     semester = models.TextField(blank=False, null=True)
     year = models.TextField(blank=False, null=True)
+    location = models.TextField(blank=False, null=True)
     is_previously_logged_in = models.BooleanField(default=False)
 
 class AssignedClient(models.Model):
@@ -18,17 +19,18 @@ class AssignedClient(models.Model):
     client = models.ForeignKey('Client', on_delete=models.CASCADE)
 
 class Client(models.Model):
+    # picture = models.ImageField(upload_to=)
     first_name = models.TextField(blank=True, null=True)
     last_name = models.TextField(blank=True, null=True)
     gender = models.TextField(blank=True, null=True)
     email = models.EmailField()
     phone_number = models.CharField(blank=True, null=True, max_length=11)
     tagalog_needed = models.BooleanField(default=True)
-    street_address = models.TextField(blank=True, null=True)
-    city = models.TextField(blank=True, null=True)
-    zipcode = models.TextField(blank=True, null=True)
-    country = models.TextField(blank=True, null=True)
-    barangay = models.TextField(blank=True, null=True)
+    # street_address = models.TextField(blank=True, null=True)
+    # city = models.TextField(blank=True, null=True)
+    # zipcode = models.TextField(blank=True, null=True)
+    location = models.TextField(blank=True, null=True)
+    # barangay = models.TextField(blank=True, null=True)
     lat = models.DecimalField(max_digits=20, decimal_places=15, blank=True, null=True)
     lon = models.DecimalField(max_digits=20, decimal_places=15, blank=True, null=True)
     business_name = models.TextField(blank=True, null=True)
