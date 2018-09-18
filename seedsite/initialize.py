@@ -118,19 +118,16 @@ CreateIntern('bdsmith98@gmail.com', 'password', 'Benton', 'Smith', 'bdsmith98@gm
 CreateIntern('eaglauser@gmail.com', 'password', 'Eliza', 'Clapier', 'eaglauser@gmail.com', 'Summer', '2018', 'Philippines')
 
 '''create client'''
-def CreateClient(first_name, last_name, gender, email, phone_number, tagalog_needed, location, lat, lon, business_name, business_type, transportation_method, bio, active):
+def CreateClient(first_name, last_name, gender, email, phone_number, language, literacy, location, lat, lon, business_name, business_type, transportation_method, bio, active):
     client = mod.Client()
     client.first_name = first_name
     client.last_name = last_name
     client.gender = gender
     client.email = email
     client.phone_number = phone_number
-    client.tagalog_needed = tagalog_needed
-    # client.street_address = street_address
-    # client.city = city
-    # client.zipcode = zipcode
+    client.language = language
+    client.literacy = literacy
     client.location = location
-    # client.barangay = barangay
     client.lat = lat
     client.lon = lon
     client.business_name = business_name
@@ -141,9 +138,9 @@ def CreateClient(first_name, last_name, gender, email, phone_number, tagalog_nee
     client.save()
     print("####### Client created: " + client.first_name)
 
-CreateClient('Zaldy', 'Conception', 'Male', 'zaldy@mailinator.com', '0927123456', True, 'Philippines', '14.563502', '121.084722', 'Eloi & She Food Corner', 'Canteen', 'Tricycle', 'He is the man!', True)
-CreateClient('Reyna', 'Banatao', 'Female', 'reyna@mailinator.com', '0927123456', True, 'Philippines', '14.543812', '121.100816', 'God Gift Lying In', 'Birthing Clinic', 'Tricycle', 'She has great ideas!', True)
-CreateClient('Gerald', 'Taratao', 'Male', 'gerald@mailinator.com', '0927123456', True, 'Philippines', '14.586477', '121.078430', 'GAT Pet Shop', 'Petshop', 'Jeepney', 'Great guy!', True)
+CreateClient('Zaldy', 'Conception', 'Male', 'zaldy@mailinator.com', '0927123456', 'Tagalog', 'High', 'Philippines', '14.563502', '121.084722', 'Eloi & She Food Corner', 'Canteen', 'Tricycle', 'He is the man!', True)
+CreateClient('Reyna', 'Banatao', 'Female', 'reyna@mailinator.com', '0927123456', 'Tagalog', 'Medium', 'Philippines', '14.543812', '121.100816', 'God Gift Lying In', 'Birthing Clinic', 'Tricycle', 'She has great ideas!', True)
+CreateClient('Gerald', 'Taratao', 'Male', 'gerald@mailinator.com', '0927123456', 'Tagalog', 'Low', 'Philippines', '14.586477', '121.078430', 'GAT Pet Shop', 'Petshop', 'Jeepney', 'Great guy!', True)
 
 '''create assigned client'''
 def CreateAssignedClient(intern_username, client_first_name):

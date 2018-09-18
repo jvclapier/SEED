@@ -73,12 +73,9 @@ Intern Portal
                     <br>
                     <strong>Email Address:</strong> <a href="mailto:{{ client.email}}">{{ client.email}}</a>
                     <br>
-                    <strong>Tagalog Needed:</strong>
-                    {% if client.tagalog_needed %}
-                    Yes
-                    {% else %}
-                    No
-                    {% endif %}
+                    <strong>Language: </strong> {{ client.language }}
+                    <br>
+                    <strong>Literacy:</strong> {{ client.literacy }}
                     <br>
                     <strong>Transportation Method:</strong> {{ client.transportation_method}}
 
@@ -147,14 +144,11 @@ Intern Portal
                   <p>
                     <strong>Phone Number:</strong> <a href="tel:{{ client.phone_number}}">{{ client.phone_number}}</a>
                     <br>
-                    <strong>Email Address:</strong> <a href="mailto:{{ client.email}}">{{ client.email}}</a>
+                    <strong>Email Address:</strong> <a href="mailto:{{ client.email}}">{{ client.email }}</a>
                     <br>
-                    <strong>Tagalog Needed:</strong>
-                    {% if client.tagalog_needed %}
-                    Yes
-                    {% else %}
-                    No
-                    {% endif %}
+                    <strong>Language:</strong> {{ client.language }}
+                    <br>
+                    <strong>Literacy:</strong> {{ client.literacy }}
                     <br>
                     <strong>Transportation Method:</strong> {{ client.transportation_method}}
 
