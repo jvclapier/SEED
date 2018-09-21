@@ -1,5 +1,5 @@
 '''
-This app operates as a router. If a user has never logged in, they
+This view operates as a router. If a user has never logged in, they
 will be redirected to the edit profile page. Next it checks their
 permissions and redirects them to the proper portal.
 '''

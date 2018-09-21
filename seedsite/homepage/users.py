@@ -1,5 +1,5 @@
 '''
-This app deals with all user information. It creates the admin portal and
+This view deals with all user information. It creates the admin portal and
 allows the admin to add and edit users (interns). It also creates the intern
 portal, allowing interns to view clients, edit their own profile, bookmark
 clients, and log visits with clients.

@@ -1,5 +1,5 @@
 '''
-This app deals with all authentication of users. This includes both logging in and
+This view deals with all authentication of users. This includes both logging in and
 logging out.
 '''
 

@@ -27,6 +27,8 @@ class Client(models.Model):
     phone_number = models.CharField(blank=True, null=True, max_length=11)
     language = models.TextField(blank=True, null=True)
     literacy = models.TextField(blank=True, null=True)
+    semester = models.TextField(blank=True, null=True)
+    year = models.TextField(blank=True, null=True)
     location = models.TextField(blank=True, null=True)
     lat = models.DecimalField(max_digits=20, decimal_places=15, blank=True, null=True)
     lon = models.DecimalField(max_digits=20, decimal_places=15, blank=True, null=True)

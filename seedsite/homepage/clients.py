@@ -1,5 +1,5 @@
 '''
-This app deals with any action relating to clients. This includes
+This view deals with any action relating to clients. This includes
 creating a client profile, viewing a client profile, editing a
 client profile, deleting a client, and viewing all inactive clients.
 '''
@@ -70,11 +70,13 @@ def edit_client(request, id):
         form = siteForms.EditClient({'first_name':current_client.first_name,
             'last_name':current_client.last_name, 'gender': current_client.gender,
             'email':current_client.email, 'phone_number': current_client.phone_number,
-            'language': current_client.language, 'literacy': current_client.literacy, 'location': current_client.location,
-            'lat': current_client.lat, 'lon':current_client.lon,
-            'business_name': current_client.business_name, 'business_type': current_client.business_type,
-            'transportation_method': current_client.transportation_method, 'bio': current_client.bio,
-
+            'language': current_client.language, 'literacy': current_client.literacy, 
+            'location': current_client.location, 'semester': current_client.semester,
+            'year': current_client.year, 'lat': current_client.lat,
+            'lon':current_client.lon, 'business_name': current_client.business_name,
+            'business_type': current_client.business_type,
+            'transportation_method': current_client.transportation_method,
+            'bio': current_client.bio,
         })
 
     context = {

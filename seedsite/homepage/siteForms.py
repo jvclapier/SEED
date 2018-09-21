@@ -1,5 +1,5 @@
 '''
-This app contains all forms used in the website.
+This view contains all forms used in the website.
 '''
 from django import forms
 from django.contrib.auth import authenticate
@@ -11,6 +11,42 @@ from django.utils import timezone
 from django.contrib.auth.models import Permission, Group
 from datetime import datetime
 from homepage import models as mod
+
+# Resources used by multiple forms
+
+TIME_CHOICES = (
+    ('9:00', '9:00'),
+    ('10:00', '10:00'),
+    ('11:00', '11:00'),
+    ('12:00', '12:00'),
+    ('1:00', '1:00'),
+    ('2:00', '2:00'),
+    ('3:00', '3:00'),
+    ('4:00', '4:00'),
+    ('5:00', '5:00'),
+    ('6:00', '6:00'),
+)
+
+GENDER_CHOICES = (
+    ('Male', 'Male'),
+    ('Female', 'Female'),
+)
+
+LOCATION = (
+    ('',''),
+    ('Philippines', 'Philippines'),
+    ('Trujillo', 'Trujillo'),
+    ('Lima', 'Lima'),
+    ('DR', 'DR'),
+    ('Ghana', 'Ghana'),
+)
+
+SEMESTER = (
+    ('',''),
+    ('Summer', 'Summer'),
+    ('Fall', 'Fall'),
+    ('Spring', 'Spring'),
+)
 
 # This form takes a user's username and password, validates and authenticates it, and logs the user into the site.
 class LoginForm(forms.Form):
@@ -32,18 +68,6 @@ class LoginForm(forms.Form):
 
 # This form records a visit description, details about next steps, and time of visit.
 class AddLog(forms.Form):
-    TIME_CHOICES = (
-        ('9:00', '9:00'),
-        ('10:00', '10:00'),
-        ('11:00', '11:00'),
-        ('12:00', '12:00'),
-        ('1:00', '1:00'),
-        ('2:00', '2:00'),
-        ('3:00', '3:00'),
-        ('4:00', '4:00'),
-        ('5:00', '5:00'),
-        ('6:00', '6:00'),
-    )
 
     visit_description = forms.CharField(label="Visit Description", required=True, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Please describe your visit', 'class':'form-control'}))
     next_steps = forms.CharField(label="Next Steps", required=True, max_length=250, widget=forms.Textarea(attrs={'placeholder':'Describe what you plan to do next', 'class':'form-control'}))
@@ -75,11 +99,6 @@ class AddLog(forms.Form):
 # The fields will autofill with existing information allowing users to update them with new information.
 class EditClient(forms.Form):
 
-    GENDER_CHOICES = (
-        ('Male', 'Male'),
-        ('Female', 'Female'),
-    )
-
     LOCATION = (
         ('',''),
         ('Philippines', 'Philippines'),
@@ -96,6 +115,8 @@ class EditClient(forms.Form):
     phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
     language = forms.CharField(label="Language", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Language', 'class':'form-control'}))
     literacy = forms.CharField(label="Literacy", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Literacy', 'class':'form-control'}))
+    semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=False)
+    year = forms.CharField(label="Year", required=False, max_length=4, widget=forms.TextInput(attrs={'placeholder':'YYYY', 'class':'form-control'}))
     location = location = forms.ChoiceField(label="Location", choices=LOCATION, required=True)
     lat = forms.CharField(label="Latitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Latitude', 'class':'form-control', 'class':'form-control'}))
     lon = forms.CharField(label="Longitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Longitude', 'class':'form-control', 'class':'form-control'}))
@@ -121,6 +142,8 @@ class EditClient(forms.Form):
         client.phone_number = self.cleaned_data.get('phone_number')
         client.language = self.cleaned_data.get('language')
         client.literacy = self.cleaned_data.get('literacy')
+        client.semester = self.cleaned_data.get('semester')
+        client.year = self.cleaned_data.get('year')
         client.location = self.cleaned_data.get('location')
         client.lat = self.cleaned_data.get('lat')
         client.lon = self.cleaned_data.get('lon')
@@ -135,20 +158,6 @@ class EditClient(forms.Form):
 # This form allows users to enter new clients into the database.
 class AddClient(forms.Form):
 
-    GENDER_CHOICES = (
-        ('Male', 'Male'),
-        ('Female', 'Female'),
-    )
-
-    LOCATION = (
-        ('',''),
-        ('Philippines', 'Philippines'),
-        ('Trujillo', 'Trujillo'),
-        ('Lima', 'Lima'),
-        ('DR', 'DR'),
-        ('Ghana', 'Ghana'),
-    )
-
     first_name = forms.CharField(label="First Name", required=True, max_length=12, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
     last_name = forms.CharField(label="Last Name", required=True, max_length=12, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
     gender = forms.ChoiceField(label="Client Gender", choices=GENDER_CHOICES, required=False)
@@ -156,6 +165,8 @@ class AddClient(forms.Form):
     phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
     language = forms.CharField(label="Language", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Language', 'class':'form-control'}))
     literacy = forms.CharField(label="Literacy", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Literacy', 'class':'form-control'}))
+    semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=False)
+    year = forms.CharField(label="Year", required=False, max_length=4, widget=forms.TextInput(attrs={'placeholder':'YYYY', 'class':'form-control'}))
     location = location = forms.ChoiceField(label="Location", choices=LOCATION, required=True)
     lat = forms.CharField(label="Latitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Latitude', 'class':'form-control'}))
     lon = forms.CharField(label="Longitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Longitude', 'class':'form-control'}))
@@ -181,6 +192,8 @@ class AddClient(forms.Form):
         client.phone_number = self.cleaned_data.get('phone_number')
         client.language = self.cleaned_data.get('language')
         client.literacy = self.cleaned_data.get('literacy')
+        client.semester = self.cleaned_data.get('semester')
+        client.year = self.cleaned_data.get('year')
         client.location = self.cleaned_data.get('location')
         client.lat = self.cleaned_data.get('lat')
         client.lon = self.cleaned_data.get('lon')
@@ -198,22 +211,6 @@ class AdminEditProfile(forms.Form):
     PERMISSIONS = (
         ('intern_portal', 'Intern'),
         ('admin_portal', 'Admin'),
-    )
-
-    SEMESTER = (
-        ('',''),
-        ('Summer', 'Summer'),
-        ('Fall', 'Fall'),
-        ('Spring', 'Spring'),
-    )
-
-    LOCATION = (
-        ('',''),
-        ('Philippines', 'Philippines'),
-        ('Trujillo', 'Trujillo'),
-        ('Lima', 'Lima'),
-        ('DR', 'DR'),
-        ('Ghana', 'Ghana'),
     )
 
     first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
@@ -317,12 +314,6 @@ class AddIntern(forms.Form):
 
 # This form allows users to edit their own profile
 class EditProfile(forms.Form):
-
-    SEMESTER = (
-        ('Summer', 'Summer'),
-        ('Fall', 'Fall'),
-        ('Spring', 'Spring'),
-    )
 
     first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
     last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))

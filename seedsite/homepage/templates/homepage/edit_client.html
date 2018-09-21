@@ -78,11 +78,31 @@ Edit Client
         </div>
         <br>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.literacy.errors}}
         <label for="{{form.literacy.id_for_label}}">Literacy</label>
         <div class="input-group">
           {{form.literacy}}
+        </div>
+        <br>
+      </div>
+      <div class="col-md-6 input-label">
+        {{form.semester.errors}}
+        <label for="{{form.semester.id_for_label}}">Semester Found</label>
+        <div class="input-group">
+          {{form.semester}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.year.errors}}
+        <label for="{{form.year.id_for_label}}">Year Found</label>
+        <div class="input-group">
+          {{form.year}}
         </div>
         <br>
       </div>

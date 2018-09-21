@@ -1,5 +1,5 @@
 '''
-This form allows users to log visits with clients. It works wit the AddLog
+This view allows users to log visits with clients. It works wit the AddLog
 form on the forms app.
 '''
 

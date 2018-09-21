@@ -1,5 +1,5 @@
 '''
-This app deals with all searches done on the site. This incluedes
+This view deals with all searches done on the site. This incluedes
 both searching clients and searching interns.
 '''
 
@@ -26,7 +26,7 @@ def search(request):
     unassigned_clients_filtered = None
     if ('client_name' in request.GET) and request.GET['client_name'].strip():
         query_string = request.GET.get('client_name')
-        query = get_query(query_string, ['first_name', 'last_name', 'business_name'])
+        query = get_query(query_string, ['first_name', 'last_name', 'business_name', 'semester', 'year'])
         assigned_clients_filtered = mod.Client.objects.filter(query, assignedclient__intern = current_user, location = current_user.location).order_by('first_name')
         unassigned_clients_filtered = mod.Client.objects.filter(query, location = current_user.location).exclude(assignedclient__intern = current_user).order_by('first_name')
 
