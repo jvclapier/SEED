@@ -158,6 +158,7 @@ class EditClient(forms.Form):
 # This form allows users to enter new clients into the database.
 class AddClient(forms.Form):
 
+    image = forms.ImageField(label="Client Image", required=True)
     first_name = forms.CharField(label="First Name", required=True, max_length=12, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
     last_name = forms.CharField(label="Last Name", required=True, max_length=12, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
     gender = forms.ChoiceField(label="Client Gender", choices=GENDER_CHOICES, required=False)
@@ -185,6 +186,7 @@ class AddClient(forms.Form):
 
     def commit(self, request):
         client = mod.Client()
+        client.image = self.cleaned_data.get('image')
         client.first_name = self.cleaned_data.get('first_name')
         client.last_name = self.cleaned_data.get('last_name')
         client.gender = self.cleaned_data.get('gender')

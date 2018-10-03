@@ -21,12 +21,20 @@ Add Client
 <div class="where-am-i">id-add</div>
 <h1 class="text-center">Add Client</h1>
 <!-- <hr> -->
-<form class="" action="/add_client/" method="post">
+<form class="" action="/add_client/" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <p class="card-text">
     <h3 class="text-left">Personal Information:</h3>
     <hr>
     <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.image.errors}}
+        <label for="{{form.image.id_for_label}}">Client Image</label>
+        <div class="input-group">
+          {{form.image}}
+        </div>
+        <br>
+      </div>
       <div class="col-md-6 input-label">
         {{form.first_name.errors}}
         <label for="{{form.first_name.id_for_label}}">First Name</label>
@@ -35,6 +43,8 @@ Add Client
         </div>
         <br>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.last_name.errors}}
         <label for="{{form.last_name.id_for_label}}">Last Name</label>
@@ -43,8 +53,6 @@ Add Client
         </div>
         <br>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-6 input-label">
         {{form.gender.errors}}
         <label for="{{form.gender.id_for_label}}">Gender</label>
@@ -53,6 +61,8 @@ Add Client
         </div>
         <br>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.email.errors}}
         <label for="{{form.email.id_for_label}}">Email</label>
@@ -61,8 +71,6 @@ Add Client
         </div>
         <br>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-6 input-label">
         {{form.phone_number.errors}}
         <label for="{{form.phone_number.id_for_label}}">Phone Number</label>
@@ -71,6 +79,8 @@ Add Client
         </div>
         <br>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.language.errors}}
         <label for="{{form.language.id_for_label}}">Language</label>
@@ -79,8 +89,6 @@ Add Client
         </div>
         <br>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-6 input-label">
         {{form.literacy.errors}}
         <label for="{{form.literacy.id_for_label}}">Literacy</label>
@@ -89,6 +97,8 @@ Add Client
         </div>
         <br>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.semester.errors}}
         <label for="{{form.semester.id_for_label}}">Semester Found</label>
@@ -97,8 +107,6 @@ Add Client
         </div>
         <br>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-6 input-label">
         {{form.year.errors}}
         <label for="{{form.year.id_for_label}}">Year Found</label>

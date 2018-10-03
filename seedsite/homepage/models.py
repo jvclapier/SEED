@@ -19,7 +19,7 @@ class AssignedClient(models.Model):
     client = models.ForeignKey('Client', on_delete=models.CASCADE)
 
 class Client(models.Model):
-    # picture = models.ImageField(upload_to=)
+    image = models.ImageField(blank=True)
     first_name = models.TextField(blank=True, null=True)
     last_name = models.TextField(blank=True, null=True)
     gender = models.TextField(blank=True, null=True)
@@ -37,7 +37,6 @@ class Client(models.Model):
     transportation_method = models.TextField(blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     active = models.BooleanField(blank=False, default=True)
-    # TODO: add image field
 
 class Log(models.Model):
     date_created = models.DateField(auto_now_add=True)

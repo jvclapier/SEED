@@ -118,8 +118,9 @@ CreateIntern('bdsmith98@gmail.com', 'password', 'Benton', 'Smith', 'bdsmith98@gm
 CreateIntern('eaglauser@gmail.com', 'password', 'Eliza', 'Clapier', 'eaglauser@gmail.com', 'Summer', '2018', 'Philippines')
 
 '''create client'''
-def CreateClient(first_name, last_name, gender, email, phone_number, language, literacy, semester, year, location, lat, lon, business_name, business_type, transportation_method, bio, active):
+def CreateClient(image, first_name, last_name, gender, email, phone_number, language, literacy, semester, year, location, lat, lon, business_name, business_type, transportation_method, bio, active):
     client = mod.Client()
+    client.image = image
     client.first_name = first_name
     client.last_name = last_name
     client.gender = gender
@@ -140,9 +141,9 @@ def CreateClient(first_name, last_name, gender, email, phone_number, language, l
     client.save()
     print("####### Client created: " + client.first_name)
 
-CreateClient('Zaldy', 'Conception', 'Male', 'zaldy@mailinator.com', '0927123456', 'Tagalog', 'High', 'Summer', '2018', 'Philippines', '14.563502', '121.084722', 'Eloi & She Food Corner', 'Canteen', 'Tricycle', 'He is the man!', True)
-CreateClient('Reyna', 'Banatao', 'Female', 'reyna@mailinator.com', '0927123456', 'Tagalog', 'Medium', 'Summer', '2018', 'Philippines', '14.543812', '121.100816', 'God Gift Lying In', 'Birthing Clinic', 'Tricycle', 'She has great ideas!', True)
-CreateClient('Gerald', 'Taratao', 'Male', 'gerald@mailinator.com', '0927123456', 'Tagalog', 'Low', 'Summer', '2018', 'Philippines', '14.586477', '121.078430', 'GAT Pet Shop', 'Petshop', 'Jeepney', 'Great guy!', True)
+CreateClient('https://images.pexels.com/photos/736716/pexels-photo-736716.jpeg?auto=compress&cs=tinysrgb&h=350','Zaldy', 'Conception', 'Male', 'zaldy@mailinator.com', '0927123456', 'Tagalog', 'High', 'Summer', '2018', 'Philippines', '14.563502', '121.084722', 'Eloi & She Food Corner', 'Canteen', 'Tricycle', 'He is the man!', True)
+CreateClient('https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&h=350','Reyna', 'Banatao', 'Female', 'reyna@mailinator.com', '0927123456', 'Tagalog', 'Medium', 'Summer', '2018', 'Philippines', '14.543812', '121.100816', 'God Gift Lying In', 'Birthing Clinic', 'Tricycle', 'She has great ideas!', True)
+CreateClient('https://images.pexels.com/photos/736716/pexels-photo-736716.jpeg?auto=compress&cs=tinysrgb&h=350','Gerald', 'Taratao', 'Male', 'gerald@mailinator.com', '0927123456', 'Tagalog', 'Low', 'Summer', '2018', 'Philippines', '14.586477', '121.078430', 'GAT Pet Shop', 'Petshop', 'Jeepney', 'Great guy!', True)
 
 '''create assigned client'''
 def CreateAssignedClient(intern_username, client_first_name):

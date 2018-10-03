@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,7 +30,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '192.168.1.20',
     '192.168.254.109',
-    '144.39.170.241',
+    '144.39.170.72',
 ]
 
 AUTH_USER_MODEL = 'homepage.Intern'
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'homepage',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +137,10 @@ STATICFILES_DIRS = (
     # os.path.join(BASE_DIR, "static"),
     # '/var/www/static/',
 )
+
+DEFAULT_FILE_STORAGE = 'seedsite.storage_backends.MediaStorage'
+
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME

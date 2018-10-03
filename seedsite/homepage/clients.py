@@ -21,7 +21,7 @@ from homepage import siteForms
 @login_required(login_url = '/login/')
 def add_client(request):
     if request.method == 'POST':
-        form = siteForms.AddClient(request.POST)
+        form = siteForms.AddClient(request.POST, request.FILES)
 
         if form.is_valid():
 
@@ -70,7 +70,7 @@ def edit_client(request, id):
         form = siteForms.EditClient({'first_name':current_client.first_name,
             'last_name':current_client.last_name, 'gender': current_client.gender,
             'email':current_client.email, 'phone_number': current_client.phone_number,
-            'language': current_client.language, 'literacy': current_client.literacy, 
+            'language': current_client.language, 'literacy': current_client.literacy,
             'location': current_client.location, 'semester': current_client.semester,
             'year': current_client.year, 'lat': current_client.lat,
             'lon':current_client.lon, 'business_name': current_client.business_name,
@@ -105,8 +105,8 @@ def delete_client(request, id):
 def inactive_clients(request):
 
     current_user = request.user
-    inactive_assigned = mod.Client.objects.filter(active=False, assignedclient__intern = current_user).order_by('first_name')
-    inactive_unassigned = mod.Client.objects.filter(active=False).exclude(assignedclient__intern = current_user).order_by('first_name')
+    inactive_assigned = mod.Client.objects.filter(active=False, location = current_user.location, assignedclient__intern = current_user).order_by('first_name')
+    inactive_unassigned = mod.Client.objects.filter(active=False, location = current_user.location).exclude(assignedclient__intern = current_user).order_by('first_name')
 
     context = {
         'inactive_assigned': inactive_assigned,
