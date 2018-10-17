@@ -71,10 +71,38 @@ Edit Client
         <br>
       </div>
       <div class="col-md-6 input-label">
-        {{form.tagalog_needed.errors}}
-        <label for="{{form.tagalog_needed.id_for_label}}">Tagalog Needed</label>
+        {{form.language.errors}}
+        <label for="{{form.language.id_for_label}}">Language</label>
         <div class="input-group">
-          {{form.tagalog_needed}}
+          {{form.language}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.literacy.errors}}
+        <label for="{{form.literacy.id_for_label}}">Literacy</label>
+        <div class="input-group">
+          {{form.literacy}}
+        </div>
+        <br>
+      </div>
+      <div class="col-md-6 input-label">
+        {{form.semester.errors}}
+        <label for="{{form.semester.id_for_label}}">Semester Found</label>
+        <div class="input-group">
+          {{form.semester}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.year.errors}}
+        <label for="{{form.year.id_for_label}}">Year Found</label>
+        <div class="input-group">
+          {{form.year}}
         </div>
         <br>
       </div>
@@ -113,46 +141,10 @@ Edit Client
     </div>
     <div class="row">
       <div class="col-md-6 input-label">
-        {{form.country.errors}}
-        <label for="{{form.country.id_for_label}}">Country</label>
+        {{form.location.errors}}
+        <label for="{{form.location.id_for_label}}">Location</label>
         <div class="input-group">
-          {{form.country}}
-        </div>
-        <br>
-      </div>
-      <div class="col-md-6 input-label">
-        {{form.street_address.errors}}
-        <label for="{{form.street_address.id_for_label}}">Street Address</label>
-        <div class="input-group">
-          {{form.street_address}}
-        </div>
-        <br>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.city.errors}}
-        <label for="{{form.city.id_for_label}}">City</label>
-        <div class="input-group">
-          {{form.city}}
-        </div>
-        <br>
-      </div>
-      <div class="col-md-6 input-label">
-        {{form.zipcode.errors}}
-        <label for="{{form.zipcode.id_for_label}}">Zipcode</label>
-        <div class="input-group">
-          {{form.zipcode}}
-        </div>
-        <br>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.barangay.errors}}
-        <label for="{{form.barangay.id_for_label}}">Barangay</label>
-        <div class="input-group">
-          {{form.barangay}}
+          {{form.location}}
         </div>
         <br>
       </div>

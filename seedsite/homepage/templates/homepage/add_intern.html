@@ -67,6 +67,14 @@ Add Intern
                     <br>
                 </div>
                 <div class="col-12 col-md-6 input-label">
+                    {{form.location.errors}}
+                    <label for="{{form.location.id_for_label}}">Location</label>
+                    <div class="input-group">
+                        {{form.location}}
+                    </div>
+                    <br>
+                </div>
+                <div class="col-12 col-md-6 input-label">
                     {{form.permissions.errors}}
                     <label for="{{form.permissions.id_for_label}}">Permissions</label>
                     <div class="input-group">

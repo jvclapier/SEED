@@ -21,12 +21,20 @@ Add Client
 <div class="where-am-i">id-add</div>
 <h1 class="text-center">Add Client</h1>
 <!-- <hr> -->
-<form class="" action="/add_client/" method="post">
+<form class="" action="/add_client/" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <p class="card-text">
     <h3 class="text-left">Personal Information:</h3>
     <hr>
     <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.image.errors}}
+        <label for="{{form.image.id_for_label}}">Client Image</label>
+        <div class="input-group">
+          {{form.image}}
+        </div>
+        <br>
+      </div>
       <div class="col-md-6 input-label">
         {{form.first_name.errors}}
         <label for="{{form.first_name.id_for_label}}">First Name</label>
@@ -35,6 +43,8 @@ Add Client
         </div>
         <br>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.last_name.errors}}
         <label for="{{form.last_name.id_for_label}}">Last Name</label>
@@ -43,8 +53,6 @@ Add Client
         </div>
         <br>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-6 input-label">
         {{form.gender.errors}}
         <label for="{{form.gender.id_for_label}}">Gender</label>
@@ -53,6 +61,8 @@ Add Client
         </div>
         <br>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.email.errors}}
         <label for="{{form.email.id_for_label}}">Email</label>
@@ -61,8 +71,6 @@ Add Client
         </div>
         <br>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-6 input-label">
         {{form.phone_number.errors}}
         <label for="{{form.phone_number.id_for_label}}">Phone Number</label>
@@ -71,11 +79,39 @@ Add Client
         </div>
         <br>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
-        {{form.tagalog_needed.errors}}
-        <label for="{{form.tagalog_needed.id_for_label}}">Tagalog Needed</label>
+        {{form.language.errors}}
+        <label for="{{form.language.id_for_label}}">Language</label>
         <div class="input-group">
-          {{form.tagalog_needed}}
+          {{form.language}}
+        </div>
+        <br>
+      </div>
+      <div class="col-md-6 input-label">
+        {{form.literacy.errors}}
+        <label for="{{form.literacy.id_for_label}}">Literacy</label>
+        <div class="input-group">
+          {{form.literacy}}
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 input-label">
+        {{form.semester.errors}}
+        <label for="{{form.semester.id_for_label}}">Semester Found</label>
+        <div class="input-group">
+          {{form.semester}}
+        </div>
+        <br>
+      </div>
+      <div class="col-md-6 input-label">
+        {{form.year.errors}}
+        <label for="{{form.year.id_for_label}}">Year Found</label>
+        <div class="input-group">
+          {{form.year}}
         </div>
         <br>
       </div>
@@ -114,46 +150,10 @@ Add Client
     </div>
     <div class="row">
       <div class="col-md-6 input-label">
-        {{form.country.errors}}
-        <label for="{{form.country.id_for_label}}">Country</label>
+        {{form.location.errors}}
+        <label for="{{form.location.id_for_label}}">Location</label>
         <div class="input-group">
-          {{form.country}}
-        </div>
-        <br>
-      </div>
-      <div class="col-md-6 input-label">
-        {{form.street_address.errors}}
-        <label for="{{form.street_address.id_for_label}}">Street Address</label>
-        <div class="input-group">
-          {{form.street_address}}
-        </div>
-        <br>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.city.errors}}
-        <label for="{{form.city.id_for_label}}">City</label>
-        <div class="input-group">
-          {{form.city}}
-        </div>
-        <br>
-      </div>
-      <div class="col-md-6 input-label">
-        {{form.zipcode.errors}}
-        <label for="{{form.zipcode.id_for_label}}">Zipcode</label>
-        <div class="input-group">
-          {{form.zipcode}}
-        </div>
-        <br>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.barangay.errors}}
-        <label for="{{form.barangay.id_for_label}}">Barangay</label>
-        <div class="input-group">
-          {{form.barangay}}
+          {{form.location}}
         </div>
         <br>
       </div>
@@ -162,7 +162,7 @@ Add Client
     <hr>
     <div class="row">
       <div class="col-md-12 mb-4">
-        <label for="{{form.country.id_for_label}}">Place Pin</label>
+        <label for="{{form.location.id_for_label}}">Place Pin</label>
         <div id='mapid' class="container"></div>
         <script>
         var mymap = L.map('mapid').setView([14.5591, 121.0802], 13);

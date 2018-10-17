@@ -15,27 +15,27 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from homepage import views
+from homepage import users, index, authentication
+from homepage import addLog, clients, search
 
 urlpatterns = [
-    path('index/', views.index, name='index'),
-    path('', views.login, name='login'),
-    path('add_log/<int:id>', views.add_log, name='add_log'),
-    path('login/', views.login, name='login'),
-    path('logout/', views.logout, name='logout'),
-    path('client_profile/<int:id>', views.client_profile, name='client_profile'),
-    path('edit_client/<int:id>', views.edit_client, name='edit_client'),
-    path('add_client/', views.add_client, name='add_client'),
-    path('search/', views.search, name='search'),
-    path('add_bookmark/<int:id>', views.add_bookmark, name='add_bookmark'),
-    path('admin_portal/', views.admin_portal, name='admin_portal'),
-    path('intern_portal/', views.intern_portal, name='intern_portal'),
-    path('edit_profile/', views.edit_profile, name='edit_profile'),
-    path('admin_edit_profile/<int:id>', views.admin_edit_profile, name='admin_edit_profile'),
-    path('add_intern/', views.add_intern, name='add_intern'),
-    path('delete_client/<int:id>', views.delete_client, name='delete_client'),
-    path('search_interns/', views.search_interns, name='search_interns'),
-    path('deactivate_intern/<int:id>', views.deactivate_intern, name='deactivate_intern'),
-    path('inactive_clients/', views.inactive_clients, name='inactive_clients'),
-
+    path('index/', index.index, name='index'),
+    path('', authentication.login, name='login'),
+    path('login/', authentication.login, name='login'),
+    path('logout/', authentication.logout, name='logout'),
+    path('add_log/<int:id>', addLog.add_log, name='add_log'),
+    path('add_client/', clients.add_client, name='add_client'),
+    path('client_profile/<int:id>', clients.client_profile, name='client_profile'),
+    path('edit_client/<int:id>', clients.edit_client, name='edit_client'),
+    path('delete_client/<int:id>', clients.delete_client, name='delete_client'),
+    path('inactive_clients/', clients.inactive_clients, name='inactive_clients'),
+    path('search/', search.search, name='search'),
+    path('search_interns/', search.search_interns, name='search_interns'),
+    path('add_bookmark/<int:id>', users.add_bookmark, name='add_bookmark'),
+    path('admin_portal/', users.admin_portal, name='admin_portal'),
+    path('intern_portal/', users.intern_portal, name='intern_portal'),
+    path('edit_profile/', users.edit_profile, name='edit_profile'),
+    path('admin_edit_profile/<int:id>', users.admin_edit_profile, name='admin_edit_profile'),
+    path('add_intern/', users.add_intern, name='add_intern'),
+    path('deactivate_intern/<int:id>', users.deactivate_intern, name='deactivate_intern'),
 ]

@@ -24,7 +24,7 @@ Inactive Clients
           <div class="card-body pb-0">
             <div class="container-fluid">
               <div class="row d-flex align-items-center justify-content-center">
-                <div class="col-6">
+                <div class="col-6 image-box">
                   {% if client.gender == 'Male' %}
                   <img src="{% static "profile-image-male.jpg" %}" class="img-responsive rounded-image" alt="">
                   {% else %}
@@ -72,17 +72,11 @@ Inactive Clients
                     <br>
                     <strong>Email Address:</strong> <a href="mailto:{{ client.email}}">{{ client.email}}</a>
                     <br>
-                    <strong>Barangay:</strong> {{ client.barangay }}
+                    <strong>Language:</strong> {{ client.language }}
                     <br>
-                    <strong>Tagalog Needed:</strong>
-                    {% if client.tagalog_needed %}
-                    Yes
-                    {% else %}
-                    No
-                    {% endif %}
+                    <strong>Literacy:</strong> {{ client.literacy }}
                     <br>
                     <strong>Transportation Method:</strong> {{ client.transportation_method}}
-
                   </p>
                   <div class="container d-flex justify-content-center">
                     <a href="/edit_client/{{ client.id }}" class="btn btn-primary">Edit</a>
@@ -102,7 +96,7 @@ Inactive Clients
           <div class="card-body pb-0">
             <div class="container-fluid">
               <div class="row d-flex align-items-center justify-content-center">
-                <div class="col-6">
+                <div class="col-6 image-box">
                   {% if client.gender == 'Male' %}
                   <img src="{% static "profile-image-male.jpg" %}" class="img-responsive rounded-image" alt="">
                   {% else %}
@@ -150,17 +144,11 @@ Inactive Clients
                     <br>
                     <strong>Email Address:</strong> <a href="mailto:{{ client.email}}">{{ client.email}}</a>
                     <br>
-                    <strong>Barangay:</strong> {{ client.barangay }}
+                    <strong>Language:</strong> {{ client.language }}
                     <br>
-                    <strong>Tagalog Needed:</strong>
-                    {% if client.tagalog_needed %}
-                    Yes
-                    {% else %}
-                    No
-                    {% endif %}
+                    <strong>Literacy:</strong> {{ client.literacy }}
                     <br>
                     <strong>Transportation Method:</strong> {{ client.transportation_method}}
-
                   </p>
 
                   <div class="container d-flex justify-content-center">
