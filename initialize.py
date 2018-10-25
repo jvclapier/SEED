@@ -39,7 +39,7 @@ with connection.cursor() as cursor:
 
 # make the migrations and migrate
 management.call_command('makemigrations')
-management.call_command('migrate homepage')
+management.call_command('migrate')
 
 #imports for our project
 from homepage import models as mod
