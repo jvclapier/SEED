@@ -139,8 +139,6 @@ STATICFILES_DIRS = (
     # '/var/www/static/',
 )
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 DEFAULT_FILE_STORAGE = 'seedsite.storage_backends.MediaStorage'
 
 AWS_ACCESS_KEY_ID = os.environ['H_AWS_ACCESS_KEY_ID']
