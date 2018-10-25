@@ -1,6 +1,8 @@
 '''
 This view contains all forms used in the website.
 '''
+from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpResponse
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
@@ -8,6 +10,13 @@ from django.contrib.auth import logout as auth_logout
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required, permission_required
+from datetime import datetime
+import re
+from django.template.loader import render_to_string, get_template
+from django.conf import settings as django_settings
+from homepage import models as mod
+from django.db.models import Q
 from django.contrib.auth.models import Permission, Group
 from datetime import datetime
 from homepage import models as mod
@@ -46,6 +55,13 @@ SEMESTER = (
     ('Summer', 'Summer'),
     ('Fall', 'Fall'),
     ('Spring', 'Spring'),
+)
+
+LITERACY = (
+    ('',''),
+    ('Poor', 'Poor'),
+    ('Adequate', 'Adequate'),
+    ('Proficient', 'Proficient'),
 )
 
 # This form takes a user's username and password, validates and authenticates it, and logs the user into the site.
@@ -114,10 +130,7 @@ class EditClient(forms.Form):
     email = forms.CharField(label="Email Address", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
     language = forms.CharField(label="Language", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Language', 'class':'form-control'}))
-    literacy = forms.CharField(label="Literacy", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Literacy', 'class':'form-control'}))
-    semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=False)
-    year = forms.CharField(label="Year", required=False, max_length=4, widget=forms.TextInput(attrs={'placeholder':'YYYY', 'class':'form-control'}))
-    location = location = forms.ChoiceField(label="Location", choices=LOCATION, required=True)
+    literacy = forms.ChoiceField(label="Literacy", choices=LITERACY, required=False)
     lat = forms.CharField(label="Latitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Latitude', 'class':'form-control', 'class':'form-control'}))
     lon = forms.CharField(label="Longitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Longitude', 'class':'form-control', 'class':'form-control'}))
     business_name = forms.CharField(label="Business Name", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Business Name', 'class':'form-control', 'class':'form-control'}))
@@ -142,9 +155,7 @@ class EditClient(forms.Form):
         client.phone_number = self.cleaned_data.get('phone_number')
         client.language = self.cleaned_data.get('language')
         client.literacy = self.cleaned_data.get('literacy')
-        client.semester = self.cleaned_data.get('semester')
         client.year = self.cleaned_data.get('year')
-        client.location = self.cleaned_data.get('location')
         client.lat = self.cleaned_data.get('lat')
         client.lon = self.cleaned_data.get('lon')
         client.business_name = self.cleaned_data.get('business_name')
@@ -165,10 +176,8 @@ class AddClient(forms.Form):
     email = forms.CharField(label="Email Address", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Email Address', 'class':'form-control'}))
     phone_number = forms.CharField(label="Phone Number", required=False, max_length=11, widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'class':'form-control'}))
     language = forms.CharField(label="Language", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Language', 'class':'form-control'}))
-    literacy = forms.CharField(label="Literacy", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Literacy', 'class':'form-control'}))
-    semester = forms.ChoiceField(label="Semester", choices=SEMESTER, required=False)
-    year = forms.CharField(label="Year", required=False, max_length=4, widget=forms.TextInput(attrs={'placeholder':'YYYY', 'class':'form-control'}))
-    location = location = forms.ChoiceField(label="Location", choices=LOCATION, required=True)
+    literacy = forms.ChoiceField(label="Literacy", choices=LITERACY, required=False)
+    organization = forms.CharField(label="Organization", required=False, max_length=25, widget=forms.TextInput(attrs={'placeholder':'Organization', 'class':'form-control'}))
     lat = forms.CharField(label="Latitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Latitude', 'class':'form-control'}))
     lon = forms.CharField(label="Longitude", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Longitude', 'class':'form-control'}))
     business_name = forms.CharField(label="Business Name", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Business Name', 'class':'form-control'}))
@@ -194,9 +203,10 @@ class AddClient(forms.Form):
         client.phone_number = self.cleaned_data.get('phone_number')
         client.language = self.cleaned_data.get('language')
         client.literacy = self.cleaned_data.get('literacy')
-        client.semester = self.cleaned_data.get('semester')
-        client.year = self.cleaned_data.get('year')
-        client.location = self.cleaned_data.get('location')
+        client.organization = self.cleaned_data.get('organization')
+        client.semester = request.user.semester
+        client.year = request.user.year
+        client.location = request.user.location
         client.lat = self.cleaned_data.get('lat')
         client.lon = self.cleaned_data.get('lon')
         client.business_name = self.cleaned_data.get('business_name')
@@ -302,6 +312,7 @@ class AddIntern(forms.Form):
         intern.last_name = self.cleaned_data.get('last_name')
         intern.email = self.cleaned_data.get('email')
         intern.semester = self.cleaned_data.get('semester')
+        intern.location = self.cleaned_data.get('location')
         intern.year = self.cleaned_data.get('year')
         intern.username = self.cleaned_data.get('email')
         intern.set_password(self.cleaned_data.get('password'))

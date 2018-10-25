@@ -30,6 +30,7 @@ class Client(models.Model):
     semester = models.TextField(blank=True, null=True)
     year = models.TextField(blank=True, null=True)
     location = models.TextField(blank=True, null=True)
+    organization = models.TextField(blank=True, null=True)
     lat = models.DecimalField(max_digits=20, decimal_places=15, blank=True, null=True)
     lon = models.DecimalField(max_digits=20, decimal_places=15, blank=True, null=True)
     business_name = models.TextField(blank=True, null=True)
