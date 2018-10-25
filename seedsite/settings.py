@@ -21,16 +21,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'wvwm67jdpjtm!or#u5v7#6&=s)x(4d!4e+!kps9r2&odil3oq#'
+SECRET_KEY = os.environ['H_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost',
-    '192.168.1.20',
-    '192.168.254.109',
-    '144.39.170.72',
+    'huntsmanseed.herokuapp.com',
 ]
 
 AUTH_USER_MODEL = 'homepage.Intern'
@@ -49,6 +46,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # Simplified static file serving.
+    # https://warehouse.python.org/project/whitenoise/
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -78,7 +78,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'seedsite.wsgi.application'
 
-ADMIN_PASSWORD = 'thisisthepassword'
+ADMIN_PASSWORD = os.environ['H_ADMIN_PASSWORD']
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -86,11 +86,11 @@ ADMIN_PASSWORD = 'thisisthepassword'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'seedsite',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': os.environ['H_DATABASE_NAME'],
+        'USER': os.environ['H_DATABASE_USER'],
+        'PASSWORD': os.environ['H_DATABASE_PASSWORD'],
+        'HOST': os.environ['H_DATABASE_HOST'],
+        'PORT': '5432',
     }
 }
 
@@ -130,17 +130,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'seedsite', 'static'),
-    # os.path.join(BASE_DIR, "static"),
+    #os.path.join(BASE_DIR, "static"),
     # '/var/www/static/',
 )
 
+#SSL Stuff
+#SECURE_PROXY_SSL_HEADER = ('X-Forwarded-Proto', 'https')
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+#SECURE_SSL_REDIRECT = True
+
 DEFAULT_FILE_STORAGE = 'seedsite.storage_backends.MediaStorage'
 
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_ACCESS_KEY_ID = os.environ['H_AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['H_AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['H_AWS_STORAGE_BUCKET_NAME']
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME

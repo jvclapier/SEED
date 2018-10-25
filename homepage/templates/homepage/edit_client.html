@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Add Client
+Edit Client
 {% endblock title %}
 
 {% block resources %}
@@ -18,23 +18,14 @@ Add Client
 {% endblock resources %}
 
 {% block content %}
-<div class="where-am-i">id-add</div>
-<h1 class="text-center">Add Client</h1>
+<h1 class="text-center">Edit Client</h1>
 <!-- <hr> -->
-<form class="" action="/add_client/" method="post" enctype="multipart/form-data">
+<form class="" action="/edit_client/{{current_client.id}}" method="post">
   {% csrf_token %}
   <p class="card-text">
     <h3 class="text-left">Personal Information:</h3>
     <hr>
     <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.image.errors}}
-        <label for="{{form.image.id_for_label}}">Client Image</label>
-        <div class="input-group">
-          {{form.image}}
-        </div>
-        <br>
-      </div>
       <div class="col-md-6 input-label">
         {{form.first_name.errors}}
         <label for="{{form.first_name.id_for_label}}">First Name</label>
@@ -43,8 +34,6 @@ Add Client
         </div>
         <br>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-6 input-label">
         {{form.last_name.errors}}
         <label for="{{form.last_name.id_for_label}}">Last Name</label>
@@ -53,6 +42,8 @@ Add Client
         </div>
         <br>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.gender.errors}}
         <label for="{{form.gender.id_for_label}}">Gender</label>
@@ -61,8 +52,6 @@ Add Client
         </div>
         <br>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-6 input-label">
         {{form.email.errors}}
         <label for="{{form.email.id_for_label}}">Email</label>
@@ -71,6 +60,8 @@ Add Client
         </div>
         <br>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.phone_number.errors}}
         <label for="{{form.phone_number.id_for_label}}">Phone Number</label>
@@ -79,8 +70,6 @@ Add Client
         </div>
         <br>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-6 input-label">
         {{form.language.errors}}
         <label for="{{form.language.id_for_label}}">Language</label>
@@ -89,29 +78,13 @@ Add Client
         </div>
         <br>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.literacy.errors}}
         <label for="{{form.literacy.id_for_label}}">Literacy</label>
         <div class="input-group">
           {{form.literacy}}
-        </div>
-        <br>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.semester.errors}}
-        <label for="{{form.semester.id_for_label}}">Semester Found</label>
-        <div class="input-group">
-          {{form.semester}}
-        </div>
-        <br>
-      </div>
-      <div class="col-md-6 input-label">
-        {{form.year.errors}}
-        <label for="{{form.year.id_for_label}}">Year Found</label>
-        <div class="input-group">
-          {{form.year}}
         </div>
         <br>
       </div>
@@ -162,10 +135,10 @@ Add Client
     <hr>
     <div class="row">
       <div class="col-md-12 mb-4">
-        <label for="{{form.location.id_for_label}}">Place Pin</label>
+        <label for="{{form.country.id_for_label}}">Place Pin</label>
         <div id='mapid' class="container"></div>
         <script>
-        var mymap = L.map('mapid').setView([14.5591, 121.0802], 13);
+        var mymap = L.map('mapid').setView([{{current_client.lat}}, {{current_client.lon}}], 13);
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
           maxZoom: 18,
@@ -177,7 +150,7 @@ Add Client
           iconSize: [38, 70],
           iconAnchor: [19, 70],
         });
-        var marker = L.marker([14.5591, 121.0802], {icon: myIcon, draggable: 'True', title:'Drag to set location', autoPan: 'True'}).addTo(mymap);
+        var marker = L.marker([{{current_client.lat}}, {{current_client.lon}}], {icon: myIcon, draggable: 'True', title:'Drag to set location', autoPan: 'True'}).addTo(mymap);
         marker.on('moveend', setlatlon);
         function setlatlon(){
 
@@ -221,6 +194,34 @@ Add Client
   <div class="container d-flex justify-content-center">
     <input class="btn btn-success" value="Save" type="submit"></input>
   </div>
+
+  {% if current_client.active == True %}
+  <!-- Button trigger modal -->
+  <a class="btn deactivate d-flex justify-content-center" data-toggle="modal" data-target="#Modal">Deactivate</a>
+  {% elif current_client.active == False %}
+  <a href="/delete_client/{{current_client.id}}" class="btn reactivate d-flex justify-content-center">Reactivate</a>
+  {% endif %}
 </form>
 
+<!-- Modal -->
+<div class="modal fade mt-5" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">Hold up! Wait a minute.</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      Are you sure you want to deactivate this client? The client will only be viewable from the search bar.
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-danger modal-danger ml-auto" href="/delete_client/{{current_client.id}}">Deactivate</a>
+        <a class="btn btn-primary mr-auto" data-dismiss="modal" style="color:white;">Close</a>
+        <img id="waiting-gif" src="{% static "waiting.gif" %}" alt="">
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}

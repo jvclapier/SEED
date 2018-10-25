@@ -7,11 +7,19 @@ client profile, deleting a client, and viewing all inactive clients.
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django import forms
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required, permission_required
+from datetime import datetime
+import re
+from django.template.loader import render_to_string, get_template
 from django.conf import settings as django_settings
 from homepage import models as mod
+from django.db.models import Q
 from django.contrib.auth.models import Permission, Group
 from homepage import siteForms
 
@@ -20,6 +28,25 @@ from homepage import siteForms
 # After adding the new client to the database, users are redirected to the index page.
 @login_required(login_url = '/login/')
 def add_client(request):
+
+    current_user = request.user
+
+    if current_user.location == "Philippines":
+        map_lat = 14.5591
+        map_lon = 121.0802
+    elif current_user.location == "Trujillo":
+        map_lat = -8.1121
+        map_lon = -79.0291
+    elif current_user.location == "Lima":
+        map_lat = -12.0237
+        map_lon = -77.0606
+    elif current_user.location == "DR":
+        map_lat = 18.4887
+        map_lon = -69.9309
+    elif current_user.location == "Ghana":
+        map_lat = 6.3015
+        map_lon = -0.7286
+
     if request.method == 'POST':
         form = siteForms.AddClient(request.POST, request.FILES)
 
@@ -33,6 +60,8 @@ def add_client(request):
 
     context = {
     'form':form,
+    'map_lat':map_lat,
+    'map_lon':map_lon,
     }
 
     return render(request, 'homepage/add_client.html', context)
@@ -57,7 +86,6 @@ def client_profile(request, id):
 def edit_client(request, id):
 
     current_client = mod.Client.objects.get(id=id)
-    print("##### The current client is", current_client.first_name)
 
     if request.method == 'POST':
         form = siteForms.EditClient(request.POST)
