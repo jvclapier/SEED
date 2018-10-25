@@ -38,8 +38,8 @@ with connection.cursor() as cursor:
     cursor.execute("GRANT ALL ON SCHEMA public TO public")
 
 # make the migrations and migrate
-management.call_command('makemigrations')
-management.call_command('migrate')
+management.call_command('makemigrations homepage')
+management.call_command('migrate homepage')
 
 #imports for our project
 from homepage import models as mod
