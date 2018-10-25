@@ -139,6 +139,11 @@ STATICFILES_DIRS = (
     # '/var/www/static/',
 )
 
+#SSL Stuff
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+
 DEFAULT_FILE_STORAGE = 'seedsite.storage_backends.MediaStorage'
 
 AWS_ACCESS_KEY_ID = os.environ['H_AWS_ACCESS_KEY_ID']
