@@ -90,7 +90,7 @@ admin.first_name = 'Andy'
 admin.last_name = 'Thunell'
 admin.email = 'andy.thunell@usu.edu'
 admin.semester = ''
-admin.username = 'Andy'
+admin.username = 'andy.thunell@usu.edu'
 admin.location = ''
 admin.set_password(django_settings.ADMIN_PASSWORD)
 admin.save()
