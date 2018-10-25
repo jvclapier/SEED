@@ -86,11 +86,11 @@ ADMIN_PASSWORD = 'thisisthepassword'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'seedsite',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': os.environ['H_DATABASE_NAME'],
+        'USER': os.environ['H_DATABASE_USER'],
+        'PASSWORD': os.environ['H_DATABASE_PASSWORD'],
+        'HOST': os.environ['H_DATABASE_HOST'],
+        'PORT': '5432',
     }
 }
 
@@ -140,7 +140,7 @@ STATICFILES_DIRS = (
 
 DEFAULT_FILE_STORAGE = 'seedsite.storage_backends.MediaStorage'
 
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_ACCESS_KEY_ID = os.environ['H_AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['H_AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['H_AWS_STORAGE_BUCKET_NAME']
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
