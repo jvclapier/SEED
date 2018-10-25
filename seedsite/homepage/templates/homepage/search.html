@@ -35,13 +35,9 @@ Search
                 <div class="card-body pb-0">
                     <div class="container-fluid">
                         <div class="row d-flex align-items-center justify-content-center">
-                            <div class="col-6">
-                              {% if client.gender == 'Male' %}
-                                <img src="{% static "profile-image-male.jpg" %}" class="img-responsive rounded-image" alt="">
-                              {% else %}
-                                <img src="{% static "profile-image-female.jpg" %}" class="img-responsive rounded-image" alt="">
-                              {% endif %}
-                            </div>
+                          <div class="col-6 image-box">
+                            <img src="{{ client.image.url }}" class="img-responsive rounded-image"%}">
+                          </div>
                         </div>
                         <div class="row d-flex align-items-center justify-content-center p-4">
                             <div class="container text-center p-0">
@@ -79,6 +75,8 @@ Search
                             <div class="container text-left">
                                 <h5>Contact Info</h5>
                                 <p>
+                                    <strong>Loan Organization:</strong> {{ client.organization}}
+                                    <br>
                                     <strong>Phone Number:</strong> <a href="tel:{{ client.phone_number}}">{{ client.phone_number}}</a>
                                     <br>
                                     <strong>Email Address:</strong> <a href="mailto:{{ client.email}}">{{ client.email}}</a>
@@ -107,13 +105,9 @@ Search
                 <div class="card-body pb-0">
                     <div class="container-fluid">
                         <div class="row d-flex align-items-center justify-content-center">
-                            <div class="col-6">
-                              {% if client.gender == 'Male' %}
-                                <img src="{% static "profile-image-male.jpg" %}" class="img-responsive rounded-image" alt="">
-                              {% else %}
-                                <img src="{% static "profile-image-female.jpg" %}" class="img-responsive rounded-image" alt="">
-                              {% endif %}
-                            </div>
+                          <div class="col-6 image-box">
+                            <img src="{{ client.image.url }}" class="img-responsive rounded-image"%}">
+                          </div>
                         </div>
                         <div class="row d-flex align-items-center justify-content-center p-4">
                             <div class="container text-center p-0">
@@ -151,6 +145,8 @@ Search
                             <div class="container text-left">
                                 <h5>Contact Info</h5>
                                 <p>
+                                    <strong>Loan Organization:</strong> {{ client.organization}}
+                                    <br>
                                     <strong>Phone Number:</strong> <a href="tel:{{ client.phone_number}}">{{ client.phone_number}}</a>
                                     <br>
                                     <strong>Email Address:</strong> <a href="mailto:{{ client.email}}">{{ client.email}}</a>
