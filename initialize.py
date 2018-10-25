@@ -86,94 +86,13 @@ CreateGroup('Admins', permissions = ['admin_portal'])
 CreateGroup('Interns', permissions = ['intern_portal'])
 
 admin = mod.Intern()
-admin.first_name = 'general'
-admin.last_name = 'admin'
-admin.email = 'jvclapier@gmail.com'
+admin.first_name = 'Andy'
+admin.last_name = 'Thunell'
+admin.email = 'andy.thunell@usu.edu'
 admin.semester = ''
-admin.username = 'admin'
+admin.username = 'Andy'
 admin.location = ''
 admin.set_password(django_settings.ADMIN_PASSWORD)
 admin.save()
 admin_group = Group.objects.get(name='Admins')
 admin_group.user_set.add(admin)
-
-'''create interns'''
-def CreateIntern(username, password, first_name, last_name, email, semester, year, location):
-    intern = mod.Intern()
-    intern.username = username
-    intern.set_password(password)
-    intern.first_name = first_name
-    intern.last_name = last_name
-    intern.email = email
-    intern.semester = semester
-    intern.year = year
-    intern.location = location
-    intern.save()
-    intern_group = Group.objects.get(name='Interns')
-    intern_group.user_set.add(intern)
-    print("####### Intern created: " + intern.first_name)
-
-CreateIntern('jvclapier@gmail.com', 'password', 'Jessee', 'Clapier', 'jvclapier@gmail.com', 'Summer', '2018', 'Philippines')
-CreateIntern('bdsmith98@gmail.com', 'password', 'Benton', 'Smith', 'bdsmith98@gmail.com', 'Summer', '2018', 'Philippines')
-CreateIntern('eaglauser@gmail.com', 'password', 'Eliza', 'Clapier', 'eaglauser@gmail.com', 'Summer', '2018', 'Philippines')
-
-'''create client'''
-def CreateClient(image, first_name, last_name, gender, email, phone_number, language, literacy, semester, year, location, organization, lat, lon, business_name, business_type, transportation_method, bio, active):
-    client = mod.Client()
-    client.image = image
-    client.first_name = first_name
-    client.last_name = last_name
-    client.gender = gender
-    client.email = email
-    client.phone_number = phone_number
-    client.language = language
-    client.literacy = literacy
-    client.semester = semester
-    client.year = year
-    client.location = location
-    client.organization = organization
-    client.lat = lat
-    client.lon = lon
-    client.business_name = business_name
-    client.business_type = business_name
-    client.transportation_method = transportation_method
-    client.bio = bio
-    client.active = active
-    client.save()
-    print("####### Client created: " + client.first_name)
-
-CreateClient('IMG_2089_KLF5Ifn.jpg','Zaldy', 'Conception', 'Male', 'zaldy@mailinator.com', '0927123456', 'Tagalog', 'High', 'Summer', '2018', 'Philippines', 'Mentors', '14.563502', '121.084722', 'Eloi & She Food Corner', 'Canteen', 'Tricycle', 'He is the man!', True)
-CreateClient('IMG_2089_KLF5Ifn.jpg','Reyna', 'Banatao', 'Female', 'reyna@mailinator.com', '0927123456', 'Tagalog', 'Medium', 'Summer', '2018', 'Philippines', 'Mentors', '14.543812', '121.100816', 'God Gift Lying In', 'Birthing Clinic', 'Tricycle', 'She has great ideas!', True)
-CreateClient('IMG_2089_KLF5Ifn.jpg','Gerald', 'Taratao', 'Male', 'gerald@mailinator.com', '0927123456', 'Tagalog', 'Low', 'Summer', '2018', 'Philippines', 'Mentors', '14.586477', '121.078430', 'GAT Pet Shop', 'Petshop', 'Jeepney', 'Great guy!', True)
-
-'''create assigned client'''
-def CreateAssignedClient(intern_username, client_first_name):
-    assigned_client = mod.AssignedClient()
-    assigned_client.client = mod.Client.objects.get(first_name = client_first_name)
-    assigned_client.intern = mod.Intern.objects.get(username = intern_username)
-    assigned_client.save()
-    print("####### assignment created: " + assigned_client.intern.first_name + ' has bookmarked ' + assigned_client.client.first_name)
-
-CreateAssignedClient('jvclapier@gmail.com', 'Zaldy')
-CreateAssignedClient('eaglauser@gmail.com', 'Zaldy')
-CreateAssignedClient('bdsmith98@gmail.com', 'Gerald')
-CreateAssignedClient('eaglauser@gmail.com', 'Reyna')
-CreateAssignedClient('bdsmith98@gmail.com', 'Reyna')
-CreateAssignedClient('jvclapier@gmail.com', 'Reyna')
-
-'''create logs'''
-def CreateLog(date_created, date_visited, visit_description, next_steps, time_of_visit, intern_username, client_first_name):
-    log = mod.Log()
-    log.date_created = date_created
-    log.date_visited = date_visited
-    log.visit_description = visit_description
-    log.next_steps = next_steps
-    log.time_of_visit = time_of_visit
-    log.intern = mod.Intern.objects.get(username = intern_username)
-    log.client = mod.Client.objects.get(first_name = client_first_name)
-    log.save()
-    print('####### New log for', log.client.first_name, 'created by', log.intern.first_name, 'on', log.date_created)
-
-CreateLog('2018-06-25', '2018-06-20', 'Today we visited with Reyna about marekting materials and it was good stuff.', 'We are doing some things for her.', '10:00AM', 'jvclapier@gmail.com', 'Reyna')
-CreateLog('2018-06-18', '2018-06-19', 'Today we visited with Gerald about an excel spreadsheet and he took us to lunch.', 'We are going to follow up and go to MOA.', '1:00PM', 'bdsmith98@gmail.com', 'Gerald')
-CreateLog('2018-06-12', '2018-06-18', 'Zaldy has an awesome ponytail.', 'We are going to cut his ponytail.', '9:00AM', 'eaglauser@gmail.com', 'Zaldy')

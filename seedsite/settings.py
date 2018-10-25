@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'wvwm67jdpjtm!or#u5v7#6&=s)x(4d!4e+!kps9r2&odil3oq#'
+SECRET_KEY = os.environ['H_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -75,7 +75,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'seedsite.wsgi.application'
 
-ADMIN_PASSWORD = 'thisisthepassword'
+ADMIN_PASSWORD = os.environ['H_ADMIN_PASSWORD']
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
