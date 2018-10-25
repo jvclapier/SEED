@@ -5,3 +5,5 @@
 __pycache__/
 .sass-cache/
 homepage/migrations/
+settings.py
+.env
