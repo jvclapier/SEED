@@ -27,10 +27,7 @@ SECRET_KEY = 'wvwm67jdpjtm!or#u5v7#6&=s)x(4d!4e+!kps9r2&odil3oq#'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost',
-    '192.168.1.20',
-    '192.168.254.109',
-    '144.39.170.122',
+    'huntsmanseed.herokuapp.com',
 ]
 
 AUTH_USER_MODEL = 'homepage.Intern'
