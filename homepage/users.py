@@ -96,8 +96,12 @@ def admin_edit_profile(request, id):
 def intern_portal(request):
 
     current_user = request.user
-    assigned_clients_ordered = mod.Client.objects.filter(active = True, location = current_user.location, assignedclient__intern = current_user).order_by('first_name')
-    unassigned_clients = mod.Client.objects.filter(active = True, location = current_user.location).exclude(assignedclient__intern = current_user).order_by('first_name')
+    if current_user.has_perm('homepage.admin_portal'):
+        assigned_clients_ordered = mod.Client.objects.filter(active = True, assignedclient__intern = current_user).order_by('first_name')
+        unassigned_clients = mod.Client.objects.filter(active = True).exclude(assignedclient__intern = current_user).order_by('first_name')
+    else:
+        assigned_clients_ordered = mod.Client.objects.filter(active = True, location = current_user.location, assignedclient__intern = current_user).order_by('first_name')
+        unassigned_clients = mod.Client.objects.filter(active = True, location = current_user.location).exclude(assignedclient__intern = current_user).order_by('first_name')
 
     context = {
         'assigned_clients_ordered':assigned_clients_ordered,

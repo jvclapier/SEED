@@ -33,9 +33,12 @@ def search(request):
     if ('client_name' in request.GET) and request.GET['client_name'].strip():
         query_string = request.GET.get('client_name')
         query = get_query(query_string, ['first_name', 'last_name', 'business_name', 'semester', 'year'])
-        assigned_clients_filtered = mod.Client.objects.filter(query, assignedclient__intern = current_user, location = current_user.location).order_by('first_name')
-        unassigned_clients_filtered = mod.Client.objects.filter(query, location = current_user.location).exclude(assignedclient__intern = current_user).order_by('first_name')
-
+        if current_user.has_perm('homepage.admin_portal'):
+            assigned_clients_filtered = mod.Client.objects.filter(query, assignedclient__intern = current_user).order_by('first_name')
+            unassigned_clients_filtered = mod.Client.objects.filter(query).exclude(assignedclient__intern = current_user).order_by('first_name')
+        else:
+            assigned_clients_filtered = mod.Client.objects.filter(query, assignedclient__intern = current_user, location = current_user.location).order_by('first_name')
+            unassigned_clients_filtered = mod.Client.objects.filter(query, location = current_user.location).exclude(assignedclient__intern = current_user).order_by('first_name')
     context = {
         'assigned_clients_filtered':assigned_clients_filtered,
         'unassigned_clients_filtered':unassigned_clients_filtered,
