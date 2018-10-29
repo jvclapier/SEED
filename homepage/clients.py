@@ -133,8 +133,12 @@ def delete_client(request, id):
 def inactive_clients(request):
 
     current_user = request.user
-    inactive_assigned = mod.Client.objects.filter(active=False, location = current_user.location, assignedclient__intern = current_user).order_by('first_name')
-    inactive_unassigned = mod.Client.objects.filter(active=False, location = current_user.location).exclude(assignedclient__intern = current_user).order_by('first_name')
+    if current_user.has_perm('homepage.admin_portal'):
+        inactive_assigned = mod.Client.objects.filter(active=False, assignedclient__intern = current_user).order_by('first_name')
+        inactive_unassigned = mod.Client.objects.filter(active=False).exclude(assignedclient__intern = current_user).order_by('first_name')
+    else:
+        inactive_assigned = mod.Client.objects.filter(active=False, location = current_user.location, assignedclient__intern = current_user).order_by('first_name')
+        inactive_unassigned = mod.Client.objects.filter(active=False, location = current_user.location).exclude(assignedclient__intern = current_user).order_by('first_name')
 
     context = {
         'inactive_assigned': inactive_assigned,
