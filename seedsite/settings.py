@@ -46,8 +46,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # Simplified static file serving.
-    # https://warehouse.python.org/project/whitenoise/
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -134,8 +132,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    #os.path.join(BASE_DIR, 'seedsite', 'static'),
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, 'seedsite', 'static'),
+    #os.path.join(BASE_DIR, "static"),
     # '/var/www/static/',
 )
 
