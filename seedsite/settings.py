@@ -48,8 +48,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     # Simplified static file serving.
     # https://warehouse.python.org/project/whitenoise/
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -140,10 +140,10 @@ STATICFILES_DIRS = (
 )
 
 #SSL Stuff
-#SECURE_PROXY_SSL_HEADER = ('X-Forwarded-Proto', 'https')
+SECURE_PROXY_SSL_HEADER = ('X-Forwarded-Proto', 'https')
+SECURE_SSL_REDIRECT = True
 CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE = False
-#SECURE_SSL_REDIRECT = True
 
 DEFAULT_FILE_STORAGE = 'seedsite.storage_backends.MediaStorage'
 
