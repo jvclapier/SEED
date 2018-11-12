@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'huntsmanseed.herokuapp.com',
+    'huntsmanseed.usu.edu',
 ]
 
 AUTH_USER_MODEL = 'homepage.Intern'
