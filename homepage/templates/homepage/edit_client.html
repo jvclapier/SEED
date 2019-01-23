@@ -27,6 +27,14 @@ Edit Client
     <hr>
     <div class="row">
       <div class="col-md-6 input-label">
+        {{form.image.errors}}
+        <label for="{{form.image.id_for_label}}">Client Image</label>
+        <div class="input-group">
+          {{form.image}}
+        </div>
+        <br>
+      </div>
+      <div class="col-md-6 input-label">
         {{form.first_name.errors}}
         <label for="{{form.first_name.id_for_label}}">First Name</label>
         <div class="input-group">
@@ -34,6 +42,8 @@ Edit Client
         </div>
         <br>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.last_name.errors}}
         <label for="{{form.last_name.id_for_label}}">Last Name</label>
@@ -42,8 +52,6 @@ Edit Client
         </div>
         <br>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-6 input-label">
         {{form.gender.errors}}
         <label for="{{form.gender.id_for_label}}">Gender</label>
@@ -52,6 +60,8 @@ Edit Client
         </div>
         <br>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.email.errors}}
         <label for="{{form.email.id_for_label}}">Email</label>
@@ -60,8 +70,6 @@ Edit Client
         </div>
         <br>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-6 input-label">
         {{form.phone_number.errors}}
         <label for="{{form.phone_number.id_for_label}}">Phone Number</label>
@@ -70,6 +78,8 @@ Edit Client
         </div>
         <br>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6 input-label">
         {{form.language.errors}}
         <label for="{{form.language.id_for_label}}">Language</label>
