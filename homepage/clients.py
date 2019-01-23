@@ -95,7 +95,7 @@ def edit_client(request, id):
 
             return HttpResponseRedirect('/index/')
     else:
-        form = siteForms.EditClient({'image':current_client.image, 'first_name':current_client.first_name,
+        form = siteForms.EditClient({'first_name':current_client.first_name,
             'last_name':current_client.last_name, 'gender': current_client.gender,
             'email':current_client.email, 'phone_number': current_client.phone_number,
             'language': current_client.language, 'literacy': current_client.literacy,
