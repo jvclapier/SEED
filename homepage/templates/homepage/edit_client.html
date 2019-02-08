@@ -8,11 +8,11 @@ Edit Client
 {% block resources %}
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
-  integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
-  crossorigin=""/>
+integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+crossorigin=""/>
 <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
-   integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
-   crossorigin=""></script>
+integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+crossorigin=""></script>
 
 
 {% endblock resources %}
@@ -20,124 +20,131 @@ Edit Client
 {% block content %}
 <h1 class="text-center">Edit Client</h1>
 <!-- <hr> -->
-<form class="" action="/edit_client/{{current_client.id}}" method="post">
+<form class="" action="/edit_client/{{current_client.id}}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  <p class="card-text">
-    <h3 class="text-left">Personal Information:</h3>
-    <hr>
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.first_name.errors}}
-        <label for="{{form.first_name.id_for_label}}">First Name</label>
-        <div class="input-group">
-          {{form.first_name}}
-        </div>
-        <br>
+  <h3 class="text-left">Personal Information:</h3>
+  <hr>
+  <div class="row">
+    <div class="col-md-6 input-label">
+      {{form.image.errors}}
+      <label for="{{form.image.id_for_label}}">Client Image</label>
+      <div class="input-group">
+        {{form.image}}
       </div>
-      <div class="col-md-6 input-label">
-        {{form.last_name.errors}}
-        <label for="{{form.last_name.id_for_label}}">Last Name</label>
-        <div class="input-group">
-          {{form.last_name}}
-        </div>
-        <br>
-      </div>
+      <br>
     </div>
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.gender.errors}}
-        <label for="{{form.gender.id_for_label}}">Gender</label>
-        <div class="input-group">
-          {{form.gender}}
-        </div>
-        <br>
+    <div class="col-md-6 input-label">
+      {{form.first_name.errors}}
+      <label for="{{form.first_name.id_for_label}}">First Name</label>
+      <div class="input-group">
+        {{form.first_name}}
       </div>
-      <div class="col-md-6 input-label">
-        {{form.email.errors}}
-        <label for="{{form.email.id_for_label}}">Email</label>
-        <div class="input-group">
-          {{form.email}}
-        </div>
-        <br>
-      </div>
+      <br>
     </div>
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.phone_number.errors}}
-        <label for="{{form.phone_number.id_for_label}}">Phone Number</label>
-        <div class="input-group">
-          {{form.phone_number}}
-        </div>
-        <br>
+  </div>
+  <div class="row">
+    <div class="col-md-6 input-label">
+      {{form.last_name.errors}}
+      <label for="{{form.last_name.id_for_label}}">Last Name</label>
+      <div class="input-group">
+        {{form.last_name}}
       </div>
-      <div class="col-md-6 input-label">
-        {{form.language.errors}}
-        <label for="{{form.language.id_for_label}}">Language</label>
-        <div class="input-group">
-          {{form.language}}
-        </div>
-        <br>
-      </div>
+      <br>
     </div>
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.literacy.errors}}
-        <label for="{{form.literacy.id_for_label}}">Literacy</label>
-        <div class="input-group">
-          {{form.literacy}}
-        </div>
-        <br>
+    <div class="col-md-6 input-label">
+      {{form.gender.errors}}
+      <label for="{{form.gender.id_for_label}}">Gender</label>
+      <div class="input-group">
+        {{form.gender}}
       </div>
+      <br>
     </div>
-    <h3 class="text-left">Bio:</h3>
-    <hr>
-    <div class="row">
-      <div class="col-md-12 input-label">
-        {{form.bio.errors}}
-        <!-- <label for="{{form.bio.id_for_label}}">Bio</label> -->
-        <div class="input-group">
-          {{form.bio}}
-        </div>
-        <br>
+  </div>
+  <div class="row">
+    <div class="col-md-6 input-label">
+      {{form.email.errors}}
+      <label for="{{form.email.id_for_label}}">Email</label>
+      <div class="input-group">
+        {{form.email}}
       </div>
+      <br>
     </div>
-    <h3 class="text-left">Business Information:</h3>
-    <hr>
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.business_name.errors}}
-        <label for="{{form.business_name.id_for_label}}">Business Name</label>
-        <div class="input-group">
-          {{form.business_name}}
-        </div>
-        <br>
+    <div class="col-md-6 input-label">
+      {{form.phone_number.errors}}
+      <label for="{{form.phone_number.id_for_label}}">Phone Number</label>
+      <div class="input-group">
+        {{form.phone_number}}
       </div>
-      <div class="col-md-6 input-label">
-        {{form.business_type.errors}}
-        <label for="{{form.business_type.id_for_label}}">Business Type</label>
-        <div class="input-group">
-          {{form.business_type}}
-        </div>
-        <br>
-      </div>
+      <br>
     </div>
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.location.errors}}
-        <label for="{{form.location.id_for_label}}">Location</label>
-        <div class="input-group">
-          {{form.location}}
-        </div>
-        <br>
+  </div>
+  <div class="row">
+    <div class="col-md-6 input-label">
+      {{form.language.errors}}
+      <label for="{{form.language.id_for_label}}">Language</label>
+      <div class="input-group">
+        {{form.language}}
       </div>
+      <br>
     </div>
-    <h3 class="text-left">Getting There:</h3>
-    <hr>
-    <div class="row">
-      <div class="col-md-12 mb-4">
-        <label for="{{form.country.id_for_label}}">Place Pin</label>
-        <div id='mapid' class="container"></div>
-        <script>
+    <div class="col-md-6 input-label">
+      {{form.literacy.errors}}
+      <label for="{{form.literacy.id_for_label}}">Literacy</label>
+      <div class="input-group">
+        {{form.literacy}}
+      </div>
+      <br>
+    </div>
+  </div>
+  <h3 class="text-left">Bio:</h3>
+  <hr>
+  <div class="row">
+    <div class="col-md-12 input-label">
+      {{form.bio.errors}}
+      <!-- <label for="{{form.bio.id_for_label}}">Bio</label> -->
+      <div class="input-group">
+        {{form.bio}}
+      </div>
+      <br>
+    </div>
+  </div>
+  <h3 class="text-left">Business Information:</h3>
+  <hr>
+  <div class="row">
+    <div class="col-md-6 input-label">
+      {{form.business_name.errors}}
+      <label for="{{form.business_name.id_for_label}}">Business Name</label>
+      <div class="input-group">
+        {{form.business_name}}
+      </div>
+      <br>
+    </div>
+    <div class="col-md-6 input-label">
+      {{form.business_type.errors}}
+      <label for="{{form.business_type.id_for_label}}">Business Type</label>
+      <div class="input-group">
+        {{form.business_type}}
+      </div>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 input-label">
+      {{form.location.errors}}
+      <label for="{{form.location.id_for_label}}">Location</label>
+      <div class="input-group">
+        {{form.location}}
+      </div>
+      <br>
+    </div>
+  </div>
+  <h3 class="text-left">Getting There:</h3>
+  <hr>
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <label for="{{form.country.id_for_label}}">Place Pin</label>
+      <div id='mapid' class="container"></div>
+      <script>
         var mymap = L.map('mapid').setView([{{current_client.lat}}, {{current_client.lon}}], 13);
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -159,49 +166,49 @@ Edit Client
           $('#id_lat').attr('value', newlocation.lat);
           $('#id_lon').attr('value', newlocation.lng);
         }
-        </script>
-      </div>
+      </script>
     </div>
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.lat.errors}}
-        <label for="{{form.lat.id_for_label}}">Latitude <span style="font-size:1rem;">(auto-populated from map)</span></label>
-        <div id="enterlat" class="input-group">
-          {{form.lat}}
-        </div>
-        <br>
+  </div>
+  <div class="row">
+    <div class="col-md-6 input-label">
+      {{form.lat.errors}}
+      <label for="{{form.lat.id_for_label}}">Latitude <span style="font-size:1rem;">(auto-populated from map)</span></label>
+      <div id="enterlat" class="input-group">
+        {{form.lat}}
       </div>
-      <div class="col-md-6 input-label">
-        {{form.lon.errors}}
-        <label for="{{form.lon.id_for_label}}">Longitude <span style="font-size:1rem;">(auto-populated from map)</span> </label>
-        <div id="enterlon" class="input-group">
-          {{form.lon}}
-        </div>
-        <br>
-      </div>
+      <br>
     </div>
-    <div class="row">
-      <div class="col-md-6 input-label">
-        {{form.transportation_method.errors}}
-        <label for="{{form.transportation_method.id_for_label}}">Transportation Method</label>
-        <div class="input-group">
-          {{form.transportation_method}}
-        </div>
-        <br>
+    <div class="col-md-6 input-label">
+      {{form.lon.errors}}
+      <label for="{{form.lon.id_for_label}}">Longitude <span style="font-size:1rem;">(auto-populated from map)</span> </label>
+      <div id="enterlon" class="input-group">
+        {{form.lon}}
       </div>
+      <br>
     </div>
-  </p>
+  </div>
+  <div class="row">
+    <div class="col-md-6 input-label">
+      {{form.transportation_method.errors}}
+      <label for="{{form.transportation_method.id_for_label}}">Transportation Method</label>
+      <div class="input-group">
+        {{form.transportation_method}}
+      </div>
+      <br>
+    </div>
+  </div>
   <div class="container d-flex justify-content-center">
     <input class="btn btn-success" value="Save" type="submit"></input>
   </div>
-
-  {% if current_client.active == True %}
-  <!-- Button trigger modal -->
-  <a class="btn deactivate d-flex justify-content-center" data-toggle="modal" data-target="#Modal">Deactivate</a>
-  {% elif current_client.active == False %}
-  <a href="/delete_client/{{current_client.id}}" class="btn reactivate d-flex justify-content-center">Reactivate</a>
-  {% endif %}
 </form>
+
+{% if current_client.active == True %}
+<!-- Button trigger modal -->
+<a class="btn deactivate d-flex justify-content-center" data-toggle="modal" data-target="#Modal">Deactivate</a>
+{% elif current_client.active == False %}
+<a href="/delete_client/{{current_client.id}}" class="btn reactivate d-flex justify-content-center">Reactivate</a>
+{% endif %}
+
 
 <!-- Modal -->
 <div class="modal fade mt-5" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
@@ -214,7 +221,7 @@ Edit Client
         </button>
       </div>
       <div class="modal-body">
-      Are you sure you want to deactivate this client? The client will only be viewable from the search bar.
+        Are you sure you want to deactivate this client? The client will only be viewable from the search bar.
       </div>
       <div class="modal-footer">
         <a class="btn btn-danger modal-danger ml-auto" href="/delete_client/{{current_client.id}}">Deactivate</a>
@@ -223,5 +230,5 @@ Edit Client
       </div>
     </div>
   </div>
-</div>
-{% endblock content %}
+
+  {% endblock content %}

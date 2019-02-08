@@ -88,14 +88,14 @@ def edit_client(request, id):
     current_client = mod.Client.objects.get(id=id)
 
     if request.method == 'POST':
-        form = siteForms.EditClient(request.POST)
+        form = siteForms.EditClient(request.POST, request.FILES)
         if form.is_valid():
 
             form.commit(request, current_client)
 
             return HttpResponseRedirect('/index/')
     else:
-        form = siteForms.EditClient({'first_name':current_client.first_name,
+        form = siteForms.EditClient({'image':current_client.image, 'first_name':current_client.first_name,
             'last_name':current_client.last_name, 'gender': current_client.gender,
             'email':current_client.email, 'phone_number': current_client.phone_number,
             'language': current_client.language, 'literacy': current_client.literacy,
