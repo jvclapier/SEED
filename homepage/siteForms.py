@@ -258,6 +258,7 @@ class AdminEditProfile(forms.Form):
         user.email = self.cleaned_data.get('email')
         user.semester = self.cleaned_data.get('semester')
         user.year = self.cleaned_data.get('year')
+        user.location = self.cleaned_data.get('location')
         if self.cleaned_data.get('confirm_new_password') != '' and self.cleaned_data.get('confirm_new_password') is not None:
             user.set_password(self.cleaned_data.get('confirm_new_password'))
             user.is_previously_logged_in = False
