@@ -21,6 +21,14 @@ Client Profile
   <p class="log-text">No bio entered</p>
 {% endif %}
 <hr>
+<h5 class="text-left">Transportation Method</h5> {{ client.transportation_method}}
+{% if current_client.transportation_method %}
+  <p class="log-text">{{ current_client.transportation_method }}</p>
+{% else %}
+  <p class="log-text">No transportation method entered</p>
+{% endif %}
+<hr>
+
 <div class="container mb-5">
     {% for log in client_logs %}
     <div class="row">
