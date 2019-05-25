@@ -32,10 +32,19 @@ def search(request):
     unassigned_clients_filtered = None
     if ('client_name' in request.GET) and request.GET['client_name'].strip():
         query_string = request.GET.get('client_name')
-        query = get_query(query_string, ['first_name', 'last_name', 'business_name', 'semester', 'year'])
+        # Getting query if user is an administrator.
+        # This lets admins search by location.
+        if current_user.has_perm('homepage.admin_portal'):
+            query = get_query(query_string, ['first_name', 'last_name', 'business_name', 'semester', 'year', 'location'])
+        # Getting query for everyone else
+        else:
+            query = get_query(query_string, ['first_name', 'last_name', 'business_name', 'semester', 'year'])
+
+        # Letting admin see all locations
         if current_user.has_perm('homepage.admin_portal'):
             assigned_clients_filtered = mod.Client.objects.filter(query, assignedclient__intern = current_user).order_by('first_name')
             unassigned_clients_filtered = mod.Client.objects.filter(query).exclude(assignedclient__intern = current_user).order_by('first_name')
+        # Letting everyone else only see their location
         else:
             assigned_clients_filtered = mod.Client.objects.filter(query, assignedclient__intern = current_user, location = current_user.location).order_by('first_name')
             unassigned_clients_filtered = mod.Client.objects.filter(query, location = current_user.location).exclude(assignedclient__intern = current_user).order_by('first_name')
@@ -55,7 +64,7 @@ def search_interns(request):
     if ('intern_name' in request.GET) and request.GET['intern_name'].strip():
         assigned_clients = mod.AssignedClient.objects.all().prefetch_related('intern', 'client')
         query_string = request.GET['intern_name']
-        entry_query = get_query(query_string, ['first_name', 'last_name', 'semester', 'year', 'email'])
+        entry_query = get_query(query_string, ['first_name', 'last_name', 'semester', 'year', 'email', 'location'])
         filtered_interns = mod.Intern.objects.filter(entry_query).order_by('-date_joined')
 
     context = {
