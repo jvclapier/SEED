@@ -136,7 +136,7 @@ class EditClient(forms.Form):
     lon = forms.CharField(label="Longitude", required=True, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Longitude', 'class':'form-control', 'class':'form-control'}))
     business_name = forms.CharField(label="Business Name", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Business Name', 'class':'form-control', 'class':'form-control'}))
     business_type = forms.CharField(label="Business Type", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Business Type', 'class':'form-control', 'class':'form-control'}))
-    transportation_method = forms.CharField(label="Transportation Method", required=False, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Please describe how you got there', 'class':'form-control', 'class':'form-control', 'width':'100%', 'rows':'3'}))
+    transportation_method = forms.CharField(label="Transportation Method", required=False, max_length=5000, widget=forms.Textarea(attrs={'placeholder':'Please describe how you got there', 'class':'form-control', 'class':'form-control', 'width':'100%', 'rows':'3'}))
     bio = forms.CharField(label="Client Bio", required=False, max_length=1500, widget=forms.Textarea(attrs={'placeholder':'Write a brief bio about your overall experience with this client', 'class':'form-control', 'class':'form-control', 'width':'100%', 'rows':'4'}))
 
 
@@ -185,7 +185,7 @@ class AddClient(forms.Form):
     lon = forms.CharField(label="Longitude", required=True, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Longitude', 'class':'form-control'}))
     business_name = forms.CharField(label="Business Name", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Business Name', 'class':'form-control'}))
     business_type = forms.CharField(label="Business Type", required=False, max_length=20, widget=forms.TextInput(attrs={'placeholder':'Business Type', 'class':'form-control'}))
-    transportation_method = forms.CharField(label="Transportation Method", required=False, max_length=1000, widget=forms.Textarea(attrs={'placeholder':'Please describe how you got there', 'class':'form-control', 'width':'100%', 'rows':'3'}))
+    transportation_method = forms.CharField(label="Transportation Method", required=False, max_length=5000, widget=forms.Textarea(attrs={'placeholder':'Please describe how you got there', 'class':'form-control', 'width':'100%', 'rows':'3'}))
     bio = forms.CharField(label="Client Bio", required=False, max_length=1500, widget=forms.Textarea(attrs={'placeholder':'Write a brief bio about your overall experience with this client', 'class':'form-control', 'width':'100%', 'rows':'4'}))
 
 
