@@ -42,12 +42,12 @@ def search(request):
 
         # Letting admin see all locations
         if current_user.has_perm('homepage.admin_portal'):
-            assigned_clients_filtered = mod.Client.objects.filter(active = True, query, assignedclient__intern = current_user).order_by('first_name')
-            unassigned_clients_filtered = mod.Client.objects.filter(active = True, query).exclude(assignedclient__intern = current_user).order_by('first_name')
+            assigned_clients_filtered = mod.Client.objects.filter(query, active = True, assignedclient__intern = current_user).order_by('first_name')
+            unassigned_clients_filtered = mod.Client.objects.filter(query, active = True,).exclude(assignedclient__intern = current_user).order_by('first_name')
         # Letting everyone else only see their location
         else:
-            assigned_clients_filtered = mod.Client.objects.filter(active = True, query, assignedclient__intern = current_user, location = current_user.location).order_by('first_name')
-            unassigned_clients_filtered = mod.Client.objects.filter(active = True, query, location = current_user.location).exclude(assignedclient__intern = current_user).order_by('first_name')
+            assigned_clients_filtered = mod.Client.objects.filter(query, active = True, assignedclient__intern = current_user, location = current_user.location).order_by('first_name')
+            unassigned_clients_filtered = mod.Client.objects.filter(query, active = True, location = current_user.location).exclude(assignedclient__intern = current_user).order_by('first_name')
     context = {
         'assigned_clients_filtered':assigned_clients_filtered,
         'unassigned_clients_filtered':unassigned_clients_filtered,
