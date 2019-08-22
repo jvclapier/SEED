@@ -115,15 +115,7 @@ class AddLog(forms.Form):
 # This form updates information about a client.
 # The fields will autofill with existing information allowing users to update them with new information.
 class EditClient(forms.Form):
-
-    LOCATION = (
-        ('',''),
-        ('Philippines', 'Philippines'),
-        ('Trujillo', 'Trujillo'),
-        ('Lima', 'Lima'),
-        ('DR', 'DR'),
-        ('Ghana', 'Ghana'),
-    )
+    
 
     image = forms.ImageField(label="Client Image", required=False)
     first_name = forms.CharField(label="First Name", required=True, max_length=12, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
@@ -285,14 +277,6 @@ class AddIntern(forms.Form):
         ('Spring', 'Spring'),
     )
 
-    LOCATION = (
-        ('',''),
-        ('Philippines', 'Philippines'),
-        ('Trujillo', 'Trujillo'),
-        ('Lima', 'Lima'),
-        ('DR', 'DR'),
-        ('Ghana', 'Ghana'),
-    )
 
     first_name = forms.CharField(label="First Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'First Name', 'class':'form-control'}))
     last_name = forms.CharField(label="Last Name", required=False, max_length=50, widget=forms.TextInput(attrs={'placeholder':'Last Name', 'class':'form-control'}))
