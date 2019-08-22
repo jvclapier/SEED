@@ -48,6 +48,7 @@ LOCATION = (
     ('Lima', 'Lima'),
     ('DR', 'DR'),
     ('Ghana', 'Ghana'),
+    ('Guatemala', 'Guatemala'),
 )
 
 SEMESTER = (
