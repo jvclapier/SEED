@@ -46,6 +46,9 @@ def add_client(request):
     elif current_user.location == "Ghana":
         map_lat = 6.3015
         map_lon = -0.7286
+    elif current_user.location == "Guatemala":
+        map_lat = 14.630
+        map_lon = -90.588
 
     if request.method == 'POST':
         form = siteForms.AddClient(request.POST, request.FILES)
