@@ -42,8 +42,12 @@ def search(request):
 
         # Letting admin see all locations
         if current_user.has_perm('homepage.admin_portal'):
-            assigned_clients_filtered = mod.Client.objects.filter(query, active = True, assignedclient__intern = current_user).order_by('first_name')
-            unassigned_clients_filtered = mod.Client.objects.filter(query, active = True,).exclude(assignedclient__intern = current_user).order_by('first_name')
+            if query_string.lower() == 'dr':
+                assigned_clients_filtered = mod.Client.objects.filter(query, active = True, assignedclient__intern = current_user, location = 'DR').order_by('first_name')
+                unassigned_clients_filtered = mod.Client.objects.filter(query, active = True, location = 'DR').exclude(assignedclient__intern = current_user).order_by('first_name')
+            else:
+                assigned_clients_filtered = mod.Client.objects.filter(query, active = True, assignedclient__intern = current_user).order_by('first_name')
+                unassigned_clients_filtered = mod.Client.objects.filter(query, active = True,).exclude(assignedclient__intern = current_user).order_by('first_name')
         # Letting everyone else only see their location
         else:
             assigned_clients_filtered = mod.Client.objects.filter(query, active = True, assignedclient__intern = current_user, location = current_user.location).order_by('first_name')
